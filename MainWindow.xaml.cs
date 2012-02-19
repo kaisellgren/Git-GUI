@@ -10,8 +10,9 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using LibGit2Sharp;
+using System.Windows.Interop;
 
-namespace Git_GUI
+namespace GG
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -21,6 +22,7 @@ namespace Git_GUI
         public MainWindow()
         {
             InitializeComponent();
+            this.Style = (Style) Resources["GlassStyle"];
         }
 
         private void LoadGitLog_Click(object sender, RoutedEventArgs e)
@@ -37,6 +39,7 @@ namespace Git_GUI
                 ChangesetHistory.Items.Add(c);
             }
         }
+
     }
 
     public struct Commit

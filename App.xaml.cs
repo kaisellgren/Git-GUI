@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-namespace Git_GUI
+namespace GG
 {
     /// <summary>
     /// Interaction logic for App.xaml

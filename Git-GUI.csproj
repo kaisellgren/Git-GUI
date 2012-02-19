@@ -8,7 +8,7 @@
     <ProjectGuid>{3E181F9A-55E5-4769-BB53-AE95AC319AAF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Git_GUI</RootNamespace>
+    <RootNamespace>GG</RootNamespace>
     <AssemblyName>Git-GUI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -55,6 +55,9 @@
   <ItemGroup>
     <Reference Include="LibGit2Sharp">
       <HintPath>packages\LibGit2Sharp.0.8\lib\net35\LibGit2Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Windows.Shell">
+      <HintPath>C:\Downloads\WPF Shell Integraton Library v2-bin\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -135,6 +138,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
