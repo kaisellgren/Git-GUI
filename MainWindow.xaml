@@ -1,0 +1,15 @@
+﻿<Window x:Class="Git_GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Git-GUI" Height="417" Width="1020">
+    <Grid>
+        <DataGrid ItemsSource="{Binding Commit}" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="0" Name="ChangesetHistory" VerticalAlignment="Stretch">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=hash}" Header="Hash"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=author}" Header="Author"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=message}" Header="Message"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Load &quot;git log&quot;" Height="23" HorizontalAlignment="Left" Margin="46,343,0,0" Name="LoadGitLog" VerticalAlignment="Top" Width="103" Click="LoadGitLog_Click" />
+    </Grid>
+</Window>
