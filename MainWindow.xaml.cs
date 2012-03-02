@@ -1,51 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using LibGit2Sharp;
-using System.Windows.Interop;
+using Microsoft.Windows.Controls.Ribbon;
 
 namespace GG
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : RibbonWindow
     {
+        protected ChangesetHistory changesetHistory;
+
         public MainWindow()
         {
-            InitializeComponent();
-            this.Style = (Style) Resources["GlassStyle"];
-        }
-
-        private void LoadGitLog_Click(object sender, RoutedEventArgs e)
-        {
-            Repository repo = new Repository("Z:/www/gg");
-            Branch master = repo.Branches.ElementAt(0);
-
-            foreach (LibGit2Sharp.Commit commit in master.Commits)
+            try
             {
-                Commit c = new Commit();
-                c.message = commit.Message;
-                c.hash = commit.GetHashCode().ToString();
-                c.author = commit.Author.Name;
-                ChangesetHistory.Items.Add(c);
+                InitializeComponent();
             }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+
+            this.changesetHistory = new ChangesetHistory(this);
+            this.Preload();
         }
 
-    }
-
-    public struct Commit
-    {
-        public string hash { set; get; }
-        public string message { set; get; }
-        public string author { set; get; }
+        /// <summary>
+        /// Preloads the application with initial data.
+        /// </summary>
+        protected void Preload()
+        {
+            this.changesetHistory.Load();
+        }
     }
 }
