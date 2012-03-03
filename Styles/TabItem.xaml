@@ -6,7 +6,7 @@
                     <Grid>
                         <Border Name="Border" BorderBrush="#666" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0" Margin="0,0,0,-1">
                             <DockPanel>
-                                <TextBlock x:Name="TabItemText" Foreground="#444" Padding="12 6 8 6" RenderOptions.ClearTypeHint="Enabled">
+                                <TextBlock x:Name="TabItemText" Foreground="#444" FontWeight="SemiBold" TextOptions.TextFormattingMode="Display" Padding="16 6 12 6" RenderOptions.ClearTypeHint="Enabled">
                                         <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
                                 </TextBlock>
                                 <Button Command="{Binding CloseCommand}" Background="{x:Null}" BorderBrush="{x:Null}">
@@ -22,6 +22,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="TabItemText" Property="RenderOptions.ClearTypeHint" Value="Enabled"></Setter>
                             <Setter TargetName="TabItemText" Property="FontSize" Value="12"></Setter>
                             <Setter TargetName="TabItemText" Property="Effect">
                                 <Setter.Value>
@@ -32,11 +33,8 @@
                             <Setter TargetName="Border" Property="Background">
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientStop Color="#fff" Offset="0"></GradientStop>
-                                        <GradientStop Color="#f0f0f0" Offset="0.85"></GradientStop>
-                                        <GradientStop Color="#f0f0f0" Offset="0.65"></GradientStop>
-                                        <GradientStop Color="#e1e1e1" Offset="0.35"></GradientStop>
-                                        <GradientStop Color="#e8e8e8" Offset="1"></GradientStop>
+                                        <GradientStop Color="#fff" Offset="0.35"></GradientStop>
+                                        <GradientStop Color="#e9e9e9" Offset="0.75"></GradientStop>
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>

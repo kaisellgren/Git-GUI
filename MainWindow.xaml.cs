@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Windows;
-using Microsoft.Windows.Controls.Ribbon;
 
 namespace GG
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : RibbonWindow
+    public partial class MainWindow : Window
     {
         protected ChangesetHistory changesetHistory;
 
@@ -22,6 +21,7 @@ namespace GG
                 System.Console.WriteLine(e.Message);
             }
 
+            this.Style = (Style) Resources["GlassStyle"];
             this.changesetHistory = new ChangesetHistory(this);
             this.Preload();
         }
