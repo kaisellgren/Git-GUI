@@ -27,6 +27,27 @@
         <TabControl shell:WindowChrome.IsHitTestVisibleInChrome="True" Background="#e9e9e9">
             <TabItem Header="Linux kernel">
                 <DockPanel>
+                    <Menu DockPanel.Dock="Top" VerticalAlignment="Top" Background="{x:Null}">
+                        <MenuItem Header="_File">
+                            <MenuItem Header="_Create repository" />
+                            <MenuItem Header="_Open repository" />
+                            <Separator />
+                            <MenuItem Header="_Exit" />
+                        </MenuItem>
+                        <MenuItem Header="_Edit">
+                            <MenuItem Header="_Preferences" />
+                        </MenuItem>
+                        <MenuItem Header="_Tools">
+                            <MenuItem Header="_Statistics" />
+                            <MenuItem Header="Search" />
+                            <MenuItem Header="File removal from _history" />
+                            <MenuItem Header="File _browser" />
+                        </MenuItem>
+                        <MenuItem Header="_Help">
+                            <MenuItem Header="_About" />
+                            <MenuItem Header="_Documentation" />
+                        </MenuItem>
+                    </Menu>
                     <WrapPanel DockPanel.Dock="Top" Style="{StaticResource TopToolbar}">
                         <Button>
                             <StackPanel>
@@ -66,16 +87,22 @@
                         </Button>
                     </WrapPanel>
                     <DockPanel DockPanel.Dock="Bottom">
-                        <Border BorderBrush="#bbb" BorderThickness="1,1,0,1">
-                            <StackPanel Style="{StaticResource LeftToolbar}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="160" DockPanel.Dock="Left">
-                                <StackPanel Margin="8">
-                                    <TextBlock><Image Source="Resources/Icons/Branch.png" Width="16" />BRANCHES</TextBlock>
-                                    <TextBlock><Image Source="Resources/Icons/Tag.png" Width="16" />TAGS</TextBlock>
-                                    <TextBlock><Image Source="Resources/Icons/Remote.png" Width="16" />REMOTES</TextBlock>
-                                    <TextBlock><Image Source="Resources/Icons/Stash.png" Width="16" />STASHES</TextBlock>
-                                    <TextBlock><Image Source="Resources/Icons/Submodule.png" Width="16" />SUBMODULES</TextBlock>
+                        <Border CornerRadius="8,0,0,8" BorderBrush="#bbb" BorderThickness="1,1,0,1" ClipToBounds="True">
+                            <Grid>
+                                <Border Name="LeftToolbarMask" Background="White" CornerRadius="8,0,0,8"/>
+                                <StackPanel Style="{StaticResource LeftToolbar}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="160" DockPanel.Dock="Left" ClipToBounds="True">
+                                    <StackPanel.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=LeftToolbarMask}"/>
+                                    </StackPanel.OpacityMask>
+                                    <StackPanel Margin="8">
+                                        <TextBlock><Image Source="Resources/Icons/Branch.png" Width="16" />BRANCHES</TextBlock>
+                                        <TextBlock><Image Source="Resources/Icons/Tag.png" Width="16" />TAGS</TextBlock>
+                                        <TextBlock><Image Source="Resources/Icons/Remote.png" Width="16" />REMOTES</TextBlock>
+                                        <TextBlock><Image Source="Resources/Icons/Stash.png" Width="16" />STASHES</TextBlock>
+                                        <TextBlock><Image Source="Resources/Icons/Submodule.png" Width="16" />SUBMODULES</TextBlock>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
+                            </Grid>
                         </Border>
                         <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding Commit}" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="ChangesetHistory" VerticalAlignment="Stretch" DockPanel.Dock="Right">
                             <DataGrid.Columns>
