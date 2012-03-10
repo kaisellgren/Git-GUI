@@ -4,7 +4,7 @@ namespace GG
 {
     public class Repository
     {
-        public Repository() {}
+        public Repository() { }
 
         public string Name { get; set; }
         public string FullPath { get; set; }
@@ -12,6 +12,6 @@ namespace GG
 
     public class RepositoryCollection : List<Repository>
     {
-        public RepositoryCollection() {}
+        public RepositoryCollection() { }
     }
 }

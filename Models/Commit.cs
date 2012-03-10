@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GG
 {
-    public struct Commit
+    public class Commit
     {
         public string AuthorEmail { set; get; }
         public string AuthorName { set; get; }
@@ -14,5 +14,12 @@ namespace GG
         public string Description { set; get; }
         public string Hash { set; get; }
         public string Source { set; get; }
+
+        public Commit() { }
+    }
+
+    public class CommitCollection : List<Commit>
+    {
+        public CommitCollection() { }
     }
 }

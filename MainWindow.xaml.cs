@@ -26,8 +26,8 @@ namespace GG
 
             //create all 
             this.repositories = new List<Repository>{
-                new Repository {Name = "Linux Kernel", FullPath = "Z:/www/git1"},
-                new Repository {Name = "Symfony 2", FullPath = "Z:/www/7th-Degree"}
+                new Repository {Name = "gi1", FullPath = "Z:/www/git1"},
+                new Repository {Name = "7th-Degree", FullPath = "Z:/www/7th-Degree"}
             };
 
             //show 
