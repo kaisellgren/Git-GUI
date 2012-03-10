@@ -10,4 +10,6 @@ Information coming soon.
 - Restart Visual Studio.
 - Install [LibGit2Sharp](http://nuget.org/packages/LibGit2Sharp) via NuGet.
 - Restart Visual Studio or reload the project.
-- Create folder "Externals/" under the project root and [download dependencies](https://docs.google.com/open?id=0B-3-X85VysdNZDlkN2MwYmItZWY1OS00MTc4LWFiNjktZTVlOGU3MTBhNjE5) there.
+- [Download dependencies](https://docs.google.com/open?id=0B-3-X85VysdNZDlkN2MwYmItZWY1OS00MTc4LWFiNjktZTVlOGU3MTBhNjE5) to 
+```Externals``` 
+folder.
