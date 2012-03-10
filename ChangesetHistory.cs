@@ -18,7 +18,7 @@ namespace GG
 
         public void Load()
         {
-            Repository repo = new Repository("Z:/www/git1");
+            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository("Z:/www/git1");
             //Branch master = repo.Branches.ElementAt(0);
 
             foreach (LibGit2Sharp.Commit commit in repo.Commits)
@@ -33,11 +33,11 @@ namespace GG
                 c.Hash = commit.Sha;
                 c.Source = branches.ElementAt(0).ToString();
                 
-                this.window.ChangesetHistory.Items.Add(c);
+                //this.window.ChangesetHistory.Items.Add(c);
             }
         }
 
-        private IEnumerable<Branch> ListBranchesContaininingCommit(Repository repo, string commitSha)
+        private IEnumerable<Branch> ListBranchesContaininingCommit(LibGit2Sharp.Repository repo, string commitSha)
         {
             bool directBranchHasBeenFound = false;
             foreach (var branch in repo.Branches)

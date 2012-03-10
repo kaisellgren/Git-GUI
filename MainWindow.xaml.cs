@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace GG
@@ -9,21 +10,32 @@ namespace GG
     public partial class MainWindow : Window
     {
         protected ChangesetHistory changesetHistory;
+        protected List<Repository> repositories;
+
+        public List<Repository> Repositories
+        {
+            get;
+            set;
+        }
 
         public MainWindow()
         {
-            try
-            {
-                InitializeComponent();
-            }
-            catch (Exception e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
+            InitializeComponent();
 
             this.Style = (Style) Resources["GlassStyle"];
-            this.changesetHistory = new ChangesetHistory(this);
-            this.Preload();
+
+            //create all 
+            this.repositories = new List<Repository>{
+                new Repository {Name = "Linux Kernel", FullPath = "Z:/www/git1"},
+                new Repository {Name = "Symfony 2", FullPath = "Z:/www/7th-Degree"}
+            };
+
+            //show 
+            this.RepositoryTabs.ItemsSource = this.repositories;
+            this.RepositoryTabs.SelectedIndex = 0;
+
+            //this.changesetHistory = new ChangesetHistory(this);
+            //this.Preload();
         }
 
         /// <summary>

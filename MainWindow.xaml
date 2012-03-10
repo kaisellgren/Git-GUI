@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
         xmlns:local="clr-namespace:GG"
-        Title="Git-GUI" Height="417" Width="1020" Icon="Resources/Icons/Git-GUI.png" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+        Title="Git-GUI" Height="417" Width="1020" Icon="Resources/Icons/Git-GUI.png" WindowState="Maximized">
     <Window.Resources>
         <Style x:Key="GlassStyle" TargetType="{x:Type local:MainWindow}">
             <Setter Property="shell:WindowChrome.WindowChrome">
@@ -23,101 +25,110 @@
         </Style>
     </Window.Resources>
 
-    <Grid Margin="0,-24,0,0">
-        <TabControl shell:WindowChrome.IsHitTestVisibleInChrome="True" Background="#e9e9e9">
-            <TabItem Header="Linux kernel">
-                <DockPanel>
-                    <Menu DockPanel.Dock="Top" VerticalAlignment="Top" Background="{x:Null}">
-                        <MenuItem Header="_File">
-                            <MenuItem Header="_Create repository" />
-                            <MenuItem Header="_Open repository" />
-                            <Separator />
-                            <MenuItem Header="_Exit" />
-                        </MenuItem>
-                        <MenuItem Header="_Edit">
-                            <MenuItem Header="_Preferences" />
-                        </MenuItem>
-                        <MenuItem Header="_Tools">
-                            <MenuItem Header="_Statistics" />
-                            <MenuItem Header="Search" />
-                            <MenuItem Header="File removal from _history" />
-                            <MenuItem Header="File _browser" />
-                        </MenuItem>
-                        <MenuItem Header="_Help">
-                            <MenuItem Header="_About" />
-                            <MenuItem Header="_Documentation" />
-                        </MenuItem>
-                    </Menu>
-                    <WrapPanel DockPanel.Dock="Top" Style="{StaticResource TopToolbar}">
-                        <Button>
-                            <StackPanel>
-                                <Image Source="Resources/Icons/Settings.png" Width="24" Height="24" />
-                                <TextBlock>Settings</TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Button>
-                            <StackPanel>
-                                <Image Source="Resources/Icons/Fetch.png" Width="24" Height="24" />
-                                <TextBlock>Fetch</TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Button>
-                            <StackPanel>
-                                <Image Source="Resources/Icons/Pull.png" Width="24" Height="24" />
-                                <TextBlock>Pull</TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Button>
-                            <StackPanel>
-                                <Image Source="Resources/Icons/Push.png" Width="24" Height="24" />
-                                <TextBlock>Push</TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Button>
-                            <StackPanel>
-                                <Image Source="Resources/Icons/Search.png" Width="24" Height="24" />
-                                <TextBlock>Search</TextBlock>
-                            </StackPanel>
-                        </Button>
-                        <Button>
-                            <StackPanel>
-                                <Image Source="Resources/Icons/Statistics.png" Width="24" Height="24" />
-                                <TextBlock>Statistics</TextBlock>
-                            </StackPanel>
-                        </Button>
-                    </WrapPanel>
-                    <DockPanel DockPanel.Dock="Bottom">
-                        <Border CornerRadius="8,0,0,8" BorderBrush="#bbb" BorderThickness="1,1,0,1" ClipToBounds="True">
-                            <Grid>
-                                <Border Name="LeftToolbarMask" Background="White" CornerRadius="8,0,0,8"/>
-                                <StackPanel Style="{StaticResource LeftToolbar}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="160" DockPanel.Dock="Left" ClipToBounds="True">
-                                    <StackPanel.OpacityMask>
-                                        <VisualBrush Visual="{Binding ElementName=LeftToolbarMask}"/>
-                                    </StackPanel.OpacityMask>
-                                    <StackPanel Margin="8">
-                                        <TextBlock><Image Source="Resources/Icons/Branch.png" Width="16" />BRANCHES</TextBlock>
-                                        <TextBlock><Image Source="Resources/Icons/Tag.png" Width="16" />TAGS</TextBlock>
-                                        <TextBlock><Image Source="Resources/Icons/Remote.png" Width="16" />REMOTES</TextBlock>
-                                        <TextBlock><Image Source="Resources/Icons/Stash.png" Width="16" />STASHES</TextBlock>
-                                        <TextBlock><Image Source="Resources/Icons/Submodule.png" Width="16" />SUBMODULES</TextBlock>
-                                    </StackPanel>
+    <Grid Margin="0,-24,0,0" d:DataContext="{d:DesignData Source=./DesignData/RepositoryData/SampleRepositories.xaml}">
+        <TabControl x:Name="RepositoryTabs" ItemsSource="{Binding Mode=OneWay}" shell:WindowChrome.IsHitTestVisibleInChrome="True" Background="#e9e9e9">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>                            
+                        <TextBlock Text="{Binding Name}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <DockPanel>
+                        <Menu DockPanel.Dock="Top" VerticalAlignment="Top" Background="{x:Null}">
+                            <MenuItem Header="_File">
+                                <MenuItem Header="_Create repository"  />
+                                <MenuItem Header="_Open repository" />
+                                <Separator />
+                                <MenuItem Header="_Exit" />
+                            </MenuItem>
+                            <MenuItem Header="_Edit">
+                                <MenuItem Header="_Preferences" />
+                            </MenuItem>
+                            <MenuItem Header="_Tools">
+                                <MenuItem Header="_Statistics" />
+                                <MenuItem Header="Search" />
+                                <MenuItem Header="File removal from _history" />
+                                <MenuItem Header="File _browser" />
+                            </MenuItem>
+                            <MenuItem Header="_Help">
+                                <MenuItem Header="_About" />
+                                <MenuItem Header="_Documentation" />
+                            </MenuItem>
+                        </Menu>
+                        <WrapPanel DockPanel.Dock="Top" Style="{StaticResource TopToolbar}">
+                            <Button>
+                                <StackPanel>
+                                    <Image Source="Resources/Icons/Settings.png" Width="24" Height="24" />
+                                    <TextBlock>Settings <TextBlock Text="{Binding FirstName}"/></TextBlock>
                                 </StackPanel>
-                            </Grid>
-                        </Border>
-                        <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding Commit}" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Name="ChangesetHistory" VerticalAlignment="Stretch" DockPanel.Dock="Right">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Path=Hash}" Header="Hash"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Path=Source}" Header="Source"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Path=Description}" Header="Description"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Path=AuthorName}" Header="Author name"></DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding Path=AuthorEmail}" Header="Author email"></DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                            </Button>
+                            <Button>
+                                <StackPanel>
+                                    <Image Source="Resources/Icons/Fetch.png" Width="24" Height="24" />
+                                    <TextBlock>Fetch</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button>
+                                <StackPanel>
+                                    <Image Source="Resources/Icons/Pull.png" Width="24" Height="24" />
+                                    <TextBlock>Pull</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button>
+                                <StackPanel>
+                                    <Image Source="Resources/Icons/Push.png" Width="24" Height="24" />
+                                    <TextBlock>Push</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button>
+                                <StackPanel>
+                                    <Image Source="Resources/Icons/Search.png" Width="24" Height="24" />
+                                    <TextBlock>Search</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button>
+                                <StackPanel>
+                                    <Image Source="Resources/Icons/Statistics.png" Width="24" Height="24" />
+                                    <TextBlock>Statistics</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </WrapPanel>
+                        <DockPanel DockPanel.Dock="Bottom">
+                            <Border CornerRadius="8,0,0,8" BorderBrush="#bbb" BorderThickness="1,1,0,1" ClipToBounds="True">
+                                <Grid>
+                                    <Border Name="LeftToolbarMask" Background="White" CornerRadius="8,0,0,8"/>
+                                    <StackPanel Style="{StaticResource LeftToolbar}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="160" DockPanel.Dock="Left" ClipToBounds="True">
+                                        <StackPanel.OpacityMask>
+                                            <VisualBrush Visual="{Binding ElementName=LeftToolbarMask}"/>
+                                        </StackPanel.OpacityMask>
+                                        <StackPanel Margin="8">
+                                            <TextBlock><Image Source="Resources/Icons/Branch.png" Width="16" />BRANCHES</TextBlock>
+                                            <TextBlock><Image Source="Resources/Icons/Tag.png" Width="16" />TAGS</TextBlock>
+                                            <TextBlock><Image Source="Resources/Icons/Remote.png" Width="16" />REMOTES</TextBlock>
+                                            <TextBlock><Image Source="Resources/Icons/Stash.png" Width="16" />STASHES</TextBlock>
+                                            <TextBlock><Image Source="Resources/Icons/Submodule.png" Width="16" />SUBMODULES</TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding Commit}" AutoGenerateColumns="False" HorizontalAlignment="Stretch" x:Name="ChangesetHistory" VerticalAlignment="Stretch" DockPanel.Dock="Right">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Path=Hash}" Header="Hash"></DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding Path=Source}" Header="Source"></DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding Path=Description}" Header="Description"></DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date"></DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding Path=AuthorName}" Header="Author name"></DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding Path=AuthorEmail}" Header="Author email"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
                     </DockPanel>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="Symfony 2"></TabItem>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
         </TabControl>
     </Grid>
 </Window>

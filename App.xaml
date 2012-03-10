@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Styles/DataGrid.xaml"/>
                 <ResourceDictionary Source="Styles/LeftToolbar.xaml"/>
                 <ResourceDictionary Source="Styles/TopToolbar.xaml"/>
+                <!--<ResourceDictionary Source="SampleData/RepositoryData.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
