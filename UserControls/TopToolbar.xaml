@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="GG.UserControls.TopToolbar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <StackPanel>
+        <WrapPanel Style="{StaticResource TopToolbar}">
+            <Button>
+                <StackPanel>
+                    <Image Source="../Resources/Icons/Settings.png" Width="24" Height="24" />
+                    <TextBlock>Settings <TextBlock Text="{Binding FirstName}"/></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button>
+                <StackPanel>
+                    <Image Source="../Resources/Icons/Fetch.png" Width="24" Height="24" />
+                    <TextBlock>Fetch</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button>
+                <StackPanel>
+                    <Image Source="../Resources/Icons/Pull.png" Width="24" Height="24" />
+                    <TextBlock>Pull</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button>
+                <StackPanel>
+                    <Image Source="../Resources/Icons/Push.png" Width="24" Height="24" />
+                    <TextBlock>Push</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button>
+                <StackPanel>
+                    <Image Source="../Resources/Icons/Search.png" Width="24" Height="24" />
+                    <TextBlock>Search</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button>
+                <StackPanel>
+                    <Image Source="../Resources/Icons/Statistics.png" Width="24" Height="24" />
+                    <TextBlock>Statistics</TextBlock>
+                </StackPanel>
+            </Button>
+        </WrapPanel>
+    </StackPanel>
+    
+</UserControl>

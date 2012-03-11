@@ -12,5 +12,13 @@ namespace GG
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            MainWindowViewModel mainWindowViewModel = new MainWindowViewModel();
+            mainWindow.DataContext = mainWindowViewModel;
+            base.MainWindow = mainWindow;
+            mainWindow.Show();
+        }
     }
 }

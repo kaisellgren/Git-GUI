@@ -1,7 +1,0 @@
-﻿<local:RepositoryCollection xmlns:local="clr-namespace:GG">
-
-    <local:Repository Name="Sample" FullPath="Z:/www/git1" />
-    <local:Repository Name="Sample 2" FullPath="Z:/www/git1" />
-    <local:Repository Name="Sample 3" FullPath="Z:/www/git1" />
-
-</local:RepositoryCollection>

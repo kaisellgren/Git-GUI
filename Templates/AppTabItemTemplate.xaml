@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Defines the application tab item header template and styling. In the future we may feature icons. -->
+    <DataTemplate x:Key="AppTabItemTemplate">
+        <TextBlock>                            
+            <TextBlock Text="{Binding Name}"/>
+        </TextBlock>
+    </DataTemplate>
+    
+</ResourceDictionary>

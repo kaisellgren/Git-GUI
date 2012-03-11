@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GG</RootNamespace>
     <AssemblyName>Git-GUI</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -56,7 +56,8 @@
     <ApplicationIcon>Resources\Icons\Git-GUI.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>GG.App</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LibGit2Sharp">
@@ -86,8 +87,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Repository.cs" />
-    <DesignData Include="DesignData\RepositoryData\SampleRepositories.xaml" />
-    <DesignData Include="DesignData\RepositoryData\SampleRepository.xaml" />
+    <Compile Include="UserControls\ChangesetHistory.xaml.cs">
+      <DependentUpon>ChangesetHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\LeftToolbar.xaml.cs">
+      <DependentUpon>LeftToolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TopToolbar.xaml.cs">
+      <DependentUpon>TopToolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <DesignData Include="DesignData\SampleApplication.xaml" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -102,16 +115,37 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Templates\AppTabContentTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\DataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\LeftToolbar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\TabItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\TopToolbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\AppTabItemTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ChangesetHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\LeftToolbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MainMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\TopToolbar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -195,6 +229,7 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\Statistics.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
