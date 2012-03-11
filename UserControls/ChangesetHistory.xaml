@@ -7,7 +7,7 @@
              d:DesignHeight="300">
     
     <StackPanel>
-        <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding Commit}" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding Commit}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Hash}" Header="Hash"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=Source}" Header="Source"></DataGridTextColumn>

@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:GG"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-        Title="Git-GUI" Icon="Resources/Icons/Git-GUI.png" WindowState="Maximized" Style="{StaticResource GlassStyle}">
+        Title="Git-GUI" Icon="Resources/Icons/Git-GUI.png" WindowState="Maximized" Style="{StaticResource WindowGlassStyle}">
 
     <DockPanel Margin="0,-24,0,0" d:DataContext="{d:DesignData Source=./DesignData/SampleApplication.xaml}">
         <TabControl x:Name="RepositoryTabs"

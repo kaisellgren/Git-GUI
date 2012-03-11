@@ -7,7 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     
     <StackPanel>
-        <WrapPanel Style="{StaticResource TopToolbar}">
+        <WrapPanel Style="{DynamicResource TopToolbarStyle}">
             <Button>
                 <StackPanel>
                     <Image Source="../Resources/Icons/Settings.png" Width="24" Height="24" />

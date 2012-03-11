@@ -9,8 +9,8 @@
             <controls:TopToolbar DockPanel.Dock="Top" />
             
             <DockPanel DockPanel.Dock="Bottom">
-                <controls:LeftToolbar DockPanel.Dock="Left" />
-                <controls:ChangesetHistory DockPanel.Dock="Right" />
+                <controls:LeftToolbar DockPanel.Dock="Left" VerticalAlignment="Stretch" />
+                <controls:ChangesetHistory DockPanel.Dock="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             </DockPanel>
         </DockPanel>
     </DataTemplate>

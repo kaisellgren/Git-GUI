@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
-    
-    <StackPanel>
-        <Border CornerRadius="8,0,0,8" BorderBrush="#bbb" BorderThickness="1,1,0,1" ClipToBounds="True">
+
+    <Grid>
+        <Border CornerRadius="8,0,0,8" BorderBrush="#bbb" BorderThickness="1" ClipToBounds="True">
             <Grid>
-                <Border Name="LeftToolbarMask" Background="White" CornerRadius="8,0,0,8"/>
-                <StackPanel Style="{StaticResource LeftToolbar}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="160" DockPanel.Dock="Left" ClipToBounds="True">
+                <Border Name="LeftToolbarMask" Background="White" CornerRadius="8,0,0,8" />
+                <StackPanel Style="{DynamicResource LeftToolbarStyle}" HorizontalAlignment="Left" Width="160" ClipToBounds="True">
                     <StackPanel.OpacityMask>
                         <VisualBrush Visual="{Binding ElementName=LeftToolbarMask}"/>
                     </StackPanel.OpacityMask>
@@ -23,6 +23,6 @@
                 </StackPanel>
             </Grid>
         </Border>
-    </StackPanel>
+    </Grid>
     
 </UserControl>
