@@ -11,6 +11,8 @@
                 <ResourceDictionary Source="Styles/MainWindow.xaml"/>
                 <ResourceDictionary Source="Templates/AppTabContentTemplate.xaml"/>
                 <ResourceDictionary Source="Templates/AppTabItemTemplate.xaml"/>
+                <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
+                <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

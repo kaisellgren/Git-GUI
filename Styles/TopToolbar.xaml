@@ -21,6 +21,19 @@
     
     <Style x:Key="TopToolbarStyle" TargetType="{x:Type Panel}">
         <Setter Property="Margin" Value="0,0,0,4" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="Transparent"></GradientStop>
+                    <GradientStop Offset="0.35">
+                        <GradientStop.Color>
+                            <Color A="24" R="0" G="0" B="0" />
+                        </GradientStop.Color>
+                    </GradientStop>
+                    <GradientStop Offset="1" Color="Transparent"></GradientStop>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
 
         <Style.Resources>
             <Style TargetType="{x:Type Button}">

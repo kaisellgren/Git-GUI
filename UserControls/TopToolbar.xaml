@@ -8,42 +8,44 @@
     
     <StackPanel>
         <WrapPanel Style="{DynamicResource TopToolbarStyle}">
-            <Button>
-                <StackPanel>
-                    <Image Source="../Resources/Icons/Settings.png" Width="24" Height="24" />
-                    <TextBlock>Settings <TextBlock Text="{Binding FirstName}"/></TextBlock>
-                </StackPanel>
-            </Button>
-            <Button>
-                <StackPanel>
-                    <Image Source="../Resources/Icons/Fetch.png" Width="24" Height="24" />
-                    <TextBlock>Fetch</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button>
-                <StackPanel>
-                    <Image Source="../Resources/Icons/Pull.png" Width="24" Height="24" />
-                    <TextBlock>Pull</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button>
-                <StackPanel>
-                    <Image Source="../Resources/Icons/Push.png" Width="24" Height="24" />
-                    <TextBlock>Push</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button>
-                <StackPanel>
-                    <Image Source="../Resources/Icons/Search.png" Width="24" Height="24" />
-                    <TextBlock>Search</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button>
-                <StackPanel>
-                    <Image Source="../Resources/Icons/Statistics.png" Width="24" Height="24" />
-                    <TextBlock>Statistics</TextBlock>
-                </StackPanel>
-            </Button>
+            <WrapPanel Margin="4,0,0,0">
+                <Button>
+                    <StackPanel>
+                        <Image Source="../Resources/Icons/Settings.png" Width="24" Height="24" />
+                        <TextBlock>Settings <TextBlock Text="{Binding FirstName}"/></TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel>
+                        <Image Source="../Resources/Icons/Fetch.png" Width="24" Height="24" />
+                        <TextBlock>Fetch</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel>
+                        <Image Source="../Resources/Icons/Pull.png" Width="24" Height="24" />
+                        <TextBlock>Pull</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel>
+                        <Image Source="../Resources/Icons/Push.png" Width="24" Height="24" />
+                        <TextBlock>Push</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel>
+                        <Image Source="../Resources/Icons/Search.png" Width="24" Height="24" />
+                        <TextBlock>Search</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel>
+                        <Image Source="../Resources/Icons/Statistics.png" Width="24" Height="24" />
+                        <TextBlock>Statistics</TextBlock>
+                    </StackPanel>
+                </Button>
+            </WrapPanel>
         </WrapPanel>
     </StackPanel>
     

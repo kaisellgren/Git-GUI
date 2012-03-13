@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:GG.UserControls">
+
+    <!-- This is the content template for the application main tab control when it's just opened. -->
+    <DataTemplate x:Key="AppTabNew">
+        <StackPanel>
+            <controls:NewTabPage />
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

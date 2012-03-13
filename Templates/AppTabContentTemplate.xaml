@@ -5,10 +5,10 @@
     <!-- This is the content template for the application main tab control. -->
     <DataTemplate x:Key="AppTabContentTemplate">
         <DockPanel>
-            <controls:MainMenu DockPanel.Dock="Top" />
+            <controls:MainMenu DockPanel.Dock="Top" Margin="4,4,0,0" />
             <controls:TopToolbar DockPanel.Dock="Top" />
-            
-            <DockPanel DockPanel.Dock="Bottom">
+
+            <DockPanel DockPanel.Dock="Bottom" Margin="4,0,0,0">
                 <controls:LeftToolbar DockPanel.Dock="Left" VerticalAlignment="Stretch" />
                 <controls:ChangesetHistory DockPanel.Dock="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             </DockPanel>

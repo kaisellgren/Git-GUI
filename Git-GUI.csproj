@@ -86,6 +86,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppTabDataTemplateSelector.cs" />
     <Compile Include="Models\Repository.cs" />
     <Compile Include="UserControls\ChangesetHistory.xaml.cs">
       <DependentUpon>ChangesetHistory.xaml</DependentUpon>
@@ -95,6 +96,9 @@
     </Compile>
     <Compile Include="UserControls\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\NewTabPage.xaml.cs">
+      <DependentUpon>NewTabPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\TopToolbar.xaml.cs">
       <DependentUpon>TopToolbar.xaml</DependentUpon>
@@ -136,6 +140,9 @@
     <Page Include="Templates\AppTabItemTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Templates\AppTabNew.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\ChangesetHistory.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +150,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\MainMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\NewTabPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\TopToolbar.xaml">
