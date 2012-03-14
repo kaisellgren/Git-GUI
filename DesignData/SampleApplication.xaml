@@ -1,6 +1,10 @@
 ﻿<local:MainWindowViewModel xmlns:local="clr-namespace:GG">
     <local:MainWindowViewModel.Repositories>
-        <local:Repository Name="Sample" FullPath="Z:/www/git1" />
+        <local:Repository Name="Sample" FullPath="Z:/www/git1">
+            <local:Repository.Commits>
+                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" Description="Foo" Hash="asdasd" Source="asdasd" />
+            </local:Repository.Commits>
+        </local:Repository>
         <local:Repository Name="Sample 2" FullPath="Z:/www/git1" />
         <local:Repository Name="Sample 3" FullPath="Z:/www/git1" />
     </local:MainWindowViewModel.Repositories>
