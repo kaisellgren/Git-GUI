@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,12 +8,29 @@ namespace GG
 {
     class AppTabDataTemplateSelector : DataTemplateSelector
     {
-        public override DataTemplate SelectTemplate(object tab, DependencyObject container)
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            FrameworkElement element = container as FrameworkElement;
-            Repository repository = tab as Repository;
+            String templateName;
 
-            return element.FindResource(repository.NotOpened ? "AppTabNew" : "AppTabContentTemplate") as DataTemplate;
+            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+            {
+                templateName = "AppTabContentTemplate";
+            }
+            else
+            {
+                Repository repository = item as Repository;
+
+                templateName = repository.NotOpened ? "AppTabNew" : "AppTabContentTemplate";
+            }
+
+            FrameworkElement element = container as FrameworkElement;
+            var template = element.TryFindResource(templateName) as DataTemplate;
+            if (template != null)
+            {
+                return template;
+            }
+
+            return base.SelectTemplate(item, container);
         }
     }
 }

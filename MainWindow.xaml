@@ -16,6 +16,6 @@
                     SelectedIndex="0"
                     ItemsSource="{Binding Repositories}"
                     ItemTemplate="{StaticResource AppTabItemTemplate}"
-                    ContentTemplateSelector="{StaticResource AppTabContentTemplateSelector}" />
+                    ContentTemplateSelector="{DynamicResource AppTabContentTemplateSelector}" />
     </DockPanel>
 </Window>

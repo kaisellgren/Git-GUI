@@ -9,6 +9,7 @@ namespace GG
         public string Name { get; set; }
         public string FullPath { get; set; }
         public bool NotOpened { get; set; }
+        public CommitCollection Commits { get; set; }
     }
 
     public class RepositoryCollection : List<Repository>

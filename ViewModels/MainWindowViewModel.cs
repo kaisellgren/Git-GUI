@@ -13,7 +13,13 @@ namespace GG
         {
             Repositories = new ObservableCollection<Repository>{
                 new Repository {Name = "gi1", FullPath = "Z:/www/git1"},
-                new Repository {Name = "7th-Degree test", FullPath = "Z:/www/7th-Degree"},
+                new Repository {
+                    Name = "7th-Degree test",
+                    FullPath = "Z:/www/7th-Degree",
+                    Commits = new CommitCollection{
+                        new Commit{ AuthorEmail = "foo@bar", Date = "12.12.2012", Description = "Bar", AuthorName = "Test", Hash = "asd", Source = "asd"}
+                    }
+                },
                 new Repository {Name = "New tab", FullPath = null, NotOpened = true}
             };
         }
