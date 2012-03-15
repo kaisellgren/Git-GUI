@@ -11,7 +11,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Hash}" Header="Hash"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=Source}" Header="Source"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=Description}" Header="Description"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=Description}" Header="Description" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=Date}" Header="Date"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=AuthorName}" Header="Author name"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=AuthorEmail}" Header="Author email"></DataGridTextColumn>

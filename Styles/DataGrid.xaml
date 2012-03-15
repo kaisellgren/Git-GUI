@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style TargetType="{x:Type DataGrid}">
         <Setter Property="BorderBrush" Value="#bbb" />
+        <Setter Property="RowBackground" Value="#f9f9f9" />
+        <Setter Property="AlternatingRowBackground" Value="#f4f4f4" />
+        <Setter Property="GridLinesVisibility" Value="None" />
     </Style>
     
     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -22,12 +25,38 @@
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"></Setter>
     </Style>
-
+    
     <Style TargetType="{x:Type DataGridCell}">
-        <Setter Property="Background" Value="#f0f0f0" />
-        <Setter Property="BorderBrush" Value="#bbb" />
-        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="#dddddd" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="BorderThickness" Value="0,0,1,1" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"></Setter>
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="BorderBrush" Value="#7ea3be" />
+                <Setter Property="BorderThickness" Value="0,1,1,1" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#d6e5ef" Offset="0" />
+                            <GradientStop Color="#b2cadb" Offset="0.1" />
+                            <GradientStop Color="#aac2d3" Offset="0.8" />
+                            <GradientStop Color="#9ab3c6" Offset="0.9" />
+                            <GradientStop Color="#c2d4e0" Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

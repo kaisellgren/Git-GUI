@@ -2,10 +2,10 @@
     <local:MainWindowViewModel.Repositories>
         <local:Repository Name="Sample" FullPath="Z:/www/git1">
             <local:Repository.Commits>
-                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" Description="Foo" Hash="asdasd" Source="asdasd" />
+                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" Description="Foo" Hash="123" Source="asdasd" />
+                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" Description="Foo 2" Hash="456" Source="asdasd" />
+                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" Description="Foo 3 " Hash="789" Source="asdasd" />
             </local:Repository.Commits>
         </local:Repository>
-        <local:Repository Name="Sample 2" FullPath="Z:/www/git1" />
-        <local:Repository Name="Sample 3" FullPath="Z:/www/git1" />
     </local:MainWindowViewModel.Repositories>
 </local:MainWindowViewModel>
