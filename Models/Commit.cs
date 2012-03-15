@@ -10,10 +10,18 @@ namespace GG
     {
         public string AuthorEmail { set; get; }
         public string AuthorName { set; get; }
-        public string Date { set; get; }
+        public DateTime Date { set; get; }
         public string Description { set; get; }
         public string Hash { set; get; }
         public string Source { set; get; }
+
+        public string FormattedDate
+        {
+            get
+            {
+                return this.Date.ToString("d.M.yyyy H:m:s");
+            }
+        }
 
         public Commit() { }
     }

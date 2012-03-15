@@ -28,7 +28,7 @@ namespace GG
                 Commit c = new Commit();
                 c.AuthorEmail = commit.Author.Email;
                 c.AuthorName = commit.Author.Name;
-                c.Date = commit.Author.When.ToString("d.M.yyyy H:m:s");
+                c.Date = commit.Author.When.DateTime;
                 c.Description = commit.MessageShort;
                 c.Hash = commit.Sha;
                 c.Source = branches.ElementAt(0).ToString();
