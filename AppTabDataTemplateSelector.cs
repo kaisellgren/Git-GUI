@@ -18,7 +18,7 @@ namespace GG
             }
             else
             {
-                Repository repository = item as Repository;
+                RepositoryViewModel repository = item as RepositoryViewModel;
 
                 templateName = repository.NotOpened ? "AppTabNew" : "AppTabContentTemplate";
             }

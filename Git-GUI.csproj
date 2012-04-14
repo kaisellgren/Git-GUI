@@ -87,7 +87,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppTabDataTemplateSelector.cs" />
-    <Compile Include="Models\Repository.cs" />
+    <Compile Include="Libraries\DateUtil.cs" />
+    <Compile Include="Models\StatusItem.cs" />
+    <Compile Include="UserControls\CommitPanel.xaml.cs">
+      <DependentUpon>CommitPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\StatusGrid.xaml.cs">
+      <DependentUpon>StatusGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\RepositoryViewModel.cs" />
     <Compile Include="UserControls\ChangesetHistory.xaml.cs">
       <DependentUpon>ChangesetHistory.xaml</DependentUpon>
     </Compile>
@@ -113,12 +122,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ChangesetHistory.cs" />
     <Compile Include="Models\Commit.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles\NewTabButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Templates\AppTabContentTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -146,6 +157,9 @@
     <Page Include="UserControls\ChangesetHistory.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\CommitPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\LeftToolbar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,6 +167,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\NewTabPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\StatusGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\TopToolbar.xaml">
@@ -239,7 +256,9 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\Statistics.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\NewTabBackground.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

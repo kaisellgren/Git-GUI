@@ -13,5 +13,11 @@ namespace GG
         {
             InitializeComponent();
         }
+
+        void OnLoad(object sender, RoutedEventArgs e)
+        {
+            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            vm.Load();
+        }
     }
 }

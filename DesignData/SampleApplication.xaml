@@ -1,11 +1,19 @@
 ﻿<local:MainWindowViewModel xmlns:local="clr-namespace:GG">
-    <local:MainWindowViewModel.Repositories>
-        <local:Repository Name="Sample" FullPath="Z:/www/git1">
-            <local:Repository.Commits>
-                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" Description="Foo" Hash="123" Source="asdasd" />
-                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" Description="Foo 2" Hash="456" Source="asdasd" />
-                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" Description="Foo 3 " Hash="789" Source="asdasd" />
-            </local:Repository.Commits>
-        </local:Repository>
-    </local:MainWindowViewModel.Repositories>
+    <local:MainWindowViewModel.RepositoryViewModels>
+        <local:RepositoryViewModel Name="Sample" FullPath="Z:/www/git1">
+            <local:RepositoryViewModel.Commits>
+                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" FormattedDate="One minute ago" Description="Foo" Hash="123" Source="asdasd" />
+                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" FormattedDate="5 minutes ago" Description="Foo 2" Hash="456" Source="asdasd" />
+                <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" FormattedDate="6 hours ago" Description="Foo 3 " Hash="789" Source="asdasd" />
+            </local:RepositoryViewModel.Commits>
+        </local:RepositoryViewModel>
+        <local:RepositoryViewModel Name="New Tab" NotOpened="True">
+            <local:RepositoryViewModel.Commits>
+            </local:RepositoryViewModel.Commits>
+        </local:RepositoryViewModel>
+    </local:MainWindowViewModel.RepositoryViewModels>
+    
+    <local:MainWindowViewModel.RecentRepositories>
+        <local:RepositoryViewModel Name="Sample" FullPath="Z:/www/git1" />
+    </local:MainWindowViewModel.RecentRepositories>
 </local:MainWindowViewModel>

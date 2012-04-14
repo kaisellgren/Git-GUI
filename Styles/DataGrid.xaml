@@ -36,8 +36,19 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
                     <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        <ContentPresenter x:Name="CellContent" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RenderOptions.ClearTypeHint="Enabled" />
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="CellContent" Property="TextOptions.TextFormattingMode" Value="Display" />
+                            <Setter TargetName="CellContent" Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+                            <Setter TargetName="CellContent" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="2" BlurRadius="2" Color="Black" RenderingBias="Quality" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

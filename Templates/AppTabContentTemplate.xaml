@@ -8,10 +8,25 @@
             <controls:MainMenu DockPanel.Dock="Top" Margin="4,4,0,0" />
             <controls:TopToolbar DockPanel.Dock="Top" />
 
-            <DockPanel DockPanel.Dock="Bottom" Margin="4,0,0,0">
-                <controls:LeftToolbar DockPanel.Dock="Left" VerticalAlignment="Stretch" />
-                <controls:ChangesetHistory DockPanel.Dock="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-            </DockPanel>
+            <Grid DockPanel.Dock="Bottom" Margin="4,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0">
+                    <ScrollViewer Name="MainAreaScrollViewer" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+                        <DockPanel>
+                            <controls:LeftToolbar DockPanel.Dock="Left" VerticalAlignment="Stretch" />
+                            <controls:ChangesetHistory DockPanel.Dock="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                        </DockPanel>
+                    </ScrollViewer>
+                </DockPanel>
+                
+                <GridSplitter ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="5" />
+                
+                <controls:StatusGrid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            </Grid>
         </DockPanel>
     </DataTemplate>
     

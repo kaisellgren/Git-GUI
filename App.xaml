@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Templates/AppTabItemTemplate.xaml"/>
                 <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
                 <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
+                <ResourceDictionary Source="Styles/NewTabButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

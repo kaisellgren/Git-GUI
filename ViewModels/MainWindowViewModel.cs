@@ -1,29 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using GG.ViewModels;
 
 namespace GG
 {
-    class MainWindowViewModel
+    class MainWindowViewModel : BaseViewModel
     {
-        public ObservableCollection<Repository> Repositories { get; set; }
+        public ObservableCollection<RepositoryViewModel> RepositoryViewModels { get; set; }
+        public ObservableCollection<RepositoryViewModel> RecentRepositories { get; set; }
 
         public MainWindowViewModel()
         {
-            Repositories = new ObservableCollection<Repository>{
-                new Repository {
-                    Name = "7th-Degree test",
-                    FullPath = "Z:/www/7th-Degree",
-                    Commits = new CommitCollection{
-                        new Commit{ AuthorEmail = "example@email.com", Date = DateTime.Now, Description = "Bar", AuthorName = "Test", Hash = "asd", Source = "asd"},
-                        new Commit{ AuthorEmail = "example@email.com", Date = new DateTime(2012, 12, 12), Description = "Bar", AuthorName = "Test", Hash = "asd", Source = "asd"},
-                        new Commit{ AuthorEmail = "example@email.com", Date = new DateTime(2012, 12, 12), Description = "Bar", AuthorName = "Test", Hash = "asd", Source = "asd"}
-                    }
-                },
-                new Repository {Name = "gi1", FullPath = "Z:/www/git1"},
-                new Repository {Name = "New tab", FullPath = null, NotOpened = true}
-            };
+            RepositoryViewModels = new ObservableCollection<RepositoryViewModel> { };
+            RecentRepositories = new ObservableCollection<RepositoryViewModel> { };
+        }
+
+        public void Load()
+        {
+            // Add some test repositories.
+            RepositoryViewModel repo = new RepositoryViewModel { Name = "gi1", FullPath = "Z:/www/git1" };
+            repo.Load();
+
+            RepositoryViewModel repo2 = new RepositoryViewModel { Name = "New tab", FullPath = null, NotOpened = true };
+            repo2.Load();
+
+            RepositoryViewModels.Add(repo);
+            RepositoryViewModels.Add(repo2);
+
+            // Add some "recent repositories".
+            RecentRepositories.Add(repo);
         }
     }
 }

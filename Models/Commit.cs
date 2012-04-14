@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GG.Libraries;
 
 namespace GG
 {
@@ -19,15 +20,8 @@ namespace GG
         {
             get
             {
-                return this.Date.ToString("d.M.yyyy H:m:s");
+                return DateUtil.GetRelativeDate(Date);
             }
         }
-
-        public Commit() { }
-    }
-
-    public class CommitCollection : List<Commit>
-    {
-        public CommitCollection() { }
     }
 }

@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="GG.UserControls.StatusGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="343" d:DesignWidth="501">
+    <DockPanel>
+        <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding StatusItems}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Status}" Header="St"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=Filename}" Header="Filename" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=Type}" Header="Type"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=Size}" Header="Size (kB)"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
