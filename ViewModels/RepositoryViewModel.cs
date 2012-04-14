@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Windows.Threading;
 using GG.ViewModels;
 using LibGit2Sharp;
 
@@ -92,7 +94,13 @@ namespace GG
             FileSystemWatcher watcher = new FileSystemWatcher();
 
             watcher.Changed += new FileSystemEventHandler((object sender, FileSystemEventArgs e) => {
-                LoadRepositoryStatus();
+                Application.Current.Dispatcher.Invoke(
+                    DispatcherPriority.Normal,
+                    (Action) delegate()
+                    {
+                        LoadRepositoryStatus();
+                    }
+                );
             });
             watcher.Path = FullPath;
             watcher.EnableRaisingEvents = true;
