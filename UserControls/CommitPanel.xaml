@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="387" d:DesignWidth="493">
     <DockPanel>
-        <controls:StatusGrid />
+        <controls:Panel HeaderText="Parent: (b4ab9102) Modified configuration files.">
+            
+        </controls:Panel>
     </DockPanel>
 </UserControl>

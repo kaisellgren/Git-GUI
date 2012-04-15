@@ -92,6 +92,9 @@
     <Compile Include="UserControls\CommitPanel.xaml.cs">
       <DependentUpon>CommitPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Panel.xaml.cs">
+      <DependentUpon>Panel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\StatusGrid.xaml.cs">
       <DependentUpon>StatusGrid.xaml</DependentUpon>
     </Compile>
@@ -127,7 +130,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles\GridSplitter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\NewTabButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Panel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Templates\AppTabContentTemplate.xaml">
@@ -167,6 +176,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\NewTabPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Panel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\StatusGrid.xaml">
@@ -258,6 +270,36 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\NewTabBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Add.png" />
+    <Resource Include="Resources\Icons\Annotate.png" />
+    <Resource Include="Resources\Icons\Backout.png" />
+    <Resource Include="Resources\Icons\Cancel.png" />
+    <Resource Include="Resources\Icons\Checkout.png" />
+    <Resource Include="Resources\Icons\Clipboard.png" />
+    <Resource Include="Resources\Icons\Copy.png" />
+    <Resource Include="Resources\Icons\CopyPatch.png" />
+    <Resource Include="Resources\Icons\DatabaseRefresh.png" />
+    <Resource Include="Resources\Icons\Delete.png" />
+    <Resource Include="Resources\Icons\Detect.png" />
+    <Resource Include="Resources\Icons\Edit.png" />
+    <Resource Include="Resources\Icons\Email.png" />
+    <Resource Include="Resources\Icons\Export.png" />
+    <Resource Include="Resources\Icons\Forget.png" />
+    <Resource Include="Resources\Icons\Hash.png" />
+    <Resource Include="Resources\Icons\History.png" />
+    <Resource Include="Resources\Icons\Home.png" />
+    <Resource Include="Resources\Icons\Ignore.png" />
+    <Resource Include="Resources\Icons\Merge.png" />
+    <Resource Include="Resources\Icons\Messages.png" />
+    <Resource Include="Resources\Icons\MessageWrite.png" />
+    <Resource Include="Resources\Icons\Rename.png" />
+    <Resource Include="Resources\Icons\RepositoryWrite.png" />
+    <Resource Include="Resources\Icons\Save.png" />
+    <Resource Include="Resources\Icons\Tick.png" />
+    <Resource Include="Resources\Icons\VisualDiff.png" />
+    <Resource Include="Resources\Icons\Warning.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

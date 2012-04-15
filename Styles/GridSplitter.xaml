@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="{x:Type GridSplitter}">
+        <Style.Triggers>
+            <!-- Vertical -->
+            <Trigger Property="VerticalAlignment" Value="Stretch">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#BFBFBF" Offset="0" />
+                            <GradientStop Color="#F7F7F7" Offset="0.5" />
+                            <GradientStop Color="#BFBFBF" Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+
+            <!-- Horizontal -->
+            <Trigger Property="HorizontalAlignment" Value="Stretch">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#BFBFBF" Offset="0" />
+                            <GradientStop Color="#F7F7F7" Offset="0.5" />
+                            <GradientStop Color="#BFBFBF" Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

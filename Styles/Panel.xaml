@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="PanelHeaderStyle" TargetType="{x:Type DockPanel}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="#8FADCD" />
+                    <GradientStop Offset="0.2" Color="#A4BDD3" />
+                    <GradientStop Offset="0.8" Color="#82A3BB" />
+                    <GradientStop Offset="1" Color="#7996AA" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="3" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="PanelHeaderTextStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Margin" Value="4,0,0,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect ShadowDepth="2" BlurRadius="2" Color="Black" RenderingBias="Quality" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

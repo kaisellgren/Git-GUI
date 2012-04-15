@@ -25,7 +25,16 @@
                 
                 <GridSplitter ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="5" />
                 
-                <controls:StatusGrid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:StatusGrid Grid.Column="0" HorizontalAlignment="Stretch" />
+                    <GridSplitter ResizeDirection="Columns" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" />
+                    <controls:CommitPanel Grid.Column="1" HorizontalAlignment="Stretch" />
+                </Grid>
             </Grid>
         </DockPanel>
     </DataTemplate>

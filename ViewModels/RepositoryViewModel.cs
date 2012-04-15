@@ -19,6 +19,8 @@ namespace GG
         public ObservableCollection<Commit> Commits { get; set; }
         public ObservableCollection<StatusItem> StatusItems { get; set; }
 
+        delegate void ReloadStatusDelegate(object sender, FileSystemEventArgs e);
+
         public RepositoryViewModel()
         {
             Commits = new ObservableCollection<Commit> { };
@@ -70,6 +72,8 @@ namespace GG
         {
             LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
 
+            StatusItems.Clear();
+
             // Load status items.
             RepositoryStatus status = repo.Index.RetrieveStatus();
             foreach (LibGit2Sharp.StatusEntry fileStatus in status)
@@ -93,7 +97,8 @@ namespace GG
         {
             FileSystemWatcher watcher = new FileSystemWatcher();
 
-            watcher.Changed += new FileSystemEventHandler((object sender, FileSystemEventArgs e) => {
+            ReloadStatusDelegate reloadStatusDelegate = delegate(object sender, FileSystemEventArgs e)
+            {
                 Application.Current.Dispatcher.Invoke(
                     DispatcherPriority.Normal,
                     (Action) delegate()
@@ -101,7 +106,11 @@ namespace GG
                         LoadRepositoryStatus();
                     }
                 );
-            });
+            };
+
+            watcher.Changed += new FileSystemEventHandler(reloadStatusDelegate);
+            watcher.Deleted += new FileSystemEventHandler(reloadStatusDelegate);
+            watcher.Renamed += new RenamedEventHandler(reloadStatusDelegate);
             watcher.Path = FullPath;
             watcher.EnableRaisingEvents = true;
         }
