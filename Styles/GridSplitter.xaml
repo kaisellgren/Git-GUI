@@ -3,7 +3,12 @@
     <Style TargetType="{x:Type GridSplitter}">
         <Style.Triggers>
             <!-- Vertical -->
-            <Trigger Property="VerticalAlignment" Value="Stretch">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="VerticalAlignment" Value="Stretch" />
+                    <Condition Property="IsMouseOver" Value="False" />
+                </MultiTrigger.Conditions>
+
                 <Setter Property="Background">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -13,10 +18,33 @@
                         </LinearGradientBrush>
                     </Setter.Value>
                 </Setter>
-            </Trigger>
+            </MultiTrigger>
+
+            <!-- Vertical hover -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="VerticalAlignment" Value="Stretch" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#9CB6CD" Offset="0" />
+                            <GradientStop Color="#E8F4FF" Offset="0.5" />
+                            <GradientStop Color="#9CB6CD" Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </MultiTrigger>
 
             <!-- Horizontal -->
-            <Trigger Property="HorizontalAlignment" Value="Stretch">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="HorizontalAlignment" Value="Stretch" />
+                    <Condition Property="IsMouseOver" Value="False" />
+                </MultiTrigger.Conditions>
+
                 <Setter Property="Background">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -26,7 +54,25 @@
                         </LinearGradientBrush>
                     </Setter.Value>
                 </Setter>
-            </Trigger>
+            </MultiTrigger>
+
+            <!-- Horizontal hover -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="HorizontalAlignment" Value="Stretch" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#9CB6CD" Offset="0" />
+                            <GradientStop Color="#E8F4FF" Offset="0.5" />
+                            <GradientStop Color="#9CB6CD" Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </MultiTrigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>
