@@ -10,7 +10,7 @@
         <ControlTemplate>
             <StackPanel>
                 <DockPanel Style="{DynamicResource PanelHeaderStyle}">
-                    <TextBlock DockPanel.Dock="Left" Style="{DynamicResource PanelHeaderTextStyle}" Text="{TemplateBinding local:Panel.HeaderText}" />
+                    <TextBlock DockPanel.Dock="Left" Style="{DynamicResource PanelHeaderTextStyle}" Text="{TemplateBinding local:Panel.HeaderText}" Foreground="White" />
                     <WrapPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
                         <Button>
                             <WrapPanel>

@@ -7,14 +7,22 @@
              d:DesignHeight="300">
     
     <StackPanel>
-        <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding Commits}" AutoGenerateColumns="False">
+        <DataGrid CanUserSortColumns="False" SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding Commits}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Hash}" Header="Hash"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=HashShort}" Header="Hash"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=Source}" Header="Source"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=Description}" Header="Description" Width="*"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Description" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <ListBox ItemsSource="{Binding DisplayTags}" Style="{DynamicResource DisplayTags}" />
+                                <TextBlock Text="{Binding Path=Description}" VerticalAlignment="Center" />
+                            </WrapPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Binding="{Binding Path=FormattedDate}" Header="Date"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=AuthorName}" Header="Author name"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=AuthorEmail}" Header="Author email"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=Author}" Header="Author"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </StackPanel>

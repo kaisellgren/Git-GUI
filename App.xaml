@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="Styles/NewTabButton.xaml"/>
                 <ResourceDictionary Source="Styles/Panel.xaml"/>
                 <ResourceDictionary Source="Styles/GridSplitter.xaml"/>
+                <ResourceDictionary Source="Styles/DisplayTags.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

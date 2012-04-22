@@ -48,17 +48,7 @@ namespace GG
             // Load commits.
             foreach (LibGit2Sharp.Commit commit in repo.Commits)
             {
-                IEnumerable<Branch> branches = ListBranchesContaininingCommit(repo, commit.Sha);
-
-                Commit c = new Commit();
-                c.AuthorEmail = commit.Author.Email;
-                c.AuthorName = commit.Author.Name;
-                c.Date = commit.Author.When.DateTime;
-                c.Description = commit.MessageShort;
-                c.Hash = commit.Sha;
-                c.Source = branches.ElementAt(0).ToString();
-
-                Commits.Add(c);
+                Commits.Add(Commit.Create(repo, commit));
             }
 
             // Dispose.
@@ -113,44 +103,6 @@ namespace GG
             watcher.Renamed += new RenamedEventHandler(reloadStatusDelegate);
             watcher.Path = FullPath;
             watcher.EnableRaisingEvents = true;
-        }
-
-        /// <summary>
-        /// A helper method for listing branches that contain the given commit.
-        /// </summary>
-        /// <param name="repo"></param>
-        /// <param name="commitSha"></param>
-        /// <returns></returns>
-        private IEnumerable<Branch> ListBranchesContaininingCommit(LibGit2Sharp.Repository repo, string commitSha)
-        {
-            bool directBranchHasBeenFound = false;
-            foreach (var branch in repo.Branches)
-            {
-                if (branch.Tip.Sha != commitSha)
-                {
-                    continue;
-                }
-
-                directBranchHasBeenFound = true;
-                yield return branch;
-            }
-
-            if (directBranchHasBeenFound)
-            {
-                yield break;
-            }
-
-            foreach (var branch in repo.Branches)
-            {
-                var commits = repo.Commits.QueryBy(new Filter { Since = branch }).Where(c => c.Sha == commitSha);
-
-                if (commits.Count() == 0)
-                {
-                    continue;
-                }
-
-                yield return branch;
-            }
         }
     }
 }

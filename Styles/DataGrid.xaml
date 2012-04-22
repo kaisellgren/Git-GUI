@@ -4,73 +4,161 @@
         <Setter Property="RowBackground" Value="#f9f9f9" />
         <Setter Property="AlternatingRowBackground" Value="#f4f4f4" />
         <Setter Property="GridLinesVisibility" Value="None" />
-        <!--<Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle" />-->
     </Style>
-    
-    <Style TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Background">
+
+    <Style x:Key="ColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="Width" Value="8" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="SizeWE" />
+        <Setter Property="Template">
             <Setter.Value>
-                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                    <GradientStop Color="#fff" Offset="0"></GradientStop>
-                    <GradientStop Color="#EBEBEB" Offset="0.2"></GradientStop>
-                    <GradientStop Color="#CDCDCD" Offset="0.8"></GradientStop>
-                    <GradientStop Color="#EBEBEB" Offset="1"></GradientStop>
-                </LinearGradientBrush>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" />
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="DataGridColumnHeader">
         <Setter Property="Height" Value="24" />
         <Setter Property="Foreground" Value="#444"/>
-        <Setter Property="BorderBrush" Value="#bbb" />
         <Setter Property="Padding" Value="4" />
-        <Setter Property="BorderThickness" Value="0,0,1,1" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"></Setter>
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="SeparatorBrush" Value="#bbb"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridColumnHeader">
+                    <Grid x:Name="Root">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:0.3" To="#fff" Storyboard.TargetProperty="(Fill).Color" Storyboard.TargetName="BackgroundRectangle"/>
+                                        <ColorAnimation Duration="0:0:0.3" To="#EBEBEB" Storyboard.TargetProperty="(Fill).(GradientStops)[1].Color" Storyboard.TargetName="BackgroundGradient"/>
+                                        <ColorAnimation Duration="0:0:0.3" To="#CDCDCD" Storyboard.TargetProperty="(Fill).(GradientStops)[2].Color" Storyboard.TargetName="BackgroundGradient"/>
+                                        <ColorAnimation Duration="0:0:0.3" To="#EBEBEB" Storyboard.TargetProperty="(Fill).(GradientStops)[3].Color" Storyboard.TargetName="BackgroundGradient"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:0.3" To="#fff" Storyboard.TargetProperty="(Fill).Color" Storyboard.TargetName="BackgroundRectangle"/>
+                                        <ColorAnimation Duration="0:0:0.3" To="#D0E0EB" Storyboard.TargetProperty="(Fill).(GradientStops)[1].Color" Storyboard.TargetName="BackgroundGradient"/>
+                                        <ColorAnimation Duration="0:0:0.3" To="#9AB1C1" Storyboard.TargetProperty="(Fill).(GradientStops)[2].Color" Storyboard.TargetName="BackgroundGradient"/>
+                                        <ColorAnimation Duration="0:0:0.3" To="#E8F3FF" Storyboard.TargetProperty="(Fill).(GradientStops)[3].Color" Storyboard.TargetName="BackgroundGradient"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:0.15" To="#E8F3FF" Storyboard.TargetProperty="(Fill).Color" Storyboard.TargetName="BackgroundRectangle"/>
+                                        <ColorAnimation Duration="0:0:0.15" To="#9AB1C1" Storyboard.TargetProperty="(Fill).(GradientStops)[1].Color" Storyboard.TargetName="BackgroundGradient"/>
+                                        <ColorAnimation Duration="0:0:0.15" To="#D0E0EB" Storyboard.TargetProperty="(Fill).(GradientStops)[2].Color" Storyboard.TargetName="BackgroundGradient"/>
+                                        <ColorAnimation Duration="0:0:0.15" To="#fff" Storyboard.TargetProperty="(Fill).(GradientStops)[3].Color" Storyboard.TargetName="BackgroundGradient"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SortStates">
+                                <VisualState x:Name="Unsorted"/>
+                                <VisualState x:Name="SortAscending">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.3" To="1.0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="SortIcon"/>
+                                        <DoubleAnimation Duration="0:0:0.3" To="1" Storyboard.TargetProperty="(RenderTransform).ScaleY" Storyboard.TargetName="SortIcon"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SortDescending">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.3" To="1.0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="SortIcon"/>
+                                        <DoubleAnimation Duration="0:0:0.3" To="-.9" Storyboard.TargetProperty="(RenderTransform).ScaleY" Storyboard.TargetName="SortIcon"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        
+                        <Rectangle x:Name="BackgroundRectangle" Grid.ColumnSpan="2" Grid.RowSpan="2" Fill="red" Stretch="Fill"/>
+                        <Rectangle x:Name="BackgroundGradient" Grid.ColumnSpan="2" Grid.RowSpan="2" Stretch="Fill">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                    <GradientStop Color="#fff" Offset="0"></GradientStop>
+                                    <GradientStop Color="#EBEBEB" Offset="0.2"></GradientStop>
+                                    <GradientStop Color="#CDCDCD" Offset="0.8"></GradientStop>
+                                    <GradientStop Color="#EBEBEB" Offset="1"></GradientStop>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        
+                        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                            <Path x:Name="SortIcon" Grid.Column="2" Data="F1 M -5.215,6.099L 5.215,6.099L 0,0L -5.215,6.099 Z " Fill="#FF444444" HorizontalAlignment="Left" Margin="4,0,0,0" Opacity="0" RenderTransformOrigin=".5,.5" Stretch="Uniform" VerticalAlignment="Center" Width="8">
+                                <Path.RenderTransform>
+                                    <ScaleTransform ScaleY=".9" ScaleX=".9"/>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                        
+                        <Rectangle x:Name="VerticalSeparator" Grid.Column="1" Fill="{TemplateBinding SeparatorBrush}" Visibility="{TemplateBinding SeparatorVisibility}" VerticalAlignment="Stretch" Width="1"/>
+                        <Rectangle x:Name="HorizontalSeparator" Grid.Row="1" Fill="{TemplateBinding SeparatorBrush}" Visibility="{TemplateBinding SeparatorVisibility}" HorizontalAlignment="Stretch" Height="1"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     
     <Style TargetType="{x:Type DataGridCell}">
         <Setter Property="BorderBrush" Value="#dddddd" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="BorderThickness" Value="0,0,1,1" />
-        <!--<Setter Property="KeyboardNavigation.IsTabStop" Value="False" />-->
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
-                    <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <ContentPresenter x:Name="CellContent" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" />
+                    <Border x:Name="OuterBorder" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="True">
+                        <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="CellContent" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" TextOptions.TextFormattingMode="Display" VerticalAlignment="Center" />
+                        </Border>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="CellContent" Property="TextOptions.TextFormattingMode" Value="Display" />
-                            <Setter TargetName="CellContent" Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-                            <!--<Setter TargetName="CellContent" Property="Effect">
+                            <Setter Property="BorderThickness" Value="0,1,0,0" TargetName="OuterBorder" />
+                            <Setter Property="BorderBrush" Value="#7ea3be" />
+                            <Setter Property="BorderBrush" Value="#7ea3be" TargetName="OuterBorder" />
+                            <Setter Property="Foreground" Value="#000" />
+                            <Setter Property="Background">
                                 <Setter.Value>
-                                    <DropShadowEffect ShadowDepth="2" BlurRadius="2" Color="Black" RenderingBias="Quality" />
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#d6e5ef" Offset="0" />
+                                        <GradientStop Color="#b2cadb" Offset="0.1" />
+                                        <GradientStop Color="#aac2d3" Offset="0.8" />
+                                        <GradientStop Color="#9ab3c6" Offset="0.9" />
+                                        <GradientStop Color="#c2d4e0" Offset="1" />
+                                    </LinearGradientBrush>
                                 </Setter.Value>
-                            </Setter>-->
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter Property="BorderBrush" Value="Transparent" TargetName="OuterBorder" />
+                            <Setter Property="BorderThickness" Value="0,1,0,0" TargetName="OuterBorder" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsSelected" Value="True">
-                <Setter Property="BorderBrush" Value="#7ea3be" />
-                <Setter Property="BorderThickness" Value="0,1,1,1" />
-                <Setter Property="Foreground" Value="#000" />
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Color="#d6e5ef" Offset="0" />
-                            <GradientStop Color="#b2cadb" Offset="0.1" />
-                            <GradientStop Color="#aac2d3" Offset="0.8" />
-                            <GradientStop Color="#9ab3c6" Offset="0.9" />
-                            <GradientStop Color="#c2d4e0" Offset="1" />
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 </ResourceDictionary>

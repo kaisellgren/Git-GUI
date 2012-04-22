@@ -19,7 +19,7 @@ namespace GG
         public void Load()
         {
             // Add some test repositories.
-            RepositoryViewModel repo = new RepositoryViewModel { Name = "gi1", FullPath = "Z:/www/git1" };
+            RepositoryViewModel repo = new RepositoryViewModel { Name = "Git test repository", FullPath = "Z:/www/git2" };
             repo.Load();
 
             RepositoryViewModel repo2 = new RepositoryViewModel { Name = "New tab", FullPath = null, NotOpened = true };
