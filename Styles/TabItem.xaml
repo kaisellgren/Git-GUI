@@ -4,9 +4,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid>
-                        <Border Name="Border" BorderBrush="#666" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0" Margin="-2,0,0,-1">
+                        <Border Name="Border" BorderBrush="#666" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0" Margin="-2,0,3,-1">
                             <DockPanel>
-                                <TextBlock x:Name="TabItemText" Foreground="#444" FontWeight="SemiBold" TextOptions.TextFormattingMode="Display" Padding="16 6 12 6" RenderOptions.ClearTypeHint="Enabled" TextOptions.TextRenderingMode="ClearType" SnapsToDevicePixels="True" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                <TextBlock x:Name="TabItemText" FontSize="12" Foreground="#444" FontWeight="SemiBold" TextOptions.TextFormattingMode="Display" Padding="16 6 12 6" RenderOptions.ClearTypeHint="Enabled" TextOptions.TextRenderingMode="ClearType" SnapsToDevicePixels="True" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
                                         <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
                                 </TextBlock>
                                 <Button Command="{Binding CloseCommand}" Background="{x:Null}" BorderBrush="{x:Null}">
@@ -19,11 +19,49 @@
                                 </Button>
                             </DockPanel>
                         </Border>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.3" />
+                                </VisualStateGroup.Transitions>
+                            </VisualStateGroup>
+
+                            <!--<VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup>
+                                    <VisualStateGroup.States>
+                                        <VisualState x:Name="MouseOver" />
+                                        <VisualState x:Name="Selected" />
+                                    </VisualStateGroup.States>
+
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Background.GradientStops[0].Color" Storyboard.TargetName="Border">
+                                            <ColorAnimation.To>
+                                                <Color A="192" R="255" G="255" B="255" />
+                                            </ColorAnimation.To>
+                                        </ColorAnimation>
+                                        <ColorAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Background.GradientStops[1].Color" Storyboard.TargetName="Border">
+                                            <ColorAnimation.To>
+                                                <Color A="192" R="233" G="233" B="233" />
+                                            </ColorAnimation.To>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </VisualStateGroup>
+                            </VisualStateGroup>-->
+                        </VisualStateManager.VisualStateGroups>
                     </Grid>
+                    
                     <ControlTemplate.Triggers>
+                        <!-- TODO: Find a way to add sliding animation when opening a new tab. -->
+                        <!--<EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <SizeAnimation Duration="0:0:0.3" To="100" From="0" Storyboard.TargetProperty="Width" Storyboard.TargetName="Border" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>-->
+
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="TabItemText" Property="FontSize" Value="12"></Setter>
-                            <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0"></Setter>
                             <Setter TargetName="Border" Property="Background">
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -33,13 +71,32 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
+                        
                         <Trigger Property="IsSelected" Value="False">
-                            <Setter TargetName="TabItemText" Property="Foreground" Value="#fff"></Setter>
-                            <Setter TargetName="TabItemText" Property="FontSize" Value="12"></Setter>
-                            <Setter TargetName="Border" Property="BorderBrush" Value="Transparent"></Setter>
-                            <Setter TargetName="TabItemText" Property="Effect">
+                            <Setter TargetName="Border" Property="BorderBrush">
                                 <Setter.Value>
-                                    <DropShadowEffect ShadowDepth="1" Direction="320" Color="Black" Opacity="0.75" BlurRadius="2" RenderingBias="Quality" />
+                                    <SolidColorBrush>
+                                        <SolidColorBrush.Color>
+                                            <Color A="127" R="102" G="102" B="102" />
+                                        </SolidColorBrush.Color>
+                                    </SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Offset="0.35">
+                                            <GradientStop.Color>
+                                                <Color A="127" R="255" G="255" B="255" />
+                                            </GradientStop.Color>
+                                        </GradientStop>
+                                        
+                                        <GradientStop Offset="0.75">
+                                            <GradientStop.Color>
+                                                <Color A="127" R="233" G="233" B="233" />
+                                            </GradientStop.Color>
+                                        </GradientStop>
+                                    </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
                         </Trigger>

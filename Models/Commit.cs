@@ -14,6 +14,7 @@ namespace GG
         public DateTime     Date        { set; get; }
         public string       Description { set; get; }
         public List<String> DisplayTags { get; set; }
+        public List<String> Tags        { get; set; }
         public string       Hash        { set; get; }
         public string       Source      { get; set; }
 
@@ -58,14 +59,24 @@ namespace GG
         /// <returns></returns>
         public static Commit Create(LibGit2Sharp.Repository repo, LibGit2Sharp.Commit commit)
         {
-            // Fetch branches.
-            IEnumerable<LibGit2Sharp.Branch> branches = ListBranchesContaininingCommit(repo, commit.Sha);
-
             // Process DisplayTags (tags to display next to the commit description).
-            List<String> tags = new List<String>();
-            foreach (LibGit2Sharp.Branch branch in branches)
+            List<String> displayTags = new List<String>();
+            foreach (LibGit2Sharp.Branch branch in repo.Branches)
             {
-                tags.Add(branch.Name);
+                if (branch.Tip.Sha == commit.Sha)
+                {
+                    displayTags.Add(branch.Name);
+                }
+            }
+
+            // Process Tags (Git tags to display next to the commit description).
+            List<String> tags = new List<String>();
+            foreach (LibGit2Sharp.Tag tag in repo.Tags)
+            {
+                if (tag.Target.Sha == commit.Sha)
+                {
+                    tags.Add(tag.Name);
+                }
             }
 
             // Create new commit model.
@@ -76,8 +87,9 @@ namespace GG
             c.Date = commit.Author.When.DateTime;
             c.Description = commit.MessageShort;
             c.Hash = commit.Sha;
-            c.Source = branches.ElementAt(0).ToString();
-            c.DisplayTags = tags;
+            c.Source = ListBranchesContaininingCommit(repo, commit.Sha).ElementAt(0).ToString();
+            c.DisplayTags = displayTags;
+            c.Tags = tags;
 
             return c;
         }

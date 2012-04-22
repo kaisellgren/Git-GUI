@@ -15,7 +15,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <WrapPanel>
-                                <ListBox ItemsSource="{Binding DisplayTags}" Style="{DynamicResource DisplayTags}" />
+                                <ListBox ItemsSource="{Binding DisplayTags}" Style="{DynamicResource DisplayTagsBlueStyle}" />
+                                <ListBox ItemsSource="{Binding Tags}" Style="{DynamicResource DisplayTagsOrangeStyle}" />
                                 <TextBlock Text="{Binding Path=Description}" VerticalAlignment="Center" />
                             </WrapPanel>
                         </DataTemplate>
