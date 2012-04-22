@@ -2,7 +2,7 @@
 
 Git-GUI is Windows only graphical user interface for Git source code management.
 
-<img src="http://img195.imageshack.us/img195/686/89721286.png" alt="Git-GUI" />
+<a href="http://img838.imageshack.us/img838/5576/57882669.jpg"><img src="http://img38.imageshack.us/img38/4397/72594439.jpg" alt="Git-GUI" /></a>
 
 ### Contributing
 
