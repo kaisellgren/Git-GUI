@@ -6,6 +6,33 @@
         <Setter Property="GridLinesVisibility" Value="None" />
     </Style>
 
+    <Style x:Key="DataGridGroupItemStyle" TargetType="{x:Type Grid}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#fff" Offset="0"></GradientStop>
+                    <GradientStop Color="#EBEBEB" Offset="0.2"></GradientStop>
+                    <GradientStop Color="#CDCDCD" Offset="0.8"></GradientStop>
+                    <GradientStop Color="#EBEBEB" Offset="1"></GradientStop>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        
+        <Style.Resources>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="Foreground" Value="#000" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+                <Setter Property="UseLayoutRounding" Value="True" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+            </Style>
+        </Style.Resources>
+    </Style>
+    
     <Style x:Key="ColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Width" Value="8" />
         <Setter Property="Background" Value="Transparent" />

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Threading;
 using GG.ViewModels;
 using LibGit2Sharp;
@@ -18,6 +19,7 @@ namespace GG
 
         public ObservableCollection<Commit> Commits { get; set; }
         public ObservableCollection<StatusItem> StatusItems { get; set; }
+        public ListCollectionView StatusItemsGrouped { get; set; }
 
         delegate void ReloadStatusDelegate(object sender, FileSystemEventArgs e);
 
@@ -25,6 +27,8 @@ namespace GG
         {
             Commits = new ObservableCollection<Commit> { };
             StatusItems = new ObservableCollection<StatusItem> { };
+            StatusItemsGrouped = new ListCollectionView(StatusItems);
+            StatusItemsGrouped.GroupDescriptions.Add(new PropertyGroupDescription("GenericStatus"));
         }
 
         public void Load()
@@ -70,11 +74,18 @@ namespace GG
             {
                 StatusItem item = new StatusItem();
                 item.Filename = fileStatus.FilePath;
-                item.Status = fileStatus.State.ToString();
+                item.Status = fileStatus.State;
                 item.Type = "image/png";
                 item.Size = "138 kB";
 
-                StatusItems.Add(item);
+                // See if the file is binary.
+                //String fullPathToFile = FullPath + item.Filename;
+
+                // Add if the file is not "Ignored".
+                if (!item.IsIgnored())
+                {
+                    StatusItems.Add(item);
+                }
             }
 
             repo.Dispose();

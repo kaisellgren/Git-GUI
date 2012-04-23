@@ -6,13 +6,48 @@
              mc:Ignorable="d" 
              d:DesignHeight="343" d:DesignWidth="501">
     <DockPanel>
-        <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding StatusItems}" AutoGenerateColumns="False">
+        <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding StatusItemsGrouped}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Status}" Header="St"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=Status}" Header="Status"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=Filename}" Header="Filename" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=Type}" Header="Type"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=Size}" Header="Size (kB)"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=Size}" Header="Binary"></DataGridTextColumn>
             </DataGrid.Columns>
+
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <StackPanel>
+                                            <Border BorderBrush="#aaa" BorderThickness="0,1,0,1">
+                                                <Grid Style="{DynamicResource DataGridGroupItemStyle}">
+                                                    <StackPanel Orientation="Horizontal" Margin="4,3,0,3">
+                                                        <TextBlock Text="{Binding Name}" />
+                                                        <TextBlock xml:space="preserve">: </TextBlock>
+                                                        <TextBlock Text="{Binding ItemCount}"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                            <ItemsPresenter />
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
         </DataGrid>
     </DockPanel>
 </UserControl>

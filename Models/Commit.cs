@@ -88,6 +88,7 @@ namespace GG
             c.Description = commit.MessageShort;
             c.Hash = commit.Sha;
             c.Source = ListBranchesContaininingCommit(repo, commit.Sha).ElementAt(0).ToString();
+            c.Source = c.Source.Replace("refs/heads/", "").Replace("refs/remotes/", "");
             c.DisplayTags = displayTags;
             c.Tags = tags;
 

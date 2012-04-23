@@ -21,6 +21,7 @@
 
     <Style x:Key="PanelHeaderTextStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Margin" Value="4,0,0,0" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
@@ -31,7 +32,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect ShadowDepth="1" BlurRadius="2" Color="Black" Opacity="0.75" RenderingBias="Quality" />
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2" Color="Black" Opacity="0.5" RenderingBias="Quality" />
             </Setter.Value>
         </Setter>
     </Style>

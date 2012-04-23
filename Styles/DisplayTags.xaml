@@ -38,7 +38,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListBoxItem">
-                            <Border Padding="3" SnapsToDevicePixels="true" CornerRadius="4" BorderThickness="1" BorderBrush="#444" UseLayoutRounding="True">
+                            <Border Padding="3,1,3,2" SnapsToDevicePixels="true" CornerRadius="4" BorderThickness="1" BorderBrush="#444" UseLayoutRounding="True">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                         <GradientStop Offset="0" Color="#B9C8D9" />
@@ -62,7 +62,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListBoxItem">
-                            <Border Padding="3" SnapsToDevicePixels="true" CornerRadius="4" BorderThickness="1" BorderBrush="#444" UseLayoutRounding="True">
+                            <Border Padding="3,1,3,2" SnapsToDevicePixels="true" CornerRadius="4" BorderThickness="1" BorderBrush="#444" UseLayoutRounding="True">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                         <GradientStop Offset="0" Color="#FFC9A6" />
