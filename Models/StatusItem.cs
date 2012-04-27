@@ -33,11 +33,6 @@ namespace GG
                     return "Staged";
                 }
 
-                if ((Status & LibGit2Sharp.FileStatus.Untracked) == LibGit2Sharp.FileStatus.Untracked)
-                {
-                    return "Untracked";
-                }
-
                 return "Not staged";
             }
         }

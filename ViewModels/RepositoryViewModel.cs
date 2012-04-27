@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -29,6 +30,7 @@ namespace GG
             StatusItems = new ObservableCollection<StatusItem> { };
             StatusItemsGrouped = new ListCollectionView(StatusItems);
             StatusItemsGrouped.GroupDescriptions.Add(new PropertyGroupDescription("GenericStatus"));
+            StatusItemsGrouped.SortDescriptions.Add(new SortDescription("GenericStatus", ListSortDirection.Descending));
         }
 
         public void Load()
@@ -72,18 +74,20 @@ namespace GG
             RepositoryStatus status = repo.Index.RetrieveStatus();
             foreach (LibGit2Sharp.StatusEntry fileStatus in status)
             {
-                StatusItem item = new StatusItem();
-                item.Filename = fileStatus.FilePath;
-                item.Status = fileStatus.State;
-                item.Type = "image/png";
-                item.Size = "138 kB";
-
-                // See if the file is binary.
-                //String fullPathToFile = FullPath + item.Filename;
-
-                // Add if the file is not "Ignored".
-                if (!item.IsIgnored())
+                foreach (FileStatus value in Enum.GetValues(typeof(FileStatus)))
                 {
+                    bool isSet = fileStatus.State.HasFlag(value);
+
+                    if (isSet == false || value.ToString() == "Unaltered" || value.ToString() == "Ignored")
+                        continue;
+
+                    // Only those enum statuses that were set will generate a row in the status grid (and those that are not ignored/unaltered).
+                    StatusItem item = new StatusItem();
+                    item.Filename = fileStatus.FilePath;
+                    item.Status = value;
+                    item.Type = "image/png";
+                    item.Size = "138 kB";
+
                     StatusItems.Add(item);
                 }
             }

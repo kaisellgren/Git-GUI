@@ -2,13 +2,49 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:GG.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="343" d:DesignWidth="501">
+    <UserControl.Resources>
+        <converters:StatusToColorConverter x:Key="statusToColorConverter" />
+        <converters:StatusToCharacterConverter x:Key="statusToCharacterConverter" />
+    </UserControl.Resources>
     <DockPanel>
         <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding StatusItemsGrouped}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Status}" Header="Status"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="St">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <ItemContainerTemplate>
+                            <WrapPanel HorizontalAlignment="Center">
+                                <WrapPanel.Effect>
+                                    <DropShadowEffect BlurRadius="3" Color="Black" ShadowDepth="0" Direction="315" />
+                                </WrapPanel.Effect>
+                                <Border BorderThickness="1" CornerRadius="4" Background="{Binding Status, Converter={StaticResource statusToColorConverter}}">
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush>
+                                            <SolidColorBrush.Color>
+                                                <Color A="96" R="0" G="0" B="0" />
+                                            </SolidColorBrush.Color>
+                                        </SolidColorBrush>
+                                    </Border.BorderBrush>
+                                    <TextBlock
+                                        Width="16"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Center"
+                                        TextAlignment="Center"
+                                        Foreground="White"
+                                        FontFamily="Arial"
+                                        FontSize="11"
+                                        FontWeight="Bold"
+                                        TextOptions.TextFormattingMode="Display"
+                                        TextOptions.TextRenderingMode="ClearType"
+                                        Text="{Binding Status, Converter={StaticResource statusToCharacterConverter}}" />
+                                </Border>
+                            </WrapPanel>
+                        </ItemContainerTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Binding="{Binding Path=Filename}" Header="Filename" Width="*"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=Type}" Header="Type"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Path=Size}" Header="Size (kB)"></DataGridTextColumn>

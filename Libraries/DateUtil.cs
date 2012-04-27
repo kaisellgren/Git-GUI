@@ -18,7 +18,6 @@ namespace GG.Libraries
             const int MINUTE = 60 * SECOND;
             const int HOUR = 60 * MINUTE;
             const int DAY = 24 * HOUR;
-            const int MONTH = 30 * DAY;
 
             if (delta < 2 * MINUTE)
             {

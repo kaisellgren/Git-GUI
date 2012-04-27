@@ -88,6 +88,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppTabDataTemplateSelector.cs" />
+    <Compile Include="Converters\StatusToCharacterConverter.cs" />
+    <Compile Include="Converters\StatusToColorConverter.cs" />
     <Compile Include="Libraries\DateUtil.cs" />
     <Compile Include="Models\StatusItem.cs" />
     <Compile Include="UserControls\CommitPanel.xaml.cs">
