@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,14 @@ namespace GG
                 }
 
                 return "Not staged";
+            }
+        }
+
+        public string Extension
+        {
+            get
+            {
+                return Path.GetExtension(Filename);
             }
         }
 

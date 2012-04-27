@@ -70,6 +70,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -88,9 +89,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppTabDataTemplateSelector.cs" />
+    <Compile Include="Converters\ExtensionToImageConverter.cs" />
     <Compile Include="Converters\StatusToCharacterConverter.cs" />
     <Compile Include="Converters\StatusToColorConverter.cs" />
     <Compile Include="Libraries\DateUtil.cs" />
+    <Compile Include="Libraries\Icons.cs" />
     <Compile Include="Models\StatusItem.cs" />
     <Compile Include="UserControls\CommitPanel.xaml.cs">
       <DependentUpon>CommitPanel.xaml</DependentUpon>
