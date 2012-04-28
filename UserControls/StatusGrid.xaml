@@ -12,7 +12,14 @@
         <converters:ExtensionToImageConverter x:Key="extensionToImageConverter" />
     </UserControl.Resources>
     <DockPanel>
-        <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding StatusItemsGrouped}" AutoGenerateColumns="False" BorderThickness="1,1,0,1">
+        <DataGrid SelectionUnit="FullRow"
+                  HeadersVisibility="Column"
+                  ItemsSource="{Binding StatusItemsGrouped}"
+                  AutoGenerateColumns="False"
+                  BorderThickness="1,1,0,1"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserResizeColumns="True">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="St">
                     <DataGridTemplateColumn.CellTemplate>
