@@ -11,37 +11,37 @@
             <WrapPanel Margin="4,0,0,0">
                 <Button>
                     <StackPanel>
-                        <Image Source="../Resources/Icons/Settings.png" Width="24" Height="24" />
-                        <TextBlock>Settings <TextBlock Text="{Binding FirstName}"/></TextBlock>
+                        <Image Source="../Resources/Icons/Settings.png" Stretch="None" />
+                        <TextBlock>Settings</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button>
                     <StackPanel>
-                        <Image Source="../Resources/Icons/Fetch.png" Width="24" Height="24" />
+                        <Image Source="../Resources/Icons/Fetch.png" Stretch="None" />
                         <TextBlock>Fetch</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button>
                     <StackPanel>
-                        <Image Source="../Resources/Icons/Pull.png" Width="24" Height="24" />
+                        <Image Source="../Resources/Icons/Pull.png" Stretch="None" />
                         <TextBlock>Pull</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button>
                     <StackPanel>
-                        <Image Source="../Resources/Icons/Push.png" Width="24" Height="24" />
+                        <Image Source="../Resources/Icons/Push.png" Stretch="None" />
                         <TextBlock>Push</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button>
                     <StackPanel>
-                        <Image Source="../Resources/Icons/Search.png" Width="24" Height="24" />
+                        <Image Source="../Resources/Icons/Search.png" Stretch="None" />
                         <TextBlock>Search</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button>
                     <StackPanel>
-                        <Image Source="../Resources/Icons/Statistics.png" Width="24" Height="24" />
+                        <Image Source="../Resources/Icons/Statistics.png" Stretch="None" />
                         <TextBlock>Statistics</TextBlock>
                     </StackPanel>
                 </Button>

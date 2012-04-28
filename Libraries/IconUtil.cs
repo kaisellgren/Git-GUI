@@ -30,7 +30,7 @@ namespace GG.Libraries
                 attributes |= FILE_ATTRIBUTE_DIRECTORY;
 
             SHFILEINFO shfi;
-            if (0 != SHGetFileInfo(
+            if (IntPtr.Zero != SHGetFileInfo(
                         path,
                         attributes,
                         out shfi,
@@ -58,7 +58,7 @@ namespace GG.Libraries
         }
 
         [DllImport("shell32", CharSet=CharSet.Unicode)]
-        private static extern int SHGetFileInfo(string pszPath, uint dwFileAttributes, out SHFILEINFO psfi, uint cbFileInfo, uint flags);
+        private static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, out SHFILEINFO psfi, uint cbFileInfo, uint flags);
 
         private const uint FILE_ATTRIBUTE_READONLY = 0x00000001;
         private const uint FILE_ATTRIBUTE_HIDDEN = 0x00000002;

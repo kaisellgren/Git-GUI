@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
+using GG.Libraries;
 using GG.ViewModels;
 using LibGit2Sharp;
 
@@ -81,12 +82,14 @@ namespace GG
                     if (isSet == false || value.ToString() == "Unaltered" || value.ToString() == "Ignored")
                         continue;
 
+                    String fileFullPath = FullPath + "/" + fileStatus.FilePath;
+
                     // Only those enum statuses that were set will generate a row in the status grid (and those that are not ignored/unaltered).
                     StatusItem item = new StatusItem();
                     item.Filename = fileStatus.FilePath;
                     item.Status = value;
-                    item.Type = "image/png";
-                    item.Size = "138 kB";
+                    item.Size = FileUtil.GetFormattedFileSize(fileFullPath);
+                    item.IsBinary = FileUtil.IsBinaryFile(fileFullPath) ? "Yes" : "-";
 
                     StatusItems.Add(item);
                 }

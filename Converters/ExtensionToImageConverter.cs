@@ -15,7 +15,7 @@ namespace GG.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Icons.GetIcon((String) value, true, false);
+            return IconUtil.GetIcon((String) value, true, false);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

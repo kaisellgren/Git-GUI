@@ -12,7 +12,7 @@
         <converters:ExtensionToImageConverter x:Key="extensionToImageConverter" />
     </UserControl.Resources>
     <DockPanel>
-        <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding StatusItemsGrouped}" AutoGenerateColumns="False">
+        <DataGrid SelectionUnit="FullRow" HeadersVisibility="Column" ItemsSource="{Binding StatusItemsGrouped}" AutoGenerateColumns="False" BorderThickness="1,1,0,1">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="St">
                     <DataGridTemplateColumn.CellTemplate>
@@ -51,16 +51,15 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <ItemContainerTemplate>
                             <WrapPanel>
-                                <Image Source="{Binding Extension, Converter={StaticResource extensionToImageConverter}}" Width="16" Margin="0,0,2,0" />
+                                <Image Source="{Binding Extension, Converter={StaticResource extensionToImageConverter}}" Stretch="None" Margin="0,0,2,0" />
                                 <TextBlock Text="{Binding Path=Filename}" />
                             </WrapPanel>
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 
-                <DataGridTextColumn Binding="{Binding Path=Type}" Header="Type"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=Size}" Header="Size (kB)"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=Size}" Header="Binary"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=Size}" Header="Size"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=IsBinary}" Header="Binary"></DataGridTextColumn>
             </DataGrid.Columns>
 
             <DataGrid.GroupStyle>
@@ -87,6 +86,7 @@
                                                     </StackPanel>
                                                 </Grid>
                                             </Border>
+                                            
                                             <ItemsPresenter />
                                         </StackPanel>
                                     </ControlTemplate>

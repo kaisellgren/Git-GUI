@@ -17,7 +17,7 @@
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-        
+
         <Style.Resources>
             <Style TargetType="{x:Type TextBlock}">
                 <Setter Property="Foreground" Value="#000" />

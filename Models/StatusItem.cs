@@ -12,8 +12,8 @@ namespace GG
     {
         public LibGit2Sharp.FileStatus Status { set; get; }
         public string Filename { set; get; }
-        public string Type { set; get; }
         public string Size { set; get; }
+        public string IsBinary { set; get; }
 
         public string GenericStatus
         {

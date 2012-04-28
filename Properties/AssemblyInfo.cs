@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Git-GUI")]
+[assembly: AssemblyTitle("A graphical user interface for Git.")]
 [assembly: AssemblyDescription("A graphical user interface for Git.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Git-GUI")]
-[assembly: AssemblyCopyright("Copyright Kai Sellgren © 2012")]
+[assembly: AssemblyCopyright("Copyright © Kai Sellgren")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

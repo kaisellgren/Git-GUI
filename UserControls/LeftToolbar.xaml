@@ -6,19 +6,19 @@
              mc:Ignorable="d">
 
     <Grid>
-        <Border CornerRadius="8,0,0,8" BorderBrush="#bbb" BorderThickness="1" ClipToBounds="True">
+        <Border CornerRadius="8,0,0,0" BorderBrush="#bbb" BorderThickness="1,1,1,0" ClipToBounds="True">
             <Grid>
-                <Border Name="LeftToolbarMask" Background="White" CornerRadius="8,0,0,8" />
+                <Border Name="LeftToolbarMask" Background="White" CornerRadius="8,0,0,0" />
                 <StackPanel Style="{DynamicResource LeftToolbarStyle}" HorizontalAlignment="Left" Width="160" ClipToBounds="True">
                     <StackPanel.OpacityMask>
                         <VisualBrush Visual="{Binding ElementName=LeftToolbarMask}"/>
                     </StackPanel.OpacityMask>
                     <StackPanel Margin="8">
-                        <TextBlock><Image Source="../Resources/Icons/Branch.png" Width="16" />BRANCHES</TextBlock>
-                        <TextBlock><Image Source="../Resources/Icons/Tag.png" Width="16" />TAGS</TextBlock>
-                        <TextBlock><Image Source="../Resources/Icons/Remote.png" Width="16" />REMOTES</TextBlock>
-                        <TextBlock><Image Source="../Resources/Icons/Stash.png" Width="16" />STASHES</TextBlock>
-                        <TextBlock><Image Source="../Resources/Icons/Submodule.png" Width="16" />SUBMODULES</TextBlock>
+                        <TextBlock><Image Source="../Resources/Icons/Branch.png" Stretch="None" />BRANCHES</TextBlock>
+                        <TextBlock><Image Source="../Resources/Icons/Tag.png" Stretch="None" />TAGS</TextBlock>
+                        <TextBlock><Image Source="../Resources/Icons/Remote.png" Stretch="None" />REMOTES</TextBlock>
+                        <TextBlock><Image Source="../Resources/Icons/Stash.png" Stretch="None" />STASHES</TextBlock>
+                        <TextBlock><Image Source="../Resources/Icons/Submodule.png" Stretch="None" />SUBMODULES</TextBlock>
                     </StackPanel>
                 </StackPanel>
             </Grid>

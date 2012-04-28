@@ -1,17 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style TargetType="{x:Type GridSplitter}">
+    <Style x:Key="GridSplitterVerticalStyle" TargetType="{x:Type GridSplitter}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
         <Style.Triggers>
-            <!-- Vertical -->
+            <!-- Normal -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="VerticalAlignment" Value="Stretch" />
                     <Condition Property="IsMouseOver" Value="False" />
                 </MultiTrigger.Conditions>
 
                 <Setter Property="Background">
                     <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                             <GradientStop Color="#BFBFBF" Offset="0" />
                             <GradientStop Color="#F7F7F7" Offset="0.5" />
                             <GradientStop Color="#BFBFBF" Offset="1" />
@@ -20,16 +21,15 @@
                 </Setter>
             </MultiTrigger>
 
-            <!-- Vertical hover -->
+            <!-- Hover -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="VerticalAlignment" Value="Stretch" />
                     <Condition Property="IsMouseOver" Value="True" />
                 </MultiTrigger.Conditions>
 
                 <Setter Property="Background">
                     <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                             <GradientStop Color="#9CB6CD" Offset="0" />
                             <GradientStop Color="#E8F4FF" Offset="0.5" />
                             <GradientStop Color="#9CB6CD" Offset="1" />
@@ -37,17 +37,22 @@
                     </Setter.Value>
                 </Setter>
             </MultiTrigger>
+        </Style.Triggers>
+    </Style>
 
-            <!-- Horizontal -->
+    <Style x:Key="GridSplitterHorizontalStyle" TargetType="{x:Type GridSplitter}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Style.Triggers>
+            <!-- Normal -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="HorizontalAlignment" Value="Stretch" />
                     <Condition Property="IsMouseOver" Value="False" />
                 </MultiTrigger.Conditions>
 
                 <Setter Property="Background">
                     <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                             <GradientStop Color="#BFBFBF" Offset="0" />
                             <GradientStop Color="#F7F7F7" Offset="0.5" />
                             <GradientStop Color="#BFBFBF" Offset="1" />
@@ -56,16 +61,15 @@
                 </Setter>
             </MultiTrigger>
 
-            <!-- Horizontal hover -->
+            <!-- Hover -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="HorizontalAlignment" Value="Stretch" />
                     <Condition Property="IsMouseOver" Value="True" />
                 </MultiTrigger.Conditions>
 
                 <Setter Property="Background">
                     <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                             <GradientStop Color="#9CB6CD" Offset="0" />
                             <GradientStop Color="#E8F4FF" Offset="0.5" />
                             <GradientStop Color="#9CB6CD" Offset="1" />
