@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:GG.Converters"
+             xmlns:userControls="clr-namespace:GG.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="343" d:DesignWidth="501">
     <UserControl.Resources>
@@ -19,23 +20,18 @@
                   BorderThickness="1,1,0,1"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
-                  CanUserResizeColumns="True">
+                  CanUserResizeColumns="True"
+                  VirtualizingPanel.IsVirtualizing="True"
+                  VirtualizingPanel.VirtualizationMode="Recycling"
+                  ContextMenu="{DynamicResource StatusGridContextMenu}"
+                  Tag="{Binding DataContext, ElementName=RepositoryTabs}">
+            
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="St">
                     <DataGridTemplateColumn.CellTemplate>
                         <ItemContainerTemplate>
                             <WrapPanel HorizontalAlignment="Center">
-                                <WrapPanel.Effect>
-                                    <DropShadowEffect BlurRadius="3" Color="Black" ShadowDepth="0" Direction="315" />
-                                </WrapPanel.Effect>
-                                <Border BorderThickness="1" CornerRadius="4" Background="{Binding Status, Converter={StaticResource statusToColorConverter}}">
-                                    <Border.BorderBrush>
-                                        <SolidColorBrush>
-                                            <SolidColorBrush.Color>
-                                                <Color A="96" R="0" G="0" B="0" />
-                                            </SolidColorBrush.Color>
-                                        </SolidColorBrush>
-                                    </Border.BorderBrush>
+                                <Border BorderThickness="0" CornerRadius="4" Background="{Binding Status, Converter={StaticResource statusToColorConverter}}">
                                     <TextBlock
                                         Width="16"
                                         VerticalAlignment="Stretch"
@@ -43,7 +39,7 @@
                                         TextAlignment="Center"
                                         Foreground="White"
                                         FontFamily="Arial"
-                                        FontSize="11"
+                                        FontSize="12"
                                         FontWeight="Bold"
                                         TextOptions.TextFormattingMode="Display"
                                         TextOptions.TextRenderingMode="ClearType"
@@ -58,15 +54,20 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <ItemContainerTemplate>
                             <WrapPanel>
-                                <Image Source="{Binding Extension, Converter={StaticResource extensionToImageConverter}}" Stretch="None" Margin="0,0,2,0" />
-                                <TextBlock Text="{Binding Path=Filename}" />
+                                <Image Source="{Binding Extension, Converter={StaticResource extensionToImageConverter}}" Stretch="None" Margin="0,0,3,0" />
+                                <TextBlock Text="{Binding Path=Filename}"
+                                           Foreground="{Binding Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
                             </WrapPanel>
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
-                <DataGridTextColumn Binding="{Binding Path=Size}" Header="Size"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=IsBinary}" Header="Binary"></DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding Path=Size}"
+                                    Header="Size"
+                                    Foreground="{Binding Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
+                <DataGridTextColumn Binding="{Binding Path=IsBinary}"
+                                    Header="Binary"
+                                    Foreground="{Binding Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
             </DataGrid.Columns>
 
             <DataGrid.GroupStyle>

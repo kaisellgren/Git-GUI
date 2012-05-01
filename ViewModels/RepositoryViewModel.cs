@@ -6,10 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
 using GG.Libraries;
 using GG.ViewModels;
-using LibGit2Sharp;
+using GG.Models;
 
 namespace GG
 {
@@ -17,21 +18,47 @@ namespace GG
     {
         public string Name { get; set; }
         public string FullPath { get; set; }
-        public bool NotOpened { get; set; }
+        public bool   NotOpened { get; set; }
 
-        public ObservableCollection<Commit> Commits { get; set; }
+        public ObservableCollection<Commit>     Commits { get; set; }
         public ObservableCollection<StatusItem> StatusItems { get; set; }
-        public ListCollectionView StatusItemsGrouped { get; set; }
+        public ObservableCollection<Branch>     LocalBranches { get; set; }
+        public ObservableCollection<Tag>        Tags { get; set; }
+        public ObservableCollection<Remote>     Remotes { get; set; }
+        public ObservableCollection<Submodule>  Submodules { get; set; }
+        public ObservableCollection<Stash>      Stashes { get; set; }
+        public ListCollectionView               StatusItemsGrouped { get; set; }
 
+        /// <summary>
+        /// The delegate used for reloading the status grid items upon filesystem changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         delegate void ReloadStatusDelegate(object sender, FileSystemEventArgs e);
+
+        public ICommand StageCommand { get; private set; }
 
         public RepositoryViewModel()
         {
-            Commits = new ObservableCollection<Commit> { };
-            StatusItems = new ObservableCollection<StatusItem> { };
+            // Initialize empty collections.
+            Commits       = new ObservableCollection<Commit> { };
+            StatusItems   = new ObservableCollection<StatusItem> { };
+            LocalBranches = new ObservableCollection<Branch> { };
+            Tags          = new ObservableCollection<Tag> { };
+            Remotes       = new ObservableCollection<Remote> { };
+            Submodules    = new ObservableCollection<Submodule> { };
+            Stashes       = new ObservableCollection<Stash> { };
+
             StatusItemsGrouped = new ListCollectionView(StatusItems);
             StatusItemsGrouped.GroupDescriptions.Add(new PropertyGroupDescription("GenericStatus"));
             StatusItemsGrouped.SortDescriptions.Add(new SortDescription("GenericStatus", ListSortDirection.Descending));
+
+            StageCommand = new DelegateCommand(StageExecuted);
+        }
+        
+        private void StageExecuted(object action)
+        {
+            System.Console.WriteLine("yay2");
         }
 
         public void Load()
@@ -40,9 +67,54 @@ namespace GG
             {
                 LoadChangesets();
                 LoadRepositoryStatus();
+                LoadSidebarData();
 
                 ListenToDirectoryChanges();
             }
+        }
+
+        /// <summary>
+        /// Loads branches, tags, remotes, etc. to be displayed on left/side toolbar.
+        /// </summary>
+        private void LoadSidebarData()
+        {
+            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
+
+            // Load local branches.
+            foreach (LibGit2Sharp.Branch branch in repo.Branches)
+            {
+                Branch b = new Branch();
+                b.Name = branch.Name;
+                b.Tip = branch.Tip.Sha;
+                b.IsTracking = branch.IsTracking;
+                b.IsRemote = branch.IsRemote;
+
+                LocalBranches.Add(b);
+            }
+
+            // Load tags.
+            foreach (LibGit2Sharp.Tag tag in repo.Tags)
+            {
+                Tag t = new Tag();
+                t.Name = tag.Name;
+                t.Target = tag.Target.Sha;
+
+                Tags.Add(t);
+            }
+
+            // Load remotes. ONLY IN VERSION.NEXT
+            /*LibGit2Sharp.RemoteCollection rc = repo.Remotes;
+            
+            foreach (LibGit2Sharp.Remote remote in repo.Remotes)
+            {
+                Remote r = new Remote();
+                r.Name = remote.Name;
+
+                Remotes.Add(r);
+            }*/
+
+            // Stashes?
+            // Submodules?
         }
 
         /// <summary>
@@ -72,10 +144,10 @@ namespace GG
             StatusItems.Clear();
 
             // Load status items.
-            RepositoryStatus status = repo.Index.RetrieveStatus();
+            LibGit2Sharp.RepositoryStatus status = repo.Index.RetrieveStatus();
             foreach (LibGit2Sharp.StatusEntry fileStatus in status)
             {
-                foreach (FileStatus value in Enum.GetValues(typeof(FileStatus)))
+                foreach (LibGit2Sharp.FileStatus value in Enum.GetValues(typeof(LibGit2Sharp.FileStatus)))
                 {
                     bool isSet = fileStatus.State.HasFlag(value);
 

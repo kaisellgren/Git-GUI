@@ -131,10 +131,16 @@
     <Compile Include="Converters\ExtensionToImageConverter.cs" />
     <Compile Include="Converters\StatusToCharacterConverter.cs" />
     <Compile Include="Converters\StatusToColorConverter.cs" />
+    <Compile Include="DelegateCommand.cs" />
     <Compile Include="Libraries\DateUtil.cs" />
     <Compile Include="Libraries\FileUtil.cs" />
     <Compile Include="Libraries\IconUtil.cs" />
+    <Compile Include="Models\Branch.cs" />
+    <Compile Include="Models\Remote.cs" />
+    <Compile Include="Models\Stash.cs" />
     <Compile Include="Models\StatusItem.cs" />
+    <Compile Include="Models\Submodule.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="UserControls\CommitPanel.xaml.cs">
       <DependentUpon>CommitPanel.xaml</DependentUpon>
     </Compile>
@@ -163,6 +169,10 @@
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <DesignData Include="DesignData\SampleApplication.xaml" />
+    <Page Include="DesignData\Branches.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -211,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Templates\AppTabNew.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\StatusGridContextMenu.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ChangesetHistory.xaml">

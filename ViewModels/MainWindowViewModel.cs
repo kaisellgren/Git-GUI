@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using GG.ViewModels;
 
 namespace GG
@@ -10,10 +11,19 @@ namespace GG
         public ObservableCollection<RepositoryViewModel> RepositoryViewModels { get; set; }
         public ObservableCollection<RepositoryViewModel> RecentRepositories { get; set; }
 
+        public ICommand StageCommand { get; private set; }
+
         public MainWindowViewModel()
         {
             RepositoryViewModels = new ObservableCollection<RepositoryViewModel> { };
             RecentRepositories = new ObservableCollection<RepositoryViewModel> { };
+
+            StageCommand = new DelegateCommand(StageExecuted);
+        }
+
+        private void StageExecuted(object action)
+        {
+            System.Console.WriteLine("yay!!");
         }
 
         public void Load()
