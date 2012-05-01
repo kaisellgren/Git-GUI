@@ -10,17 +10,17 @@
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-           
-        <Style.Resources>
-            <Style TargetType="{x:Type TextBlock}">
-                <Setter Property="Foreground" Value="#3595c2" />
-                <Setter Property="FontWeight" Value="Bold" />
-                <Setter Property="FontSize" Value="12" />
-                <Setter Property="FontFamily" Value="Segoe UI Semibold" />
-                <Setter Property="Margin" Value="0 0 0 16" />
-                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"></Setter>
-            </Style>
+    </Style>
 
+    <Style x:Key="LeftToolbarTitleStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#3595c2" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="Segoe UI Semibold" />
+        <Setter Property="Margin" Value="0,2,0,2" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"></Setter>
+
+        <Style.Resources>
             <Style TargetType="{x:Type Image}">
                 <Setter Property="Margin" Value="0 0 6 -3" />
             </Style>

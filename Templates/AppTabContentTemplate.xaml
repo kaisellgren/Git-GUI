@@ -16,12 +16,8 @@
                 </Grid.RowDefinitions>
 
                 <DockPanel Grid.Row="0">
-                    <ScrollViewer Name="MainAreaScrollViewer" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
-                        <DockPanel>
-                            <controls:LeftToolbar DockPanel.Dock="Left" VerticalAlignment="Stretch" />
-                            <controls:ChangesetHistory DockPanel.Dock="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                        </DockPanel>
-                    </ScrollViewer>
+                    <controls:LeftToolbar DockPanel.Dock="Left" VerticalAlignment="Stretch" />
+                    <controls:ChangesetHistory DockPanel.Dock="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 </DockPanel>
                 
                 <GridSplitter Grid.Row="1" Style="{DynamicResource GridSplitterVerticalStyle}" />
