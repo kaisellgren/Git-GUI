@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GG.Libraries;
 
-namespace GG
+namespace GG.Models
 {
     public class StatusItem
     {
@@ -15,6 +15,9 @@ namespace GG
         public string Size { set; get; }
         public string IsBinary { set; get; }
 
+        /// <summary>
+        /// Returns the generic status (i.e. either "Staged" or "Unstaged").
+        /// </summary>
         public string GenericStatus
         {
             get
@@ -48,12 +51,7 @@ namespace GG
 
         public bool IsIgnored()
         {
-            if ((Status & LibGit2Sharp.FileStatus.Ignored) == LibGit2Sharp.FileStatus.Ignored)
-            {
-                return true;
-            }
-
-            return false;
+            return (Status & LibGit2Sharp.FileStatus.Ignored) == LibGit2Sharp.FileStatus.Ignored;
         }
     }
 }

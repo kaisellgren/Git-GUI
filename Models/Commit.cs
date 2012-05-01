@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GG.Libraries;
 
-namespace GG
+namespace GG.Models
 {
     public class Commit
     {
