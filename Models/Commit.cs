@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GG.Libraries;
+using System.Linq;
 
 namespace GG.Models
 {
     public class Commit
     {
-        public string       AuthorEmail { set; get; }
-        public string       AuthorName  { set; get; }
-        public DateTime     Date        { set; get; }
-        public string       Description { set; get; }
-        public List<String> DisplayTags { get; set; }
-        public List<String> Tags        { get; set; }
-        public string       Hash        { set; get; }
-        public string       Source      { get; set; }
+        public string       AuthorEmail  { set; get; }
+        public string       AuthorName   { set; get; }
+        public DateTime     Date         { set; get; }
+        public string       Description  { set; get; }
+        public List<String> DisplayTags  { get; set; }
+        public List<String> Tags         { get; set; }
+        public string       Hash         { set; get; }
+        public string       Source       { get; set; }
+        public List<String> ParentHashes { get; set; }
 
         /// <summary>
         /// Returns the date of this changeset in relative format.
@@ -79,6 +80,13 @@ namespace GG.Models
                 }
             }
 
+            // Process ParentHashes.
+            List<String> parentHashes = new List<String>();
+            foreach (LibGit2Sharp.Commit parentCommit in commit.Parents)
+            {
+                parentHashes.Add(parentCommit.Sha.ToString());
+            }
+
             // Create new commit model.
             Commit c = new Commit();
 
@@ -87,50 +95,13 @@ namespace GG.Models
             c.Date = commit.Author.When.DateTime;
             c.Description = commit.MessageShort;
             c.Hash = commit.Sha;
-            c.Source = ListBranchesContaininingCommit(repo, commit.Sha).ElementAt(0).ToString();
+            c.ParentHashes = parentHashes;
+            c.Source = RepoUtil.ListBranchesContaininingCommit(repo, commit.Sha).ElementAt(0).ToString();
             c.Source = c.Source.Replace("refs/heads/", "").Replace("refs/remotes/", "");
             c.DisplayTags = displayTags;
             c.Tags = tags;
 
             return c;
-        }
-
-        /// <summary>
-        /// A helper method for listing branches that contain the given commit.
-        /// </summary>
-        /// <param name="repo"></param>
-        /// <param name="commitSha"></param>
-        /// <returns></returns>
-        private static IEnumerable<LibGit2Sharp.Branch> ListBranchesContaininingCommit(LibGit2Sharp.Repository repo, string commitSha)
-        {
-            bool directBranchHasBeenFound = false;
-            foreach (var branch in repo.Branches)
-            {
-                if (branch.Tip.Sha != commitSha)
-                {
-                    continue;
-                }
-
-                directBranchHasBeenFound = true;
-                yield return branch;
-            }
-
-            if (directBranchHasBeenFound)
-            {
-                yield break;
-            }
-
-            foreach (var branch in repo.Branches)
-            {
-                var commits = repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = branch }).Where(c => c.Sha == commitSha);
-
-                if (commits.Count() == 0)
-                {
-                    continue;
-                }
-
-                yield return branch;
-            }
         }
     }
 }

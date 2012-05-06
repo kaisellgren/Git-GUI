@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using GG.Libraries;
 using GG.ViewModels;
 using GG.Models;
+using System.Windows.Controls;
 
 namespace GG
 {
@@ -36,7 +37,7 @@ namespace GG
         /// <param name="e"></param>
         delegate void ReloadStatusDelegate(object sender, FileSystemEventArgs e);
 
-        public ICommand StageCommand { get; private set; }
+        public DelegateCommand StageUnstageCommand { get; private set; } // TODO
 
         public RepositoryViewModel()
         {
@@ -53,12 +54,21 @@ namespace GG
             StatusItemsGrouped.GroupDescriptions.Add(new PropertyGroupDescription("GenericStatus"));
             StatusItemsGrouped.SortDescriptions.Add(new SortDescription("GenericStatus", ListSortDirection.Descending));
 
-            StageCommand = new DelegateCommand(StageExecuted);
+            StageUnstageCommand = new DelegateCommand(StageUnstageExecuted); // TODO
         }
-        
-        private void StageExecuted(object action)
+
+        // TODO
+        private void StageUnstageExecuted(object action)
         {
-            System.Console.WriteLine("yay2");
+            DataGrid statusGrid = UIHelper.FindChild<DataGrid>(Application.Current.MainWindow, "StatusGridElement");
+            StatusItem item = statusGrid.SelectedItem as StatusItem;
+
+            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
+
+            if (item.GenericStatus == "Staged")
+                repo.Index.Unstage(FullPath + "/" + item.Filename);
+            else
+                repo.Index.Stage(FullPath + "/" + item.Filename);
         }
 
         public void Load()
@@ -125,7 +135,7 @@ namespace GG
             LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
 
             // Load commits.
-            foreach (LibGit2Sharp.Commit commit in repo.Commits)
+            foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }))
             {
                 Commits.Add(Commit.Create(repo, commit));
             }
@@ -191,6 +201,7 @@ namespace GG
             watcher.Changed += new FileSystemEventHandler(reloadStatusDelegate);
             watcher.Deleted += new FileSystemEventHandler(reloadStatusDelegate);
             watcher.Renamed += new RenamedEventHandler(reloadStatusDelegate);
+            watcher.Created += new FileSystemEventHandler(reloadStatusDelegate);
             watcher.Path = FullPath;
             watcher.EnableRaisingEvents = true;
         }

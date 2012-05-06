@@ -11,25 +11,16 @@ namespace GG
         public ObservableCollection<RepositoryViewModel> RepositoryViewModels { get; set; }
         public ObservableCollection<RepositoryViewModel> RecentRepositories { get; set; }
 
-        public ICommand StageCommand { get; private set; }
-
         public MainWindowViewModel()
         {
             RepositoryViewModels = new ObservableCollection<RepositoryViewModel> { };
             RecentRepositories = new ObservableCollection<RepositoryViewModel> { };
-
-            StageCommand = new DelegateCommand(StageExecuted);
-        }
-
-        private void StageExecuted(object action)
-        {
-            System.Console.WriteLine("yay!!");
         }
 
         public void Load()
         {
             // Add some test repositories.
-            RepositoryViewModel repo = new RepositoryViewModel { Name = "Git test repository", FullPath = "Z:/www/git2" };
+            RepositoryViewModel repo = new RepositoryViewModel { Name = "Git test repository", FullPath = "Z:/www/test-repo" };
             repo.Load();
 
             RepositoryViewModel repo2 = new RepositoryViewModel { Name = "New tab", FullPath = null, NotOpened = true };

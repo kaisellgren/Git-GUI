@@ -150,6 +150,7 @@
     <Style TargetType="{x:Type DataGridCell}">
         <Setter Property="BorderBrush" Value="#dddddd" />
         <Setter Property="Padding" Value="2" />
+        <Setter Property="Height" Value="24" />
         <Setter Property="BorderThickness" Value="0,0,1,1" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
