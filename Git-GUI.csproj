@@ -128,6 +128,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppTabDataTemplateSelector.cs" />
+    <Compile Include="Components\StatusGridContextMenu.xaml.cs">
+      <DependentUpon>StatusGridContextMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\ExtensionToImageConverter.cs" />
     <Compile Include="Converters\StatusToCharacterConverter.cs" />
     <Compile Include="Converters\StatusToColorConverter.cs" />
@@ -135,6 +138,8 @@
     <Compile Include="Libraries\DateUtil.cs" />
     <Compile Include="Libraries\FileUtil.cs" />
     <Compile Include="Libraries\IconUtil.cs" />
+    <Compile Include="Libraries\RepoUtil.cs" />
+    <Compile Include="Libraries\UIHelper.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Remote.cs" />
     <Compile Include="Models\Stash.cs" />

@@ -24,7 +24,12 @@
                   VirtualizingPanel.IsVirtualizing="True"
                   VirtualizingPanel.VirtualizationMode="Recycling"
                   ContextMenu="{DynamicResource StatusGridContextMenu}"
-                  Tag="{Binding DataContext, ElementName=RepositoryTabs}">
+                  Tag="{Binding}"
+                  x:Name="StatusGridElement">
+            <DataGrid.InputBindings>
+                <KeyBinding Command="{Binding StageUnstageCommand}" Gesture="Enter" />
+                <KeyBinding Command="{Binding StageUnstageCommand}" Gesture="Delete" />
+            </DataGrid.InputBindings>
             
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="St">
