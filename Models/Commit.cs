@@ -17,7 +17,9 @@ namespace GG.Models
         public List<String> Tags         { get; set; }
         public string       Hash         { set; get; }
         public string       Source       { get; set; }
+        public List<String> Sources      { get; set; }
         public List<String> ParentHashes { get; set; }
+        public UInt32       ParentCount { get; set; }
 
         /// <summary>
         /// Returns the date of this changeset in relative format.
@@ -50,6 +52,15 @@ namespace GG.Models
             {
                 return AuthorName + " <" + AuthorEmail + ">";
             }
+        }
+
+        /// <summary>
+        /// Returns whether this is a merge commit.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsMergeCommit()
+        {
+            return ParentCount > 1;
         }
 
         /// <summary>
@@ -87,6 +98,13 @@ namespace GG.Models
                 parentHashes.Add(parentCommit.Sha.ToString());
             }
 
+            // Process Sources.
+            List<String> sources = new List<String>();
+            foreach (LibGit2Sharp.Branch branch in RepoUtil.ListBranchesContaininingCommit(repo, commit.Sha))
+            {
+                sources.Add(branch.ToString().Replace("refs/heads/", "").Replace("refs/remotes/", ""));
+            }
+
             // Create new commit model.
             Commit c = new Commit();
 
@@ -96,8 +114,9 @@ namespace GG.Models
             c.Description = commit.MessageShort;
             c.Hash = commit.Sha;
             c.ParentHashes = parentHashes;
-            c.Source = RepoUtil.ListBranchesContaininingCommit(repo, commit.Sha).ElementAt(0).ToString();
-            c.Source = c.Source.Replace("refs/heads/", "").Replace("refs/remotes/", "");
+            c.ParentCount = commit.ParentsCount;
+            c.Source = String.Join(", ", sources.ToArray());
+            c.Sources = sources;
             c.DisplayTags = displayTags;
             c.Tags = tags;
 

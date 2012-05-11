@@ -137,6 +137,7 @@
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="Libraries\DateUtil.cs" />
     <Compile Include="Libraries\FileUtil.cs" />
+    <Compile Include="Libraries\GenericUtil.cs" />
     <Compile Include="Libraries\IconUtil.cs" />
     <Compile Include="Libraries\RepoUtil.cs" />
     <Compile Include="Libraries\UIHelper.cs" />
