@@ -76,7 +76,7 @@ namespace GG
             if (NotOpened == false)
             {
                 LoadChangesets();
-                LoadRepositoryStatus();
+                //LoadRepositoryStatus();
                 LoadSidebarData();
 
                 ListenToDirectoryChanges();
@@ -135,7 +135,7 @@ namespace GG
             LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
 
             // Load commits.
-            foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }))
+            foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }).Take(100))
             {
                 Commits.Add(Commit.Create(repo, commit));
             }

@@ -1,6 +1,8 @@
 #Custom
 *.dll
 *.pdb
+*.psess
+*.vsp
 
 #OS junk files
 [Tt]humbs.db
