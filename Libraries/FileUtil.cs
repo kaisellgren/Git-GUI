@@ -10,7 +10,7 @@ namespace GG.Libraries
         /// </summary>
         /// <param name="fileFullPath"></param>
         /// <returns></returns>
-        public static String GetFormattedFileSize(String fileFullPath)
+        public static string GetFormattedFileSize(string fileFullPath)
         {
             if (!File.Exists(fileFullPath))
                 return "--";
@@ -26,7 +26,7 @@ namespace GG.Libraries
                 bytes = bytes / 1024;
             }
 
-            return String.Format("{0:0.##} {1}", bytes, suffixes[order]);
+            return string.Format("{0:0.##} {1}", bytes, suffixes[order]);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace GG.Libraries
         /// </summary>
         /// <param name="fileFullPath"></param>
         /// <returns></returns>
-        public static bool IsBinaryFile(String fileFullPath)
+        public static bool IsBinaryFile(string fileFullPath)
         {
             if (!File.Exists(fileFullPath))
                 return false;

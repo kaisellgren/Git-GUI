@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GG.Libraries;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace GG.Models
 {
@@ -13,13 +14,15 @@ namespace GG.Models
         public string       AuthorName   { set; get; }
         public DateTime     Date         { set; get; }
         public string       Description  { set; get; }
-        public List<String> DisplayTags  { get; set; }
-        public List<String> Tags         { get; set; }
+        public List<string> DisplayTags  { get; set; }
+        public List<string> Tags         { get; set; }
         public string       Hash         { set; get; }
-        public string       Source       { get; set; }
-        public List<String> Sources      { get; set; }
-        public List<String> ParentHashes { get; set; }
-        public UInt32       ParentCount { get; set; }
+        public List<Branch> Branches     { get; set; }
+        public List<Branch> BranchesAround { get; set; }
+        public List<string> ParentHashes { get; set; }
+        public uint         ParentCount  { get; set; }
+        public List<Commit> Parents      { get; set; }
+        public List<Commit> Siblings     { get; set; }
 
         /// <summary>
         /// Returns the date of this changeset in relative format.
@@ -69,58 +72,93 @@ namespace GG.Models
         /// <param name="repo"></param>
         /// <param name="commit"></param>
         /// <returns></returns>
-        public static Commit Create(LibGit2Sharp.Repository repo, LibGit2Sharp.Commit commit)
+        public static Commit Create(LibGit2Sharp.Repository repo,
+                                    LibGit2Sharp.Commit commit,
+                                    ObservableCollection<Branch> branches,
+                                    ObservableCollection<Tag> tags)
         {
+            Commit c = new Commit();
+
             // Process DisplayTags (tags to display next to the commit description).
-            List<String> displayTags = new List<String>();
-            foreach (LibGit2Sharp.Branch branch in repo.Branches)
+            List<string> displayTags = new List<string>();
+            foreach (Branch branch in branches)
             {
-                if (branch.Tip.Sha == commit.Sha)
+                if (branch.TipHash == commit.Sha.ToString())
                 {
                     displayTags.Add(branch.Name);
+                    branch.Tip = c;
                 }
             }
 
             // Process Tags (Git tags to display next to the commit description).
-            List<String> tags = new List<String>();
-            foreach (LibGit2Sharp.Tag tag in repo.Tags)
+            List<string> commitTags = new List<string>();
+            foreach (Tag tag in tags)
             {
-                if (tag.Target.Sha == commit.Sha)
+                if (tag.TargetSha == commit.Sha.ToString())
                 {
-                    tags.Add(tag.Name);
+                    commitTags.Add(tag.Name);
+                    tag.Target = c;
                 }
             }
 
             // Process ParentHashes.
-            List<String> parentHashes = new List<String>();
+            List<string> parentHashes = new List<string>();
             foreach (LibGit2Sharp.Commit parentCommit in commit.Parents)
             {
                 parentHashes.Add(parentCommit.Sha.ToString());
             }
 
-            // Process Sources.
-            List<String> sources = new List<String>();
-            foreach (LibGit2Sharp.Branch branch in RepoUtil.ListBranchesContaininingCommit(repo, commit.Sha))
+            // Process branches.
+            List<Branch> commitBranches = new List<Branch>();
+            foreach (LibGit2Sharp.Branch branch in RepoUtil.GetBranchesContaininingCommit(repo, commit.Sha))
             {
-                sources.Add(branch.ToString().Replace("refs/heads/", "").Replace("refs/remotes/", ""));
+                Branch commitBranch = branches.Where(b => b.Name == branch.Name).FirstOrDefault();
+
+                if (commitBranch != null)
+                    commitBranches.Add(commitBranch);
             }
 
-            // Create new commit model.
-            Commit c = new Commit();
-
-            c.AuthorEmail = commit.Author.Email;
-            c.AuthorName = commit.Author.Name;
-            c.Date = commit.Author.When.DateTime;
-            c.Description = commit.MessageShort;
-            c.Hash = commit.Sha;
+            // Set properties.
+            c.AuthorEmail  = commit.Author.Email;
+            c.AuthorName   = commit.Author.Name;
+            c.Branches     = commitBranches;
+            c.Date         = commit.Author.When.DateTime;
+            c.Description  = commit.MessageShort;
+            c.DisplayTags  = displayTags;
+            c.Tags         = commitTags;
+            c.Hash         = commit.Sha.ToString();
             c.ParentHashes = parentHashes;
-            c.ParentCount = commit.ParentsCount;
-            c.Source = String.Join(", ", sources.ToArray());
-            c.Sources = sources;
-            c.DisplayTags = displayTags;
-            c.Tags = tags;
+            c.ParentCount  = commit.ParentsCount;
+            c.Parents      = new List<Commit>();
 
             return c;
+        }
+
+        /// <summary>
+        /// Post-processes the commit. This means that we set up the parent object relationship.
+        /// </summary>
+        /// <param name="Commits"></param>
+        public void PostProcess(ObservableCollection<Commit> commits, ObservableCollection<Branch> branches)
+        {
+            // Set Parents.
+            if (ParentCount > 0)
+            {
+                foreach (string hash in ParentHashes)
+                {
+                    Commit parentCommit = commits.Where(c => c.Hash == hash).FirstOrDefault();
+
+                    if (parentCommit != null)
+                        Parents.Add(parentCommit);
+                }
+            }
+
+            // Set Siblings.
+            Siblings = RepoUtil.GetCommitSiblings(this, commits);
+
+            // SiblingTreeCount ?
+
+            // Set BranchesAround.
+            BranchesAround = RepoUtil.GetBranchesAroundCommit(this, branches);
         }
     }
 }

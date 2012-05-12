@@ -36,7 +36,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <ItemContainerTemplate>
                             <WrapPanel HorizontalAlignment="Center">
-                                <Border BorderThickness="0" CornerRadius="4" Background="{Binding Status, Converter={StaticResource statusToColorConverter}}">
+                                <Border BorderThickness="0" CornerRadius="4" Background="{Binding Path=Status, Converter={StaticResource statusToColorConverter}}">
                                     <TextBlock
                                         Width="16"
                                         VerticalAlignment="Stretch"
@@ -61,7 +61,7 @@
                             <WrapPanel>
                                 <Image Source="{Binding Extension, Converter={StaticResource extensionToImageConverter}}" Stretch="None" Margin="0,0,3,0" />
                                 <TextBlock Text="{Binding Path=Filename}"
-                                           Foreground="{Binding Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
+                                           Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
                             </WrapPanel>
                         </ItemContainerTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -69,10 +69,10 @@
 
                 <DataGridTextColumn Binding="{Binding Path=Size}"
                                     Header="Size"
-                                    Foreground="{Binding Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
+                                    Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
                 <DataGridTextColumn Binding="{Binding Path=IsBinary}"
                                     Header="Binary"
-                                    Foreground="{Binding Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
+                                    Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
             </DataGrid.Columns>
 
             <DataGrid.GroupStyle>

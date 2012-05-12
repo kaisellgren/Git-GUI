@@ -10,7 +10,7 @@ namespace GG
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            String templateName;
+            string templateName;
 
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {

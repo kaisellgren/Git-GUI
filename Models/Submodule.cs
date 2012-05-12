@@ -4,8 +4,8 @@ namespace GG.Models
 {
     public class Submodule
     {
-        public String Name { get; set; }
-        public String Path { get; set; }
-        public String Url { get; set; }
+        public string Name { get; set; }
+        public string Path { get; set; }
+        public string Url { get; set; }
     }
 }

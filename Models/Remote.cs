@@ -4,7 +4,7 @@ namespace GG.Models
 {
     public class Remote
     {
-        public String Name { get; set; }
-        public String Tip { get; set; }
+        public string Name { get; set; }
+        public string Tip { get; set; }
     }
 }

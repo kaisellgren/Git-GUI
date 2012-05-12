@@ -26,7 +26,7 @@
                 </DataGridTemplateColumn>
                 
                 <DataGridTextColumn Binding="{Binding Path=HashShort}" Header="Hash"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=Source}" Header="Source"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=Branches}" Header="Branches"></DataGridTextColumn>
                 
                 <DataGridTemplateColumn Header="Description" Width="*">
                     <DataGridTemplateColumn.CellTemplate>

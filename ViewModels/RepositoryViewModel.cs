@@ -24,6 +24,7 @@ namespace GG
         public ObservableCollection<Commit>     Commits { get; set; }
         public ObservableCollection<StatusItem> StatusItems { get; set; }
         public ObservableCollection<Branch>     LocalBranches { get; set; }
+        public ObservableCollection<Branch>     Branches { get; set; }
         public ObservableCollection<Tag>        Tags { get; set; }
         public ObservableCollection<Remote>     Remotes { get; set; }
         public ObservableCollection<Submodule>  Submodules { get; set; }
@@ -45,6 +46,7 @@ namespace GG
             Commits       = new ObservableCollection<Commit> { };
             StatusItems   = new ObservableCollection<StatusItem> { };
             LocalBranches = new ObservableCollection<Branch> { };
+            Branches      = new ObservableCollection<Branch> { };
             Tags          = new ObservableCollection<Tag> { };
             Remotes       = new ObservableCollection<Remote> { };
             Submodules    = new ObservableCollection<Submodule> { };
@@ -75,72 +77,62 @@ namespace GG
         {
             if (NotOpened == false)
             {
-                LoadChangesets();
-                //LoadRepositoryStatus();
-                LoadSidebarData();
+                Console.WriteLine("Loading and constructing repository data for \"" + FullPath + "\".");
 
-                ListenToDirectoryChanges();
+                ConstructRepository();
+                //LoadChangesets();
+                //LoadRepositoryStatus();
+                //LoadSidebarData();
+
+                //ListenToDirectoryChanges();
             }
         }
 
         /// <summary>
-        /// Loads branches, tags, remotes, etc. to be displayed on left/side toolbar.
+        /// Loads and constructs the entire repository.
+        /// 
+        /// This will limit the amount of changesets to 100 / n.
         /// </summary>
-        private void LoadSidebarData()
+        private void ConstructRepository()
         {
+            Console.WriteLine("Constructs repository \"" + FullPath + "\".");
+
             LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
 
-            // Load local branches.
+            // Create branches.
             foreach (LibGit2Sharp.Branch branch in repo.Branches)
             {
-                Branch b = new Branch();
-                b.Name = branch.Name;
-                b.Tip = branch.Tip.Sha;
-                b.IsTracking = branch.IsTracking;
-                b.IsRemote = branch.IsRemote;
-
-                LocalBranches.Add(b);
+                Branch b = Branch.Create(repo, branch);
+                Branches.Add(b);
             }
 
-            // Load tags.
+            // Create tags.
             foreach (LibGit2Sharp.Tag tag in repo.Tags)
             {
-                Tag t = new Tag();
-                t.Name = tag.Name;
-                t.Target = tag.Target.Sha;
+                Tag t = Tag.Create(repo, tag);
 
-                Tags.Add(t);
+                if (t.HasCommitAsTarget)
+                    Tags.Add(t);
             }
 
-            // Load remotes. ONLY IN VERSION.NEXT
-            /*LibGit2Sharp.RemoteCollection rc = repo.Remotes;
-            
-            foreach (LibGit2Sharp.Remote remote in repo.Remotes)
-            {
-                Remote r = new Remote();
-                r.Name = remote.Name;
-
-                Remotes.Add(r);
-            }*/
-
-            // Stashes?
-            // Submodules?
-        }
-
-        /// <summary>
-        /// Loads changesets/commits.
-        /// </summary>
-        private void LoadChangesets()
-        {
-            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
-
-            // Load commits.
+            // Create commits.
             foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }).Take(100))
             {
-                Commits.Add(Commit.Create(repo, commit));
+                Commits.Add(Commit.Create(repo, commit, Branches, Tags));
             }
 
-            // Dispose.
+            // Post-process commits (commit parents).
+            foreach (Commit commit in Commits)
+            {
+                commit.PostProcess(Commits, Branches);
+            }
+
+            // Post-process branches (tips and tracking branches).
+            foreach (Branch branch in Branches)
+            {
+                branch.PostProcess(Branches, Commits);
+            }
+
             repo.Dispose();
         }
 
@@ -149,6 +141,8 @@ namespace GG
         /// </summary>
         private void LoadRepositoryStatus()
         {
+            Console.WriteLine("Loading status data for \"" + FullPath + "\".");
+
             LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
 
             StatusItems.Clear();
@@ -164,14 +158,16 @@ namespace GG
                     if (isSet == false || value.ToString() == "Unaltered" || value.ToString() == "Ignored")
                         continue;
 
-                    String fileFullPath = FullPath + "/" + fileStatus.FilePath;
+                    string fileFullPath = FullPath + "/" + fileStatus.FilePath;
 
                     // Only those enum statuses that were set will generate a row in the status grid (and those that are not ignored/unaltered).
-                    StatusItem item = new StatusItem();
-                    item.Filename = fileStatus.FilePath;
-                    item.Status = value;
-                    item.Size = FileUtil.GetFormattedFileSize(fileFullPath);
-                    item.IsBinary = FileUtil.IsBinaryFile(fileFullPath) ? "Yes" : "-";
+                    StatusItem item = new StatusItem
+                    {
+                        Filename = fileStatus.FilePath,
+                        Status = value,
+                        Size = FileUtil.GetFormattedFileSize(fileFullPath),
+                        IsBinary = FileUtil.IsBinaryFile(fileFullPath) ? "Yes" : "-"
+                    };
 
                     StatusItems.Add(item);
                 }

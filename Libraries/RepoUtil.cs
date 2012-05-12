@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using GG.Models;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace GG.Libraries
 {
@@ -14,35 +15,25 @@ namespace GG.Libraries
         /// <param name="commit"></param>
         /// <param name="repo"></param>
         /// <returns></returns>
-        public static List<String> GetBranchesAroundCommit(Commit commit, LibGit2Sharp.Repository repo)
+        public static List<Branch> GetBranchesAroundCommit(Commit commit, ObservableCollection<Branch> branches)
         {
-            List<String> list = new List<String>();
+            List<Branch> list = new List<Branch>();
 
             // Loop through all branches and determine if they are around the specified commit.
-            foreach (LibGit2Sharp.Branch branch in repo.Branches)
+            foreach (Branch branch in branches)
             {
                 // The branch's tip must be newer/same than the commit.
-                if (branch.Tip.Author.When >= commit.Date)
+                if (branch.Tip.Date >= commit.Date) // TODO: && first commit-ever must be older? We might not need to do that... ... ?
                 {
-                    list.Add(branch.Name.ToString());
+                    list.Add(branch);
                 }
                 else
                 {
-                    // None of the branches in this commit should exist in any of those branches containing the tip commit or else it's "around".
-                    LibGit2Sharp.Branch targetBranch = RepoUtil.ListBranchesContaininingCommit(repo, commit.Hash).ElementAt(0);
-
-                    bool foundThisBranch = false;
-                    foreach (LibGit2Sharp.Branch b in RepoUtil.ListBranchesContaininingCommit(repo, branch.Tip.Sha))
-                    {
-                        if (targetBranch.CanonicalName == b.CanonicalName)
-                        {
-                            foundThisBranch = true;
-                            break;
-                        }
-                    }
+                    // If there's a branch with a tip commit older than commit.Date, then it's around this commit if they don't share a single branch.
+                    bool foundThisBranch = branch.Tip.Branches.Any(b => commit.Branches.Contains(b));
 
                     if (foundThisBranch == false)
-                        list.Add(branch.Name.ToString());
+                        list.Add(branch);
                 }
             }
 
@@ -55,19 +46,22 @@ namespace GG.Libraries
         /// <param name="commit"></param>
         /// <param name="repo"></param>
         /// <returns></returns>
-        public static List<String> GetCommitSiblings(Commit commit, LibGit2Sharp.Repository repo)
+        public static List<Commit> GetCommitSiblings(Commit commit, ObservableCollection<Commit> commits)
         {
-            List<String> commits = new List<String>();
+            List<Commit> siblings = new List<Commit>();
 
+            return siblings;
+
+            /*
             // If there 
             if (commit.ParentCount == 0)
-                return commits;
+                return siblings;
 
             // Find one of the branches this commit belongs to.
-            IEnumerable<LibGit2Sharp.Branch> myBranches = RepoUtil.ListBranchesContaininingCommit(repo, commit.Hash);
+            IEnumerable<LibGit2Sharp.Branch> myBranches = RepoUtil.GetBranchesContaininingCommit(repo, commit.Hash);
 
             // Loop through commits of this branch.
-            foreach (String hash in commit.ParentHashes)
+            foreach (string hash in commit.ParentHashes)
             {
                 IEnumerable<LibGit2Sharp.Commit> commitsSharingParent = repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs })
                                                                                                 .Where(c => c.Parents.Any(o => o.Sha.ToString() == hash));
@@ -75,12 +69,13 @@ namespace GG.Libraries
                 foreach (LibGit2Sharp.Commit c in commitsSharingParent)
                 {
                     // Make sure that the siblings share at least one branch. If they don't they are not considered siblings.
-                    if (myBranches.Any(o => RepoUtil.ListBranchesContaininingCommit(repo, c.Sha.ToString()).Contains(o)))
+                    if (myBranches.Any(o => RepoUtil.GetBranchesContaininingCommit(repo, c.Sha.ToString()).Contains(o)))
                         commits.Add(c.Sha.ToString());
                 }
             }
 
             return commits;
+            */
         }
 
         /// <summary>
@@ -89,7 +84,7 @@ namespace GG.Libraries
         /// <param name="repo"></param>
         /// <param name="commitSha"></param>
         /// <returns></returns>
-        public static IEnumerable<LibGit2Sharp.Branch> ListBranchesContaininingCommit(LibGit2Sharp.Repository repo, string commitSha)
+        public static IEnumerable<LibGit2Sharp.Branch> GetBranchesContaininingCommit(LibGit2Sharp.Repository repo, string commitSha)
         {
             bool directBranchHasBeenFound = false;
             foreach (var branch in repo.Branches)

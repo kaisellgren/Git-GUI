@@ -135,6 +135,7 @@
     <Compile Include="Converters\StatusToCharacterConverter.cs" />
     <Compile Include="Converters\StatusToColorConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="Libraries\ChangesetGraph.cs" />
     <Compile Include="Libraries\DateUtil.cs" />
     <Compile Include="Libraries\FileUtil.cs" />
     <Compile Include="Libraries\GenericUtil.cs" />

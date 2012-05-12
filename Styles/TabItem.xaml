@@ -9,7 +9,7 @@
                                 <TextBlock x:Name="TabItemText" FontSize="12" Foreground="#444" FontWeight="SemiBold" TextOptions.TextFormattingMode="Display" Padding="16 6 12 6" RenderOptions.ClearTypeHint="Enabled" TextOptions.TextRenderingMode="ClearType" SnapsToDevicePixels="True" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
                                         <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
                                 </TextBlock>
-                                <Button Command="{Binding CloseCommand}" Background="{x:Null}" BorderBrush="{x:Null}">
+                                <Button Background="{x:Null}" BorderBrush="{x:Null}">
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">
                                             <ContentPresenter Content="{TemplateBinding Content}"/>
@@ -26,28 +26,6 @@
                                     <VisualTransition GeneratedDuration="0:0:0.3" />
                                 </VisualStateGroup.Transitions>
                             </VisualStateGroup>
-
-                            <!--<VisualStateGroup x:Name="CommonStates">
-                                <VisualStateGroup>
-                                    <VisualStateGroup.States>
-                                        <VisualState x:Name="MouseOver" />
-                                        <VisualState x:Name="Selected" />
-                                    </VisualStateGroup.States>
-
-                                    <Storyboard>
-                                        <ColorAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Background.GradientStops[0].Color" Storyboard.TargetName="Border">
-                                            <ColorAnimation.To>
-                                                <Color A="192" R="255" G="255" B="255" />
-                                            </ColorAnimation.To>
-                                        </ColorAnimation>
-                                        <ColorAnimation Duration="0:0:0.3" Storyboard.TargetProperty="Background.GradientStops[1].Color" Storyboard.TargetName="Border">
-                                            <ColorAnimation.To>
-                                                <Color A="192" R="233" G="233" B="233" />
-                                            </ColorAnimation.To>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </VisualStateGroup>
-                            </VisualStateGroup>-->
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
                     

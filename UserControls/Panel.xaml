@@ -28,7 +28,7 @@
                 </DockPanel>
                 <Grid>
                     <StackPanel Margin="4">
-                        <TextBox ToolTip="Enter your commit message." Height="48"></TextBox>
+                        <TextBox ToolTip="Enter your commit message." Height="64">WWWWWWWWWWWWWWWWWWW</TextBox>
                     </StackPanel>
                 </Grid>
             </StackPanel>
