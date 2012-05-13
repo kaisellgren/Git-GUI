@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="387" d:DesignWidth="493">
     <DockPanel>
+        <!-- TODO: Panel should be a reusable component... I've only made the title to be reusable, the rest is hard-coded as Commit Panel stuff in Panel XAML... move it in here...  -->
         <controls:Panel HeaderText="Parent: (b4ab9102) Modified configuration files.">
             
         </controls:Panel>
