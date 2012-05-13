@@ -34,7 +34,7 @@ namespace GG.Models
         /// <param name="repo"></param>
         /// <param name="branch"></param>
         /// <returns></returns>
-        public static Branch Create(LibGit2Sharp.Repository repo, LibGit2Sharp.Branch branch)
+        public static Branch Create(LibGit2Sharp.Repository repo, LibGit2Sharp.Branch branch, ObservableCollection<Commit> commits, int commitsPerPage)
         {
             Branch newBranch = new Branch
             {
@@ -47,6 +47,24 @@ namespace GG.Models
                 BehindBy = branch.BehindBy,
                 TrackedBranchName = branch.TrackedBranch != null ? branch.TrackedBranch.Name : null
             };
+
+            // Loop through the first N commits and let them know about me.
+            foreach (LibGit2Sharp.Commit branchCommit in branch.Commits.Take(commitsPerPage))
+            {
+                Commit commit = commits.Where(c => c.Hash == branchCommit.Sha.ToString()).FirstOrDefault();
+
+                if (commit != null)
+                {
+                    commit.Branches.Add(newBranch); // Let the commit know that I am one of her branches.
+
+                    // Process commit DisplayTags (tags to display next to the commit description, in this case = branch Tips).
+                    if (newBranch.TipHash == commit.Hash)
+                    {
+                        commit.DisplayTags.Add(branch.Name);
+                        newBranch.Tip = commit;
+                    }
+                }
+            }
 
             return newBranch;
         }
@@ -61,7 +79,7 @@ namespace GG.Models
             TrackedBranch = branches.Where(b => b.Name == TrackedBranchName).FirstOrDefault();
             
             // Set the Tip to be an actual Commit model.
-            Tip = commits.Where(c => c.Hash == TipHash).First();
+            Tip = commits.Where(c => c.Hash == TipHash).FirstOrDefault();
         }
     }
 }

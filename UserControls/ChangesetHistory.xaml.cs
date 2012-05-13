@@ -27,7 +27,7 @@ namespace GG.UserControls
         /// <param name="e"></param>
         private void OnDataContextChanged(object sender, RoutedEventArgs e)
         {
-            ChangesetGraph graph = new ChangesetGraph((RepositoryViewModel) DataContext, Graph);
+            ChangesetGraph graph = new ChangesetGraph((RepositoryViewModel) DataContext, UIHelper.FindChild<Canvas>(this, "Graph"));
             graph.Draw(ChangesetHistoryGrid.Items);
         }
     }

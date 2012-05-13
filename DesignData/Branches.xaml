@@ -1,10 +1,10 @@
 ﻿<local:RepositoryViewModel xmlns:local="clr-namespace:GG"
                            xmlns:models="clr-namespace:GG.Models"
                            xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <local:RepositoryViewModel.LocalBranches>
+    <local:RepositoryViewModel.Branches>
         <models:Branch Name="master" Tip="0123asd" IsRemote="False" IsTracking="True" />
         <models:Branch Name="foo" Tip="0123asd" IsRemote="False" IsTracking="False" />
         <models:Branch Name="bar" Tip="0123asd" IsRemote="False" IsTracking="False" />
         <models:Branch Name="test" Tip="0123asd" IsRemote="True" IsTracking="True" />
-    </local:RepositoryViewModel.LocalBranches>
+    </local:RepositoryViewModel.Branches>
 </local:RepositoryViewModel>

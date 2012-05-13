@@ -74,21 +74,9 @@ namespace GG.Models
         /// <returns></returns>
         public static Commit Create(LibGit2Sharp.Repository repo,
                                     LibGit2Sharp.Commit commit,
-                                    ObservableCollection<Branch> branches,
                                     ObservableCollection<Tag> tags)
         {
             Commit c = new Commit();
-
-            // Process DisplayTags (tags to display next to the commit description).
-            List<string> displayTags = new List<string>();
-            foreach (Branch branch in branches)
-            {
-                if (branch.TipHash == commit.Sha.ToString())
-                {
-                    displayTags.Add(branch.Name);
-                    branch.Tip = c;
-                }
-            }
 
             // Process Tags (Git tags to display next to the commit description).
             List<string> commitTags = new List<string>();
@@ -108,23 +96,13 @@ namespace GG.Models
                 parentHashes.Add(parentCommit.Sha.ToString());
             }
 
-            // Process branches.
-            List<Branch> commitBranches = new List<Branch>();
-            foreach (LibGit2Sharp.Branch branch in RepoUtil.GetBranchesContaininingCommit(repo, commit.Sha))
-            {
-                Branch commitBranch = branches.Where(b => b.Name == branch.Name).FirstOrDefault();
-
-                if (commitBranch != null)
-                    commitBranches.Add(commitBranch);
-            }
-
             // Set properties.
             c.AuthorEmail  = commit.Author.Email;
             c.AuthorName   = commit.Author.Name;
-            c.Branches     = commitBranches;
             c.Date         = commit.Author.When.DateTime;
             c.Description  = commit.MessageShort;
-            c.DisplayTags  = displayTags;
+            c.DisplayTags  = new List<string>();
+            c.Branches     = new List<Branch>();
             c.Tags         = commitTags;
             c.Hash         = commit.Sha.ToString();
             c.ParentHashes = parentHashes;

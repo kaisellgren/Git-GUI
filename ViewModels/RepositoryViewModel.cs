@@ -21,15 +21,16 @@ namespace GG
         public string FullPath { get; set; }
         public bool   NotOpened { get; set; }
 
-        public ObservableCollection<Commit>     Commits { get; set; }
-        public ObservableCollection<StatusItem> StatusItems { get; set; }
-        public ObservableCollection<Branch>     LocalBranches { get; set; }
+        public Libraries.Extensions.ObservableCollection<Commit>     Commits { get; set; }
+        public Libraries.Extensions.ObservableCollection<StatusItem> StatusItems { get; set; }
         public ObservableCollection<Branch>     Branches { get; set; }
         public ObservableCollection<Tag>        Tags { get; set; }
         public ObservableCollection<Remote>     Remotes { get; set; }
         public ObservableCollection<Submodule>  Submodules { get; set; }
         public ObservableCollection<Stash>      Stashes { get; set; }
         public ListCollectionView               StatusItemsGrouped { get; set; }
+
+        public int CommitsPerPage { get; set; }
 
         /// <summary>
         /// The delegate used for reloading the status grid items upon filesystem changes.
@@ -43,14 +44,15 @@ namespace GG
         public RepositoryViewModel()
         {
             // Initialize empty collections.
-            Commits       = new ObservableCollection<Commit> { };
-            StatusItems   = new ObservableCollection<StatusItem> { };
-            LocalBranches = new ObservableCollection<Branch> { };
+            Commits       = new Libraries.Extensions.ObservableCollection<Commit> { };
+            StatusItems   = new Libraries.Extensions.ObservableCollection<StatusItem> { };
             Branches      = new ObservableCollection<Branch> { };
             Tags          = new ObservableCollection<Tag> { };
             Remotes       = new ObservableCollection<Remote> { };
             Submodules    = new ObservableCollection<Submodule> { };
             Stashes       = new ObservableCollection<Stash> { };
+
+            CommitsPerPage = 50;
 
             StatusItemsGrouped = new ListCollectionView(StatusItems);
             StatusItemsGrouped.GroupDescriptions.Add(new PropertyGroupDescription("GenericStatus"));
@@ -80,11 +82,9 @@ namespace GG
                 Console.WriteLine("Loading and constructing repository data for \"" + FullPath + "\".");
 
                 ConstructRepository();
-                //LoadChangesets();
-                //LoadRepositoryStatus();
-                //LoadSidebarData();
+                LoadRepositoryStatus();
 
-                //ListenToDirectoryChanges();
+                ListenToDirectoryChanges();
             }
         }
 
@@ -95,18 +95,10 @@ namespace GG
         /// </summary>
         private void ConstructRepository()
         {
-            Console.WriteLine("Constructs repository \"" + FullPath + "\".");
-
             LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
 
-            // Create branches.
-            foreach (LibGit2Sharp.Branch branch in repo.Branches)
-            {
-                Branch b = Branch.Create(repo, branch);
-                Branches.Add(b);
-            }
-
             // Create tags.
+            Console.WriteLine("Constructs repository tags for \"" + FullPath + "\".");
             foreach (LibGit2Sharp.Tag tag in repo.Tags)
             {
                 Tag t = Tag.Create(repo, tag);
@@ -116,21 +108,34 @@ namespace GG
             }
 
             // Create commits.
-            foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }).Take(100))
+            Console.WriteLine("Constructs repository commits for \"" + FullPath + "\".");
+            List<Commit> commitList = new List<Commit>();
+            foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }).Take(CommitsPerPage))
             {
-                Commits.Add(Commit.Create(repo, commit, Branches, Tags));
+                commitList.Add(Commit.Create(repo, commit, Tags));
             }
+            Commits.AddRange(commitList);
 
-            // Post-process commits (commit parents).
-            foreach (Commit commit in Commits)
+            // Create branches.
+            Console.WriteLine("Constructs repository branches for \"" + FullPath + "\".");
+            foreach (LibGit2Sharp.Branch branch in repo.Branches)
             {
-                commit.PostProcess(Commits, Branches);
+                Branch b = Branch.Create(repo, branch, Commits, CommitsPerPage);
+                Branches.Add(b);
             }
 
             // Post-process branches (tips and tracking branches).
+            Console.WriteLine("Post-processing repository branches for \"" + FullPath + "\".");
             foreach (Branch branch in Branches)
             {
                 branch.PostProcess(Branches, Commits);
+            }
+
+            // Post-process commits (commit parents).
+            Console.WriteLine("Post-processing repository commits for \"" + FullPath + "\".");
+            foreach (Commit commit in Commits)
+            {
+                commit.PostProcess(Commits, Branches);
             }
 
             repo.Dispose();
@@ -148,6 +153,8 @@ namespace GG
             StatusItems.Clear();
 
             // Load status items.
+            List<StatusItem> itemList = new List<StatusItem>();
+
             LibGit2Sharp.RepositoryStatus status = repo.Index.RetrieveStatus();
             foreach (LibGit2Sharp.StatusEntry fileStatus in status)
             {
@@ -169,9 +176,11 @@ namespace GG
                         IsBinary = FileUtil.IsBinaryFile(fileFullPath) ? "Yes" : "-"
                     };
 
-                    StatusItems.Add(item);
+                    itemList.Add(item);
                 }
             }
+
+            StatusItems.AddRange(itemList);
 
             repo.Dispose();
         }

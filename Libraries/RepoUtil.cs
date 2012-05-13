@@ -22,6 +22,9 @@ namespace GG.Libraries
             // Loop through all branches and determine if they are around the specified commit.
             foreach (Branch branch in branches)
             {
+                if (branch.Tip == null)
+                    continue;
+
                 // The branch's tip must be newer/same than the commit.
                 if (branch.Tip.Date >= commit.Date) // TODO: && first commit-ever must be older? We might not need to do that... ... ?
                 {

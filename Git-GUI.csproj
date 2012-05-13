@@ -140,6 +140,7 @@
     <Compile Include="Libraries\FileUtil.cs" />
     <Compile Include="Libraries\GenericUtil.cs" />
     <Compile Include="Libraries\IconUtil.cs" />
+    <Compile Include="Libraries\Extensions\ObservableCollection.cs" />
     <Compile Include="Libraries\RepoUtil.cs" />
     <Compile Include="Libraries\UIHelper.cs" />
     <Compile Include="Models\Branch.cs" />
@@ -193,6 +194,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles\ChangesetHistoryDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\DisplayTags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

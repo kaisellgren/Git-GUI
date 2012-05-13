@@ -6,46 +6,44 @@
              mc:Ignorable="d" 
              d:DesignHeight="300">
     
-    <Grid>
-        <DataGrid CanUserSortColumns="False"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  SelectionUnit="FullRow"
-                  HeadersVisibility="Column"
-                  VirtualizingPanel.IsVirtualizing="True"
-                  VirtualizingPanel.VirtualizationMode="Recycling"
-                  ItemsSource="{Binding Commits}"
-                  AutoGenerateColumns="False"
-                  Grid.Row="0"
-                  Loaded="OnDataContextChanged"
-                  x:Name="ChangesetHistoryGrid">
+    <DataGrid CanUserSortColumns="False"
+              CanUserAddRows="False"
+              CanUserDeleteRows="False"
+              CanUserResizeColumns="True"
+              CanUserReorderColumns="True"
+              SelectionUnit="FullRow"
+              HeadersVisibility="Column"
+              VirtualizingPanel.IsVirtualizing="True"
+              VirtualizingPanel.VirtualizationMode="Recycling"
+              ItemsSource="{Binding Commits}"
+              AutoGenerateColumns="False"
+              Grid.Row="0"
+              Loaded="OnDataContextChanged"
+              x:Name="ChangesetHistoryGrid"
+              Style="{StaticResource ChangesetHistoryDataGridStyle}">
             
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Graph" Width="128">
-                    <DataGridTemplateColumn.CellTemplate><DataTemplate></DataTemplate></DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+        <DataGrid.Columns>
+            <DataGridTemplateColumn Header="Graph" Width="128">
+                <DataGridTemplateColumn.CellTemplate><DataTemplate></DataTemplate></DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
                 
-                <DataGridTextColumn Binding="{Binding Path=HashShort}" Header="Hash"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=Branches}" Header="Branches"></DataGridTextColumn>
+            <DataGridTextColumn Binding="{Binding Path=HashShort}" Header="Hash"></DataGridTextColumn>
+            <DataGridTextColumn Binding="{Binding Path=Branches}" Header="Branches"></DataGridTextColumn>
                 
-                <DataGridTemplateColumn Header="Description" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <WrapPanel>
-                                <ListBox ItemsSource="{Binding DisplayTags}" Style="{DynamicResource DisplayTagsBlueStyle}" />
-                                <ListBox ItemsSource="{Binding Tags}" Style="{DynamicResource DisplayTagsOrangeStyle}" />
-                                <TextBlock Text="{Binding Path=Description}" VerticalAlignment="Center" />
-                            </WrapPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header="Description" Width="*">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <WrapPanel>
+                            <ListBox ItemsSource="{Binding DisplayTags}" Style="{DynamicResource DisplayTagsBlueStyle}" />
+                            <ListBox ItemsSource="{Binding Tags}" Style="{DynamicResource DisplayTagsOrangeStyle}" />
+                            <TextBlock Text="{Binding Path=Description}" VerticalAlignment="Center" />
+                        </WrapPanel>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
                 
-                <DataGridTextColumn Binding="{Binding Path=FormattedDate}" Header="Date"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=Author}" Header="Author"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <Canvas Width="128" VerticalAlignment="Stretch" HorizontalAlignment="Left" Grid.Row="0" Margin="0,25,0,0" x:Name="Graph" />
-    </Grid>
-
+            <DataGridTextColumn Binding="{Binding Path=FormattedDate}" Header="Date"></DataGridTextColumn>
+            <DataGridTextColumn Binding="{Binding Path=Author}" Header="Author"></DataGridTextColumn>
+        </DataGrid.Columns>
+    </DataGrid>
 </UserControl>
