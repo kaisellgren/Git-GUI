@@ -11,19 +11,17 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <Style x:Key="LeftToolbarTitleImageStyle" TargetType="{x:Type Image}">
+        <Setter Property="Margin" Value="2 0 4 -1" />
+    </Style>
 
     <Style x:Key="LeftToolbarTitleStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#3595c2" />
-        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="Segoe UI Semibold" />
-        <Setter Property="Margin" Value="0,2,0,2" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"></Setter>
-
-        <Style.Resources>
-            <Style TargetType="{x:Type Image}">
-                <Setter Property="Margin" Value="0 0 6 -3" />
-            </Style>
-        </Style.Resources>
+        <Setter Property="Margin" Value="0,2,4,2" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
     </Style>
 </ResourceDictionary>

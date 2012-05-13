@@ -211,6 +211,10 @@
     <Page Include="Styles\Panel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\TreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Templates\AppTabContentTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

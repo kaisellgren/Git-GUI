@@ -12,89 +12,59 @@
                 <Grid.OpacityMask>
                     <VisualBrush Visual="{Binding ElementName=LeftToolbarMask}"/>
                 </Grid.OpacityMask>
+                
                 <Grid Margin="8" d:DataContext="{d:DesignData Source=../DesignData/Branches.xaml}">
                     <TreeView Background="Transparent" BorderThickness="0" Padding="0">
-                        <TreeViewItem ItemsSource="{Binding LocalBranches}">
+                        <TreeViewItem ItemsSource="{Binding Branches}">
                             <TreeViewItem.Header>
-                                <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">
-                            <Image Source="../Resources/Icons/Branch.png" Stretch="None" />BRANCHES
-                                </TextBlock>
+                                <WrapPanel>
+                                    <Image Source="../Resources/Icons/Branch.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
+                                    <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">BRANCHES</TextBlock>
+                                </WrapPanel>
                             </TreeViewItem.Header>
 
                             <TreeViewItem.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding Name}" Style="{DynamicResource LeftToolbarTitleStyle}" />
                                 </DataTemplate>
                             </TreeViewItem.ItemTemplate>
                         </TreeViewItem>
 
                         <TreeViewItem ItemsSource="{Binding Tags}">
                             <TreeViewItem.Header>
-                                <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">
-                            <Image Source="../Resources/Icons/Tag.png" Stretch="None" />TAGS
-                                </TextBlock>
+                                <WrapPanel>
+                                    <Image Source="../Resources/Icons/Tag.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
+                                    <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">TAGS</TextBlock>
+                                </WrapPanel>
                             </TreeViewItem.Header>
                         </TreeViewItem>
 
                         <TreeViewItem ItemsSource="{Binding Remotes}">
                             <TreeViewItem.Header>
-                                <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">
-                            <Image Source="../Resources/Icons/Remote.png" Stretch="None" />REMOTES
-                                </TextBlock>
+                                <WrapPanel>
+                                    <Image Source="../Resources/Icons/Remote.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
+                                    <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">REMOTES</TextBlock>
+                                </WrapPanel>
                             </TreeViewItem.Header>
                         </TreeViewItem>
 
                         <TreeViewItem ItemsSource="{Binding Stashes}">
                             <TreeViewItem.Header>
-                                <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">
-                            <Image Source="../Resources/Icons/Stash.png" Stretch="None" />STASHES
-                                </TextBlock>
+                                <WrapPanel>
+                                    <Image Source="../Resources/Icons/Stash.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
+                                    <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">STASHES</TextBlock>
+                                </WrapPanel>
                             </TreeViewItem.Header>
                         </TreeViewItem>
 
                         <TreeViewItem ItemsSource="{Binding Submodules}">
                             <TreeViewItem.Header>
-                                <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">
-                            <Image Source="../Resources/Icons/Submodule.png" Stretch="None" />SUBMODULES
-                                </TextBlock>
+                                <WrapPanel>
+                                    <Image Source="../Resources/Icons/Submodule.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
+                                    <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">SUBMODULES</TextBlock>
+                                </WrapPanel>
                             </TreeViewItem.Header>
                         </TreeViewItem>
-
-                        <TreeView.Resources>
-                            <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="0,1" StartPoint="0,0">
-                                <GradientStop Color="#FFD9F4FF" Offset="0"/>
-                                <GradientStop Color="#FF9BDDFB" Offset="1"/>
-                            </LinearGradientBrush>
-                            <LinearGradientBrush x:Key="{x:Static SystemColors.ControlBrushKey}" EndPoint="0,1" StartPoint="0,0">
-                                <GradientStop Color="#FFEEEDED" Offset="0"/>
-                                <GradientStop Color="#FFDDDDDD" Offset="1"/>
-                            </LinearGradientBrush>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="Black" />
-                        </TreeView.Resources>
-
-                        <TreeView.ItemContainerStyle>
-                            <Style TargetType="{x:Type TreeViewItem}">
-                                <Setter Property="BorderThickness" Value="1.5"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter Property="BorderBrush" Value="#adc6e5"/>
-                                    </Trigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsSelected" Value="True"/>
-                                            <Condition Property="IsSelectionActive" Value="False"/>
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="BorderBrush" Value="LightGray"/>
-                                    </MultiTrigger>
-                                </Style.Triggers>
-                                <Style.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="2"/>
-                                    </Style>
-                                </Style.Resources>
-                            </Style>
-                        </TreeView.ItemContainerStyle>
                     </TreeView>
                 </Grid>
             </Grid>
