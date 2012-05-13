@@ -8,17 +8,15 @@
             <controls:MainMenu DockPanel.Dock="Top" Margin="4,4,0,0" />
             <controls:TopToolbar DockPanel.Dock="Top" />
 
-            <Grid DockPanel.Dock="Bottom" Margin="0,0,0,0">
+            <controls:LeftToolbar DockPanel.Dock="Left" VerticalAlignment="Stretch" />
+            <Grid DockPanel.Dock="Right">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="6" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <DockPanel Grid.Row="0">
-                    <controls:LeftToolbar DockPanel.Dock="Left" VerticalAlignment="Stretch" />
-                    <controls:ChangesetHistory DockPanel.Dock="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                </DockPanel>
+                <controls:ChangesetHistory Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 
                 <GridSplitter Grid.Row="1" Style="{DynamicResource GridSplitterVerticalStyle}" />
                 
