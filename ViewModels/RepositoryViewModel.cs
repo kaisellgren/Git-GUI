@@ -21,14 +21,14 @@ namespace GG
         public string FullPath { get; set; }
         public bool   NotOpened { get; set; }
 
-        public Libraries.Extensions.ObservableCollection<Commit>     Commits { get; set; }
-        public Libraries.Extensions.ObservableCollection<StatusItem> StatusItems { get; set; }
-        public ObservableCollection<Branch>     Branches { get; set; }
-        public ObservableCollection<Tag>        Tags { get; set; }
-        public ObservableCollection<Remote>     Remotes { get; set; }
-        public ObservableCollection<Submodule>  Submodules { get; set; }
-        public ObservableCollection<Stash>      Stashes { get; set; }
-        public ListCollectionView               StatusItemsGrouped { get; set; }
+        public RangedObservableCollection<Commit>     Commits { get; set; }
+        public RangedObservableCollection<StatusItem> StatusItems { get; set; }
+        public ObservableCollection<Branch>           Branches { get; set; }
+        public ObservableCollection<Tag>              Tags { get; set; }
+        public ObservableCollection<Remote>           Remotes { get; set; }
+        public ObservableCollection<Submodule>        Submodules { get; set; }
+        public ObservableCollection<Stash>            Stashes { get; set; }
+        public ListCollectionView                     StatusItemsGrouped { get; set; }
 
         public int CommitsPerPage { get; set; }
 
@@ -44,8 +44,8 @@ namespace GG
         public RepositoryViewModel()
         {
             // Initialize empty collections.
-            Commits       = new Libraries.Extensions.ObservableCollection<Commit> { };
-            StatusItems   = new Libraries.Extensions.ObservableCollection<StatusItem> { };
+            Commits       = new RangedObservableCollection<Commit> { };
+            StatusItems   = new RangedObservableCollection<StatusItem> { };
             Branches      = new ObservableCollection<Branch> { };
             Tags          = new ObservableCollection<Tag> { };
             Remotes       = new ObservableCollection<Remote> { };
