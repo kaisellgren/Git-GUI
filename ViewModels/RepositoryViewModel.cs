@@ -39,7 +39,14 @@ namespace GG
         /// <param name="e"></param>
         delegate void ReloadStatusDelegate(object sender, FileSystemEventArgs e);
 
+        /// <summary>
+        /// Commands.
+        /// </summary>
+        #region Commands
+
         public DelegateCommand StageUnstageCommand { get; private set; } // TODO
+
+        #endregion
 
         public RepositoryViewModel()
         {
@@ -54,15 +61,20 @@ namespace GG
 
             CommitsPerPage = 50;
 
+            // Initialize status item view and group.
             StatusItemsGrouped = new ListCollectionView(StatusItems);
             StatusItemsGrouped.GroupDescriptions.Add(new PropertyGroupDescription("GenericStatus"));
             StatusItemsGrouped.SortDescriptions.Add(new SortDescription("GenericStatus", ListSortDirection.Descending));
 
-            StageUnstageCommand = new DelegateCommand(StageUnstageExecuted); // TODO
+            // Initialize commands.
+            StageUnstageCommand = new DelegateCommand(StageUnstage);
         }
 
-        // TODO
-        private void StageUnstageExecuted(object action)
+        /// <summary>
+        /// Stages or unstages the selected item.
+        /// </summary>
+        /// <param name="action"></param>
+        private void StageUnstage(object action)
         {
             DataGrid statusGrid = UIHelper.FindChild<DataGrid>(Application.Current.MainWindow, "StatusGridElement");
             StatusItem item = statusGrid.SelectedItem as StatusItem;

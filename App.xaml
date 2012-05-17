@@ -17,7 +17,6 @@
                 <ResourceDictionary Source="Styles/Panel.xaml"/>
                 <ResourceDictionary Source="Styles/GridSplitter.xaml"/>
                 <ResourceDictionary Source="Styles/DisplayTags.xaml"/>
-                <ResourceDictionary Source="Components/StatusGridContextMenu.xaml"/>
                 <ResourceDictionary Source="Styles/ChangesetHistoryDataGrid.xaml"/>
                 <ResourceDictionary Source="Styles/TreeView.xaml"/>
             </ResourceDictionary.MergedDictionaries>

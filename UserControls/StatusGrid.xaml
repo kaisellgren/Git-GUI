@@ -11,6 +11,7 @@
         <converters:StatusToColorConverter x:Key="statusToColorConverter" />
         <converters:StatusToCharacterConverter x:Key="statusToCharacterConverter" />
         <converters:ExtensionToImageConverter x:Key="extensionToImageConverter" />
+        <userControls:StatusGridContextMenu x:Key="statusGridContextMenu" />
     </UserControl.Resources>
     <DockPanel>
         <DataGrid SelectionUnit="FullRow"
@@ -23,7 +24,7 @@
                   CanUserResizeColumns="True"
                   VirtualizingPanel.IsVirtualizing="True"
                   VirtualizingPanel.VirtualizationMode="Recycling"
-                  ContextMenu="{DynamicResource StatusGridContextMenu}"
+                  ContextMenu="{StaticResource statusGridContextMenu}"
                   Tag="{Binding}"
                   x:Name="StatusGridElement">
             <DataGrid.InputBindings>

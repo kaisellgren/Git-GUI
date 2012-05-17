@@ -3,6 +3,7 @@
 *.pdb
 *.psess
 *.vsp
+*.pfx
 
 #OS junk files
 [Tt]humbs.db

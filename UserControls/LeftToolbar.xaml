@@ -14,8 +14,8 @@
                 </Grid.OpacityMask>
                 
                 <Grid Margin="8" d:DataContext="{d:DesignData Source=../DesignData/Branches.xaml}">
-                    <TreeView Background="Transparent" BorderThickness="0" Padding="0">
-                        <TreeViewItem ItemsSource="{Binding Branches}">
+                    <TreeView Background="{x:Null}" BorderThickness="0" Padding="0">
+                        <TreeViewItem ItemsSource="{Binding Branches}" PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown">
                             <TreeViewItem.Header>
                                 <WrapPanel>
                                     <Image Source="../Resources/Icons/Branch.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
@@ -25,7 +25,27 @@
 
                             <TreeViewItem.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" Style="{DynamicResource LeftToolbarTitleStyle}" />
+                                    <TextBlock Text="{Binding Name}" Style="{DynamicResource LeftToolbarTitleStyle}">
+                                        <TextBlock.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Checkout">
+                                                    <MenuItem.Icon>
+                                                        <Image Source="../Resources/Icons/Checkout.png" Stretch="None" />
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                                <MenuItem Header="Delete">
+                                                    <MenuItem.Icon>
+                                                        <Image Source="../Resources/Icons/Delete.png" Stretch="None" />
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                                <MenuItem Header="Merge with X">
+                                                    <MenuItem.Icon>
+                                                        <Image Source="../Resources/Icons/Merge.png" Stretch="None" />
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                            </ContextMenu>
+                                        </TextBlock.ContextMenu>
+                                    </TextBlock>
                                 </DataTemplate>
                             </TreeViewItem.ItemTemplate>
                         </TreeViewItem>

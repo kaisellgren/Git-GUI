@@ -41,6 +41,17 @@ namespace GG.Models
             }
         }
 
+        /// <summary>
+        /// Returns true whether this status item is staged.
+        /// </summary>
+        public bool IsStaged
+        {
+            get
+            {
+                return GenericStatus == "Staged";
+            }
+        }
+
         public string Extension
         {
             get

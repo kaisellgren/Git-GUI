@@ -16,20 +16,27 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>C:\Setups\Software\Git-GUI\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Background</UpdateMode>
+    <UpdateInterval>1</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <InstallUrl>http://www.gitgui.com/publish/</InstallUrl>
+    <SupportUrl>http://www.gitgui.com/support</SupportUrl>
+    <TargetCulture>en</TargetCulture>
+    <ProductName>Git-GUI</ProductName>
+    <PublisherName>Kai Sellgren</PublisherName>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -99,6 +106,18 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>CADC8AEAADDC7B593B80E792F4699198601188F0</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Git-GUI_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="LibGit2Sharp">
       <HintPath>packages\LibGit2Sharp.0.8\lib\net35\LibGit2Sharp.dll</HintPath>
@@ -128,9 +147,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppTabDataTemplateSelector.cs" />
-    <Compile Include="Components\StatusGridContextMenu.xaml.cs">
-      <DependentUpon>StatusGridContextMenu.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Converters\ExtensionToImageConverter.cs" />
     <Compile Include="Converters\StatusToCharacterConverter.cs" />
     <Compile Include="Converters\StatusToColorConverter.cs" />
@@ -157,6 +173,9 @@
     </Compile>
     <Compile Include="UserControls\StatusGrid.xaml.cs">
       <DependentUpon>StatusGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\StatusGridContextMenu.xaml.cs">
+      <DependentUpon>StatusGridContextMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\RepositoryViewModel.cs" />
@@ -239,10 +258,6 @@
     <Page Include="Templates\AppTabNew.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\StatusGridContextMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\ChangesetHistory.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -262,6 +277,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\StatusGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\StatusGridContextMenu.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\TopToolbar.xaml">
@@ -287,6 +306,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Git-GUI_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -310,9 +330,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
       <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
+      <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
@@ -380,6 +400,31 @@
     <Resource Include="Resources\Icons\Tick.png" />
     <Resource Include="Resources\Icons\VisualDiff.png" />
     <Resource Include="Resources\Icons\Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Unstage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="LibGit2Sharp">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.Windows.Shell">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
