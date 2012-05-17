@@ -148,6 +148,7 @@
     </ApplicationDefinition>
     <Compile Include="AppTabDataTemplateSelector.cs" />
     <Compile Include="Converters\ExtensionToImageConverter.cs" />
+    <Compile Include="Converters\StatusGridGroupToColorConverter.cs" />
     <Compile Include="Converters\StatusToCharacterConverter.cs" />
     <Compile Include="Converters\StatusToColorConverter.cs" />
     <Compile Include="DelegateCommand.cs" />

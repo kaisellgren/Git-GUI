@@ -22,7 +22,6 @@
 
         <Style.Resources>
             <Style TargetType="{x:Type TextBlock}">
-                <Setter Property="Foreground" Value="#000" />
                 <Setter Property="FontSize" Value="12" />
                 <Setter Property="FontWeight" Value="SemiBold" />
                 <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />

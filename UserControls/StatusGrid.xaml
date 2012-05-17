@@ -11,6 +11,7 @@
         <converters:StatusToColorConverter x:Key="statusToColorConverter" />
         <converters:StatusToCharacterConverter x:Key="statusToCharacterConverter" />
         <converters:ExtensionToImageConverter x:Key="extensionToImageConverter" />
+        <converters:StatusGridGroupToColorConverter x:Key="statusGridGroupToColorConverter" />
         <userControls:StatusGridContextMenu x:Key="statusGridContextMenu" />
     </UserControl.Resources>
     <DockPanel>
@@ -94,9 +95,9 @@
                                             <Border BorderBrush="#aaa" BorderThickness="0,1,0,1">
                                                 <Grid Style="{DynamicResource DataGridGroupItemStyle}">
                                                     <StackPanel Orientation="Horizontal" Margin="4,3,0,3">
-                                                        <TextBlock Text="{Binding Name}" />
-                                                        <TextBlock xml:space="preserve">: </TextBlock>
-                                                        <TextBlock Text="{Binding ItemCount}"/>
+                                                        <TextBlock Text="{Binding Name}" Foreground="{Binding Path=Name, Converter={StaticResource statusGridGroupToColorConverter}}" />
+                                                        <TextBlock xml:space="preserve" Foreground="{Binding Path=Name, Converter={StaticResource statusGridGroupToColorConverter}}">: </TextBlock>
+                                                        <TextBlock Text="{Binding ItemCount}" Foreground="{Binding Path=Name, Converter={StaticResource statusGridGroupToColorConverter}}" />
                                                     </StackPanel>
                                                 </Grid>
                                             </Border>
