@@ -77,14 +77,16 @@ namespace GG
         private void StageUnstage(object action)
         {
             DataGrid statusGrid = UIHelper.FindChild<DataGrid>(Application.Current.MainWindow, "StatusGridElement");
-            StatusItem item = statusGrid.SelectedItem as StatusItem;
 
             LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
-            if (item.GenericStatus == "Staged")
-                repo.Index.Unstage(RepositoryFullPath + "/" + item.Filename);
-            else
-                repo.Index.Stage(RepositoryFullPath + "/" + item.Filename);
+            foreach (StatusItem item in statusGrid.SelectedItems)
+            {
+                if (item.GenericStatus == "Staged")
+                    repo.Index.Unstage(RepositoryFullPath + "/" + item.Filename);
+                else
+                    repo.Index.Stage(RepositoryFullPath + "/" + item.Filename);
+            }
         }
 
         /// <summary>
