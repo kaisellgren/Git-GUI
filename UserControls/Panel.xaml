@@ -12,13 +12,13 @@
                 <DockPanel Style="{DynamicResource PanelHeaderStyle}">
                     <TextBlock DockPanel.Dock="Left" Style="{DynamicResource PanelHeaderTextStyle}" Text="{TemplateBinding local:Panel.HeaderText}" />
                     <WrapPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
-                        <Button>
+                        <Button Margin="3">
                             <WrapPanel>
                                 <Image Source="../Resources/Icons/MessageWrite.png" Width="16" Margin="0,0,4,0" />
                                 <TextBlock>Copy message</TextBlock>
                             </WrapPanel>
                         </Button>
-                        <Button>
+                        <Button Margin="0,3,3,3">
                             <WrapPanel>
                                 <Image Source="../Resources/Icons/RepositoryWrite.png" Width="16" Margin="0,0,4,0" />
                                 <TextBlock>Commit</TextBlock>

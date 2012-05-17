@@ -11,12 +11,6 @@
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-
-        <Style.Resources>
-            <Style TargetType="{x:Type Button}">
-                <Setter Property="Margin" Value="3" />
-            </Style>
-        </Style.Resources>
     </Style>
 
     <Style x:Key="PanelHeaderTextStyle" TargetType="{x:Type TextBlock}">
