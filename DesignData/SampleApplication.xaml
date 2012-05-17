@@ -1,6 +1,6 @@
 ﻿<local:MainWindowViewModel xmlns:local="clr-namespace:GG" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <local:MainWindowViewModel.RepositoryViewModels>
-        <local:RepositoryViewModel Name="Sample" FullPath="Z:/www/git1">
+        <local:RepositoryViewModel Name="Sample" RepositoryFullPath="Z:/www/git1">
             <local:RepositoryViewModel.Commits>
                 <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" FormattedDate="One minute ago" Description="Foo" Hash="123" Source="asdasd">
                     <local:Commit.DisplayTags>
@@ -22,6 +22,6 @@
     </local:MainWindowViewModel.RepositoryViewModels>
     
     <local:MainWindowViewModel.RecentRepositories>
-        <local:RepositoryViewModel Name="Sample" FullPath="Z:/www/git1" />
+        <local:RepositoryViewModel Name="Sample" RepositoryFullPath="Z:/www/git1" />
     </local:MainWindowViewModel.RecentRepositories>
 </local:MainWindowViewModel>

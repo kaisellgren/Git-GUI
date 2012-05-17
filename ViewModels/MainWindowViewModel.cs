@@ -26,10 +26,10 @@ namespace GG
             // C:/Program Files (x86)/node
 
             // Add some test repositories.
-            RepositoryViewModel repo = new RepositoryViewModel { Name = "Git test repository", FullPath = "Z:/www/test-repo" };
+            RepositoryViewModel repo = new RepositoryViewModel { Name = "Git test repository", RepositoryFullPath = "Z:/www/test-repo" };
             repo.Load();
 
-            RepositoryViewModel repo2 = new RepositoryViewModel { Name = "New tab", FullPath = null, NotOpened = true };
+            RepositoryViewModel repo2 = new RepositoryViewModel { Name = "New tab", RepositoryFullPath = null, NotOpened = true };
             repo2.Load();
 
             RepositoryViewModels.Add(repo);

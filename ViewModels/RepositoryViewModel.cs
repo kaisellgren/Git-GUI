@@ -18,7 +18,7 @@ namespace GG
     public class RepositoryViewModel : BaseViewModel
     {
         public string Name { get; set; }
-        public string FullPath { get; set; }
+        public string RepositoryFullPath { get; set; }
         public bool   NotOpened { get; set; }
 
         public RangedObservableCollection<Commit>     Commits { get; set; }
@@ -38,15 +38,6 @@ namespace GG
         /// <param name="sender"></param>
         /// <param name="e"></param>
         delegate void ReloadStatusDelegate(object sender, FileSystemEventArgs e);
-
-        /// <summary>
-        /// Commands.
-        /// </summary>
-        #region Commands
-
-        public DelegateCommand StageUnstageCommand { get; private set; } // TODO
-
-        #endregion
 
         public RepositoryViewModel()
         {
@@ -68,7 +59,16 @@ namespace GG
 
             // Initialize commands.
             StageUnstageCommand = new DelegateCommand(StageUnstage);
+            DeleteFileCommand = new DelegateCommand(DeleteFile);
         }
+
+        /// <summary>
+        /// Commands.
+        /// </summary>
+        #region Commands.
+
+        public DelegateCommand StageUnstageCommand { get; private set; }
+        public DelegateCommand DeleteFileCommand { get; private set; }
 
         /// <summary>
         /// Stages or unstages the selected item.
@@ -79,19 +79,55 @@ namespace GG
             DataGrid statusGrid = UIHelper.FindChild<DataGrid>(Application.Current.MainWindow, "StatusGridElement");
             StatusItem item = statusGrid.SelectedItem as StatusItem;
 
-            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
+            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
             if (item.GenericStatus == "Staged")
-                repo.Index.Unstage(FullPath + "/" + item.Filename);
+                repo.Index.Unstage(RepositoryFullPath + "/" + item.Filename);
             else
-                repo.Index.Stage(FullPath + "/" + item.Filename);
+                repo.Index.Stage(RepositoryFullPath + "/" + item.Filename);
         }
 
+        /// <summary>
+        /// Deletes a file or many.
+        /// </summary>
+        /// <param name="action"></param>
+        private void DeleteFile(object action)
+        {
+            LibGit2Sharp.Repository repo = null;
+            DataGrid statusGrid = UIHelper.FindChild<DataGrid>(Application.Current.MainWindow, "StatusGridElement");
+
+            // Loop through all selected status items and remove the files physically (and in some cases also from the repository).
+            foreach (StatusItem item in statusGrid.SelectedItems)
+            {
+                // TODO: --cached ?
+
+                File.Delete(RepositoryFullPath + "/" + item.Filename);
+
+                if (!item.Status.HasFlag(LibGit2Sharp.FileStatus.Untracked))
+                {
+                    if (!(repo is LibGit2Sharp.Repository))
+                        repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+
+                    repo.Index.Stage(RepositoryFullPath + "/" + item.Filename);
+                }
+            }
+
+            if (repo is LibGit2Sharp.Repository)
+                repo.Dispose();
+        }
+
+        #endregion
+
+        #region Loading and construction.
+
+        /// <summary>
+        /// A method that loads the entire repository.
+        /// </summary>
         public void Load()
         {
             if (NotOpened == false)
             {
-                Console.WriteLine("Loading and constructing repository data for \"" + FullPath + "\".");
+                Console.WriteLine("Loading and constructing repository data for \"" + RepositoryFullPath + "\".");
 
                 ConstructRepository();
                 LoadRepositoryStatus();
@@ -107,10 +143,10 @@ namespace GG
         /// </summary>
         private void ConstructRepository()
         {
-            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
+            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
             // Create tags.
-            Console.WriteLine("Constructs repository tags for \"" + FullPath + "\".");
+            Console.WriteLine("Constructs repository tags for \"" + RepositoryFullPath + "\".");
             foreach (LibGit2Sharp.Tag tag in repo.Tags)
             {
                 Tag t = Tag.Create(repo, tag);
@@ -120,7 +156,7 @@ namespace GG
             }
 
             // Create commits.
-            Console.WriteLine("Constructs repository commits for \"" + FullPath + "\".");
+            Console.WriteLine("Constructs repository commits for \"" + RepositoryFullPath + "\".");
             List<Commit> commitList = new List<Commit>();
             foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }).Take(CommitsPerPage))
             {
@@ -129,7 +165,7 @@ namespace GG
             Commits.AddRange(commitList);
 
             // Create branches.
-            Console.WriteLine("Constructs repository branches for \"" + FullPath + "\".");
+            Console.WriteLine("Constructs repository branches for \"" + RepositoryFullPath + "\".");
             foreach (LibGit2Sharp.Branch branch in repo.Branches)
             {
                 Branch b = Branch.Create(repo, branch, Commits, CommitsPerPage);
@@ -137,14 +173,14 @@ namespace GG
             }
 
             // Post-process branches (tips and tracking branches).
-            Console.WriteLine("Post-processing repository branches for \"" + FullPath + "\".");
+            Console.WriteLine("Post-processing repository branches for \"" + RepositoryFullPath + "\".");
             foreach (Branch branch in Branches)
             {
                 branch.PostProcess(Branches, Commits);
             }
 
             // Post-process commits (commit parents).
-            Console.WriteLine("Post-processing repository commits for \"" + FullPath + "\".");
+            Console.WriteLine("Post-processing repository commits for \"" + RepositoryFullPath + "\".");
             foreach (Commit commit in Commits)
             {
                 commit.PostProcess(Commits, Branches);
@@ -158,9 +194,9 @@ namespace GG
         /// </summary>
         private void LoadRepositoryStatus()
         {
-            Console.WriteLine("Loading status data for \"" + FullPath + "\".");
+            Console.WriteLine("Loading status data for \"" + RepositoryFullPath + "\".");
 
-            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(FullPath);
+            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
             StatusItems.Clear();
 
@@ -177,7 +213,7 @@ namespace GG
                     if (isSet == false || value.ToString() == "Unaltered" || value.ToString() == "Ignored")
                         continue;
 
-                    string fileFullPath = FullPath + "/" + fileStatus.FilePath;
+                    string fileFullPath = RepositoryFullPath + "/" + fileStatus.FilePath;
 
                     // Only those enum statuses that were set will generate a row in the status grid (and those that are not ignored/unaltered).
                     StatusItem item = new StatusItem
@@ -196,6 +232,8 @@ namespace GG
 
             repo.Dispose();
         }
+
+#endregion
 
         /// <summary>
         /// Refresh some data when the repository directory changes.
@@ -219,7 +257,7 @@ namespace GG
             watcher.Deleted += new FileSystemEventHandler(reloadStatusDelegate);
             watcher.Renamed += new RenamedEventHandler(reloadStatusDelegate);
             watcher.Created += new FileSystemEventHandler(reloadStatusDelegate);
-            watcher.Path = FullPath;
+            watcher.Path = RepositoryFullPath;
             watcher.EnableRaisingEvents = true;
         }
     }

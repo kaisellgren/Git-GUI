@@ -67,7 +67,7 @@ namespace GG.Libraries
 
             Console.WriteLine("Drawing graph.");
 
-            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(repositoryViewModel.FullPath);
+            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(repositoryViewModel.RepositoryFullPath);
             commitDotPositions.Clear();
             SetBranchColors(repo.Branches);
 

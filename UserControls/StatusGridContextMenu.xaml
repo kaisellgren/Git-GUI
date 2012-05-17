@@ -17,19 +17,19 @@
 
     <Separator x:Name="StageSeparator" />
 
-    <MenuItem Header="Annotate...">
+    <MenuItem Header="Annotate..." IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Annotate.png" Stretch="None" />
         </MenuItem.Icon>
     </MenuItem>
 
-    <MenuItem Header="File history...">
+    <MenuItem Header="File history..." IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/History.png" Stretch="None" />
         </MenuItem.Icon>
     </MenuItem>
 
-    <MenuItem Header="Visual diff...">
+    <MenuItem Header="Visual diff..." IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/VisualDiff.png" Stretch="None" />
         </MenuItem.Icon>
@@ -37,13 +37,43 @@
 
     <Separator />
 
-    <MenuItem Header="Ignore" InputGestureText="Ctrl+I">
+    <MenuItem Header="Ignore" IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Ignore.png" Stretch="None" />
         </MenuItem.Icon>
+
+        <MenuItem Header="Open the Ignore Editor...">
+            <MenuItem.Icon>
+                <Image Source="../Resources/Icons/OpenIgnoreEditor.png" Stretch="None" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem x:Name="IgnoreThisFile" Header="Ignore this file">
+            <MenuItem.Icon>
+                <Image Source="../Resources/Icons/Ignore.png" Stretch="None" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem Header="Ignore all *.xyz files">
+            <MenuItem.Icon>
+                <Image Source="../Resources/Icons/Ignore.png" Stretch="None" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem x:Name="IgnoreFilesUnderThisFolder" Header="Ignore files under this folder">
+            <MenuItem.Icon>
+                <Image Source="../Resources/Icons/Ignore.png" Stretch="None" />
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem x:Name="IgnoreThisFolderEntirely" Header="Ignore this folder entirely">
+            <MenuItem.Icon>
+                <Image Source="../Resources/Icons/Ignore.png" Stretch="None" />
+            </MenuItem.Icon>
+        </MenuItem>
     </MenuItem>
 
-    <MenuItem Header="Revert...">
+    <MenuItem Header="Revert..." IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Backout.png" Stretch="None" />
         </MenuItem.Icon>
@@ -51,7 +81,7 @@
 
     <Separator />
 
-    <MenuItem Header="Copy">
+    <MenuItem Header="Copy" IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Copy.png" Stretch="None" />
         </MenuItem.Icon>
@@ -69,19 +99,19 @@
         </MenuItem>
     </MenuItem>
 
-    <MenuItem Header="Delete..." InputGestureText="Delete">
+    <MenuItem x:Name="Delete" Header="Delete..." InputGestureText="Delete" Command="{Binding PlacementTarget.Tag.DeleteFileCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Delete.png" Stretch="None" />
         </MenuItem.Icon>
     </MenuItem>
 
-    <MenuItem Header="Edit...">
+    <MenuItem Header="Edit..." IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Edit.png" Stretch="None" />
         </MenuItem.Icon>
     </MenuItem>
 
-    <MenuItem Header="Rename...">
+    <MenuItem Header="Rename..." IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Rename.png" Stretch="None" />
         </MenuItem.Icon>
