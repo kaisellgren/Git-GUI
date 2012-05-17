@@ -147,6 +147,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppTabDataTemplateSelector.cs" />
     <Compile Include="Converters\ExtensionToImageConverter.cs" />
     <Compile Include="Converters\StatusGridGroupToColorConverter.cs" />
@@ -198,6 +201,10 @@
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <DesignData Include="DesignData\SampleApplication.xaml" />
+    <Page Include="About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DesignData\Branches.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

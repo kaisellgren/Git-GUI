@@ -41,7 +41,7 @@
                 <Setter Property="Margin" Value="2"/>
                 <Setter Property="FontSize" Value="11px"/>
                 <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Foreground" Value="#888" />
+                <Setter Property="Foreground" Value="#777" />
                 <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
                 <Setter Property="FocusVisualStyle" Value="{StaticResource TopToolbarButtonFocusVisualStyle}" />

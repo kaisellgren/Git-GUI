@@ -12,6 +12,7 @@ using GG.Libraries;
 using GG.ViewModels;
 using GG.Models;
 using System.Windows.Controls;
+using System.Windows.Media.Effects;
 
 namespace GG
 {
@@ -58,6 +59,7 @@ namespace GG
             StatusItemsGrouped.SortDescriptions.Add(new SortDescription("GenericStatus", ListSortDirection.Descending));
 
             // Initialize commands.
+            OpenAboutCommand = new DelegateCommand(OpenAbout);
             StageUnstageCommand = new DelegateCommand(StageUnstage);
             DeleteFileCommand = new DelegateCommand(DeleteFile);
         }
@@ -66,6 +68,8 @@ namespace GG
         /// Commands.
         /// </summary>
         #region Commands.
+
+        public DelegateCommand OpenAboutCommand { get; private set; }
 
         public DelegateCommand StageUnstageCommand { get; private set; }
         public DelegateCommand DeleteFileCommand { get; private set; }
@@ -116,6 +120,24 @@ namespace GG
 
             if (repo is LibGit2Sharp.Repository)
                 repo.Dispose();
+        }
+
+        /// <summary>
+        /// Opens the about dialog.
+        /// </summary>
+        /// <param name="action"></param>
+        private void OpenAbout(object action)
+        {
+            Window about = new About();
+
+            // Apply a blur effect to main window.
+            BlurEffect blur = new BlurEffect();
+            blur.Radius = 4;
+            Application.Current.MainWindow.Effect = blur;
+
+            about.ShowDialog();
+
+            Application.Current.MainWindow.Effect = null;
         }
 
         #endregion
