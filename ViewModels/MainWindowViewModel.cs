@@ -96,9 +96,9 @@ namespace GG
 
             mainWindowViewModel.RepositoryViewModels.Add(repository);
 
-            tabControl.SelectedItem = repository;
-            ListView recentRepositoriesList = UIHelper.FindChild<ListView>(tabControl.Items[tabControl.SelectedIndex] as NewTabPage, "RecentRepositoriesList");
-            int f = 5;
+            // TODO: Automatically give focus to the ListView's first item.
+            //tabControl.SelectedItem = repository;
+            //ListView recentRepositoriesList = UIHelper.FindChild<ListView>(tabControl.ItemContainerGenerator.ContainerFromIndex(0), "RecentRepositoriesList");
         }
 
         #endregion
