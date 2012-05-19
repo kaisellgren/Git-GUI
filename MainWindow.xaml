@@ -5,7 +5,12 @@
         xmlns:local="clr-namespace:GG"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-        Title="Git-GUI" Icon="Resources/Icons/Git-GUI.png" WindowState="Normal" Style="{StaticResource WindowGlassStyle}" Loaded="OnLoad" d:DesignWidth="1027" d:DesignHeight="549">
+        Title="Git-GUI" Icon="Resources/Icons/Git-GUI.png" WindowState="Normal" Style="{StaticResource WindowGlassStyle}" Loaded="OnLoad" d:DesignWidth="1152" d:DesignHeight="546">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseTabCommand}" Key="W" Modifiers="Control" />
+        <KeyBinding Command="{Binding CreateTabCommand}" Key="T" Modifiers="Control" />
+    </Window.InputBindings>
+    
     <DockPanel Margin="0,-24,0,0" d:DataContext="{d:DesignData Source=./DesignData/SampleApplication.xaml}">
         <TabControl x:Name="RepositoryTabs"
                     d:LayoutOverrides="Margin"
