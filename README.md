@@ -29,11 +29,10 @@ I aim to make a complete product that features the majority of Git functionality
 So you want to fix a bug or add a feature? Or perhaps you just want to try it out? Here's what you need to do:
 
 - Install [.NET Framework 4.5](http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=27541) or newer.
-- Install [Visual Studio 2011 Developer Preview](http://www.microsoft.com/download/en/details.aspx?id=27538).
+- Install [Visual Studio 2011 Beta](http://www.microsoft.com/download/en/details.aspx?id=27538) or newer.
 - Install [Nuget](http://nuget.org/) for Visual Studio (it's a package manager).
 - Restart Visual Studio.
-- Install [LibGit2Sharp](http://nuget.org/packages/LibGit2Sharp) via NuGet.
+- Install [LibGit2Sharp](http://nuget.org/packages/LibGit2Sharp) via NuGet: ```Install-Package LibGit2Sharp``` (or using the GUI)
+- Install [YamlDotNet.Core](https://nuget.org/packages/YamlDotNet.Core) via NuGet: ```Install-Package YamlDotNet.Core``` (or using the GUI)
 - Restart Visual Studio or reload the project.
-- [Download dependencies](https://docs.google.com/open?id=0B-3-X85VysdNZDlkN2MwYmItZWY1OS00MTc4LWFiNjktZTVlOGU3MTBhNjE5) to 
-```Externals``` 
-folder.
+- Press F5.
