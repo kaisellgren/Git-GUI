@@ -10,15 +10,15 @@
         <KeyBinding Command="{Binding CloseTabCommand}" Key="W" Modifiers="Control" />
         <KeyBinding Command="{Binding CreateTabCommand}" Key="T" Modifiers="Control" />
     </Window.InputBindings>
-    
+
     <DockPanel Margin="0,-24,0,0" d:DataContext="{d:DesignData Source=./DesignData/SampleApplication.xaml}">
         <TabControl x:Name="RepositoryTabs"
-                    d:LayoutOverrides="Margin"
-                    shell:WindowChrome.IsHitTestVisibleInChrome="True"
-                    Background="#e9e9e9"
-                    Padding="0"
-                    ItemsSource="{Binding RepositoryViewModels}"
-                    ItemTemplate="{StaticResource AppTabItemTemplate}"
-                    ContentTemplateSelector="{DynamicResource AppTabContentTemplateSelector}" />
+                d:LayoutOverrides="Margin"
+                shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                Background="#e9e9e9"
+                Padding="0"
+                ItemsSource="{Binding RepositoryViewModels}"
+                ItemTemplate="{StaticResource AppTabItemTemplate}"
+                ContentTemplateSelector="{DynamicResource AppTabContentTemplateSelector}" />
     </DockPanel>
 </Window>

@@ -1,6 +1,11 @@
 ﻿<local:MainWindowViewModel xmlns:local="clr-namespace:GG" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <local:MainWindowViewModel.RepositoryViewModels>
-        <local:RepositoryViewModel Name="Sample" RepositoryFullPath="Z:/www/git1">
+        <local:RepositoryViewModel Name="New Tab" NotOpened="True">
+            <local:RepositoryViewModel.Commits>
+            </local:RepositoryViewModel.Commits>
+        </local:RepositoryViewModel>
+
+        <local:RepositoryViewModel Name="Sample" RepositoryFullPath="Z:/www/git1" NotOpened="True">
             <local:RepositoryViewModel.Commits>
                 <local:Commit AuthorEmail="foo@email" AuthorName="Foo" Date="12.12.2012" FormattedDate="One minute ago" Description="Foo" Hash="123" Source="asdasd">
                     <local:Commit.DisplayTags>
@@ -14,10 +19,6 @@
             <local:RepositoryViewModel.Branches>
                 <local:Branch Name="master" Tip="0123asd" IsRemote="False" IsTracking="True" />
             </local:RepositoryViewModel.Branches>
-        </local:RepositoryViewModel>
-        <local:RepositoryViewModel Name="New Tab" NotOpened="True">
-            <local:RepositoryViewModel.Commits>
-            </local:RepositoryViewModel.Commits>
         </local:RepositoryViewModel>
     </local:MainWindowViewModel.RepositoryViewModels>
     

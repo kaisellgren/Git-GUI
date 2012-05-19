@@ -4,29 +4,73 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" HorizontalAlignment="Center" VerticalAlignment="Center">
+    
     <DockPanel>
-        <GroupBox Header="Recent repositories">
-            <ListView ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.RecentRepositories}" MinWidth="250">
+        <StackPanel DockPanel.Dock="Top">
+            <WrapPanel Margin="0,32,0,24">
+                <Image Source="../Resources/Icons/Recent.png" Stretch="None" />
+                <TextBlock FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center" Margin="4,0,0,0">Recent repositories:</TextBlock>
+            </WrapPanel>
+
+            <ListView MinWidth="250"
+                      Margin="0,0,8,0"
+                      HorizontalAlignment="Left"
+                      d:DataContext="{d:DesignData Source=../DesignData/RecentRepositories.xaml}"
+                      DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}"
+                      ItemsSource="{Binding RecentRepositories}"
+                      Style="{DynamicResource NewTabListViewStyle}"
+                      x:Name="RecentRepositoriesList">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"  />
-                        <GridViewColumn Header="Path" DisplayMemberBinding="{Binding FullPath}" />
+                        <GridViewColumn Header="Path" DisplayMemberBinding="{Binding RepositoryFullPath}" />
                     </GridView>
                 </ListView.View>
             </ListView>
-        </GroupBox>
-        
-        <StackPanel DockPanel.Dock="Right" Margin="32,0,0,0" HorizontalAlignment="Right">
-            <Button Style="{DynamicResource NewTabButton}">
+        </StackPanel>
+
+        <WrapPanel DockPanel.Dock="Bottom" Margin="0,32,0,0">
+            <WrapPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="0,0,8,0" />
+                    <Setter Property="Padding" Value="4" />
+                </Style>
+                
+                <Style TargetType="Image">
+                    <Setter Property="Margin" Value="0,0,4,0" />
+                </Style>
+            </WrapPanel.Resources>
+            
+            <Button>
                 <DockPanel>
-                    <Image DockPanel.Dock="Left" Source="../Resources/Icons/Git-GUI.png" Width="32" Height="32" Margin="0,0,8,0" />
-                    <TextBlock VerticalAlignment="Center">Add Local Repository</TextBlock>
+                    <Image DockPanel.Dock="Left" Source="../Resources/Icons/Open.png" Stretch="None" />
+                    <TextBlock VerticalAlignment="Center">Open Local Repository</TextBlock>
                 </DockPanel>
             </Button>
-            <Button Style="{DynamicResource NewTabButton}">Clone Remote Repository</Button>
-            <Button Style="{DynamicResource NewTabButton}">Create Local Repository</Button>
-            <Button Style="{DynamicResource NewTabButton}">Clone SVN Repository</Button>
-            <Button Style="{DynamicResource NewTabButton}">Create GitHub Repository</Button>
-        </StackPanel>
+            <Button>
+                <DockPanel>
+                    <Image DockPanel.Dock="Left" Source="../Resources/Icons/Add.png" Stretch="None" />
+                    <TextBlock VerticalAlignment="Center">Create New Repository</TextBlock>
+                </DockPanel>
+            </Button>
+            <Button>
+                <DockPanel>
+                    <Image DockPanel.Dock="Left" Source="../Resources/Icons/Clone.png" Stretch="None" />
+                    <TextBlock VerticalAlignment="Center">Clone Repository</TextBlock>
+                </DockPanel>
+            </Button>
+            <Button>
+                <DockPanel>
+                    <Image DockPanel.Dock="Left" Source="../Resources/Icons/SVN.png" Stretch="None" />
+                    <TextBlock VerticalAlignment="Center">Clone SVN Repository</TextBlock>
+                </DockPanel>
+            </Button>
+            <Button>
+                <DockPanel>
+                    <Image DockPanel.Dock="Left" Source="../Resources/Icons/GitHub.png" Stretch="None" />
+                    <TextBlock VerticalAlignment="Center">Create GitHub Repository</TextBlock>
+                </DockPanel>
+            </Button>
+        </WrapPanel>
     </DockPanel>
 </UserControl>

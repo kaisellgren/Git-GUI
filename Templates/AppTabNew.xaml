@@ -4,13 +4,22 @@
 
     <!-- This is the content template for the application main tab control when it's just opened. -->
     <DataTemplate x:Key="AppTabNew">
-        <Border BorderBrush="#e9e9e9" BorderThickness="4">
-            <StackPanel>
+        <DockPanel>
+            <StackPanel Height="8" DockPanel.Dock="Top">
                 <StackPanel.Background>
-                    <ImageBrush ImageSource="../Resources/NewTabBackground.png" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,200,200"/>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#e9e9e9" Offset="0" />
+                        <GradientStop Color="White" Offset="1" />
+                    </LinearGradientBrush>
+                </StackPanel.Background>
+            </StackPanel>
+            
+            <StackPanel DockPanel.Dock="Bottom">
+                <StackPanel.Background>
+                    <ImageBrush ImageSource="../Resources/AbstractBackground.jpg" TileMode="None" />
                 </StackPanel.Background>
                 <controls:NewTabPage />
             </StackPanel>
-        </Border>
+        </DockPanel>
     </DataTemplate>
 </ResourceDictionary>

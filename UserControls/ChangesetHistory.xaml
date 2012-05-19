@@ -20,7 +20,7 @@
               Grid.Row="0"
               Loaded="OnDataContextChanged"
               x:Name="ChangesetHistoryGrid"
-              Style="{StaticResource ChangesetHistoryDataGridStyle}">
+              Style="{DynamicResource ChangesetHistoryDataGridStyle}">
             
         <DataGrid.Columns>
             <DataGridTemplateColumn Header="Graph" Width="128">

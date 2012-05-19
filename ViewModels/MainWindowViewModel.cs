@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using GG.Libraries;
+using GG.UserControls;
 using GG.ViewModels;
 
 namespace GG
@@ -35,14 +36,27 @@ namespace GG
             RepositoryViewModel repo = new RepositoryViewModel { Name = "Git test repository", RepositoryFullPath = "Z:/www/test-repo" };
             repo.Load();
 
-            RepositoryViewModel repo2 = new RepositoryViewModel { Name = "New tab", RepositoryFullPath = null, NotOpened = true };
-            repo2.Load();
-
             RepositoryViewModels.Add(repo);
-            RepositoryViewModels.Add(repo2);
+
+            TabControl tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
+            tabControl.SelectedIndex = 0;
 
             // Add some "recent repositories".
             RecentRepositories.Add(repo);
+
+            RecentRepositories.Add(new RepositoryViewModel
+            {
+                Name = "Symfony 2",
+                RepositoryFullPath = "C:/Program Files (x86)/symfony",
+                NotOpened = true
+            });
+
+            RecentRepositories.Add(new RepositoryViewModel
+            {
+                Name = "Linux Kernel",
+                RepositoryFullPath = "C:/Program Files (x86)/linux-stable",
+                NotOpened = true
+            });
         }
 
         #region Commands.
@@ -59,6 +73,9 @@ namespace GG
             TabControl tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
             ObservableCollection<RepositoryViewModel> repositories = tabControl.ItemsSource as ObservableCollection<RepositoryViewModel>;
             repositories.Remove(tabControl.SelectedContent as RepositoryViewModel);
+
+            if (tabControl.Items.Count == 0)
+                CreateTab(new object());
         }
 
         /// <summary>
@@ -80,6 +97,8 @@ namespace GG
             mainWindowViewModel.RepositoryViewModels.Add(repository);
 
             tabControl.SelectedItem = repository;
+            ListView recentRepositoriesList = UIHelper.FindChild<ListView>(tabControl.Items[tabControl.SelectedIndex] as NewTabPage, "RecentRepositoriesList");
+            int f = 5;
         }
 
         #endregion

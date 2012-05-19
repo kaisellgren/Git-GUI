@@ -1,0 +1,10 @@
+﻿<local:MainWindowViewModel xmlns:local="clr-namespace:GG"
+                           xmlns:models="clr-namespace:GG.Models"
+                           xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <local:MainWindowViewModel.RecentRepositories>
+        <local:RepositoryViewModel Name="git2" RepositoryFullPath="Z:/www/git2" />
+        <local:RepositoryViewModel Name="Linux Kernel" RepositoryFullPath="C:/Program Files (x86)/linux-stable" />
+        <local:RepositoryViewModel Name="test-repo" RepositoryFullPath="Z:/www/test-repo" />
+        <local:RepositoryViewModel Name="Symfony 2" RepositoryFullPath="C:/Program Files (x86)/symfony" />
+    </local:MainWindowViewModel.RecentRepositories>
+</local:MainWindowViewModel>

@@ -4,15 +4,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Colors.xaml"/>
                 <ResourceDictionary Source="Styles/TabItem.xaml"/>
                 <ResourceDictionary Source="Styles/DataGrid.xaml"/>
                 <ResourceDictionary Source="Styles/LeftToolbar.xaml"/>
                 <ResourceDictionary Source="Styles/TopToolbar.xaml"/>
                 <ResourceDictionary Source="Styles/MainWindow.xaml"/>
-                <ResourceDictionary Source="Templates/AppTabContentTemplate.xaml"/>
-                <ResourceDictionary Source="Templates/AppTabItemTemplate.xaml"/>
-                <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
-                <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
                 <ResourceDictionary Source="Styles/NewTabButton.xaml"/>
                 <ResourceDictionary Source="Styles/Panel.xaml"/>
                 <ResourceDictionary Source="Styles/GridSplitter.xaml"/>
@@ -20,6 +17,12 @@
                 <ResourceDictionary Source="Styles/ChangesetHistoryDataGrid.xaml"/>
                 <ResourceDictionary Source="Styles/TreeView.xaml"/>
                 <ResourceDictionary Source="Styles/Button.xaml"/>
+                <ResourceDictionary Source="Styles/NewTabList.xaml"/>
+                <ResourceDictionary Source="Styles/TextBlock.xaml"/>
+                <ResourceDictionary Source="Templates/AppTabContentTemplate.xaml"/>
+                <ResourceDictionary Source="Templates/AppTabItemTemplate.xaml"/>
+                <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
+                <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
