@@ -122,9 +122,8 @@
     <Reference Include="LibGit2Sharp">
       <HintPath>packages\LibGit2Sharp.0.8\lib\net35\LibGit2Sharp.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Windows.Shell, Version=3.5.41019.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Externals\Microsoft.Windows.Shell.dll</HintPath>
+    <Reference Include="Microsoft.Windows.Shell">
+      <HintPath>packages\Microsoft.Windows.Shell.3.0.1.0\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
@@ -141,9 +140,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="YamlDotNet.Core">
-      <HintPath>packages\YamlDotNet.Core.1.1.15\lib\YamlDotNet.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -154,6 +150,7 @@
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppTabDataTemplateSelector.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Converters\ExtensionToImageConverter.cs" />
     <Compile Include="Converters\StatusGridGroupToColorConverter.cs" />
     <Compile Include="Converters\StatusToCharacterConverter.cs" />
@@ -431,16 +428,6 @@
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="LibGit2Sharp">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="Microsoft.Windows.Shell">
       <Visible>False</Visible>
       <Group>
       </Group>

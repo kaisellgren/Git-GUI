@@ -11,8 +11,8 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3E181F9A-55E5-4769-BB53-AE95AC319AAF}.Debug|x64.ActiveCfg = Debug|x64
-		{3E181F9A-55E5-4769-BB53-AE95AC319AAF}.Debug|x64.Build.0 = Debug|x64
+		{3E181F9A-55E5-4769-BB53-AE95AC319AAF}.Debug|x64.ActiveCfg = Debug|x86
+		{3E181F9A-55E5-4769-BB53-AE95AC319AAF}.Debug|x64.Build.0 = Debug|x86
 		{3E181F9A-55E5-4769-BB53-AE95AC319AAF}.Debug|x86.ActiveCfg = Debug|x86
 		{3E181F9A-55E5-4769-BB53-AE95AC319AAF}.Debug|x86.Build.0 = Debug|x86
 		{3E181F9A-55E5-4769-BB53-AE95AC319AAF}.Release|x64.ActiveCfg = Release|x64
@@ -22,8 +22,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

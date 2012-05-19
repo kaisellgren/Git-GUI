@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Serialization;
 using GG.Libraries;
 using GG.UserControls;
 using GG.ViewModels;
@@ -24,39 +26,35 @@ namespace GG
             CloseTabCommand = new DelegateCommand(CloseTab);
         }
 
+        /// <summary>
+        /// Loads the initial configuration.
+        /// </summary>
         public void Load()
         {
-            // C:/Program Files (x86)/linux-stable
-            // Z:/www/git2
-            // Z:/www/test-repo
-            // C:/Program Files (x86)/symfony
-            // C:/Program Files (x86)/node
+            if (File.Exists("./Configuration.xml"))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Configuration));
+                using (FileStream fileStream = new FileStream("./Configuration.xml", FileMode.Open))
+                {
+                    Configuration configuration = (Configuration) serializer.Deserialize(fileStream);
 
-            // Add some test repositories.
-            RepositoryViewModel repo = new RepositoryViewModel { Name = "Git test repository", RepositoryFullPath = "Z:/www/test-repo" };
-            repo.Load();
+                    // Fill the "RecentRepositories" collection and load them.
+                    foreach (RecentRepositoryConfiguration recent in configuration.RecentRepositories)
+                    {
+                        RepositoryViewModel repo = new RepositoryViewModel { Name = recent.Name, RepositoryFullPath = recent.RepositoryFullPath };
+                        repo.Load();
 
-            RepositoryViewModels.Add(repo);
+                        RepositoryViewModels.Add(repo);
+                        RecentRepositories.Add(repo);
+                    }
+                }
+            }
 
+            CreateTab(new object()); // Create "New Tab".
+
+            // Select the first tab.
             TabControl tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
             tabControl.SelectedIndex = 0;
-
-            // Add some "recent repositories".
-            RecentRepositories.Add(repo);
-
-            RecentRepositories.Add(new RepositoryViewModel
-            {
-                Name = "Symfony 2",
-                RepositoryFullPath = "C:/Program Files (x86)/symfony",
-                NotOpened = true
-            });
-
-            RecentRepositories.Add(new RepositoryViewModel
-            {
-                Name = "Linux Kernel",
-                RepositoryFullPath = "C:/Program Files (x86)/linux-stable",
-                NotOpened = true
-            });
         }
 
         #region Commands.
