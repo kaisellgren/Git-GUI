@@ -33,6 +33,6 @@ So you want to fix a bug or add a feature? Or perhaps you just want to try it ou
 - Install [Nuget](http://nuget.org/) for Visual Studio (it's a package manager).
 - Restart Visual Studio.
 - Install [LibGit2Sharp](http://nuget.org/packages/LibGit2Sharp) via NuGet: ```Install-Package LibGit2Sharp``` (or using the GUI)
-- Install [YamlDotNet.Core](https://nuget.org/packages/YamlDotNet.Core) via NuGet: ```Install-Package YamlDotNet.Core``` (or using the GUI)
+- Install [YamlSerializer](https://nuget.org/packages/YamlSerializer) via NuGet: ```Install-Package YamlSerializer``` (or using the GUI)
 - Restart Visual Studio or reload the project.
 - Press F5.
