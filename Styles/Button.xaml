@@ -51,4 +51,87 @@
         </Setter>
     </Style>
 
+    <!-- Window top buttons (maximize, close, etc.). -->
+    
+    <Style x:Key="WindowTopButtonFocusVisualStyle">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Grid Margin="3 2">
+                        <Rectangle Name="r1" StrokeThickness="1" Stroke="Black" StrokeDashArray="2 2"/>
+                        <Border Name="border" Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}"  CornerRadius="2" BorderThickness="1" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="WindowTopButtonStyle" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource WindowTopButtonFocusVisualStyle}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border" BorderThickness="0,1,1,1" Padding="8,6" BorderBrush="#303030" CornerRadius="0" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="contentShadow" Style="{StaticResource ShadowStyle}">
+                                <ContentPresenter.RenderTransform>
+                                    <TranslateTransform X="1.0" Y="1.0" />
+                                </ContentPresenter.RenderTransform>
+                            </ContentPresenter>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="content" />
+                        </Grid>
+                    </Border>
+                    
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#a0a0a0" Offset="0" />
+                                        <GradientStop Color="#7c7c7c" Offset="0.05" />
+                                        <GradientStop Color="#666666" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#a6d4ff" Offset="0" />
+                                        <GradientStop Color="#6bb4f8" Offset="0.05" />
+                                        <GradientStop Color="#3780c4" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" >
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" >
+                                        <GradientStop Color="#86c5ff" Offset="0" />
+                                        <GradientStop Color="#4c9eea" Offset="0.05" />
+                                        <GradientStop Color="#2166a6" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            
+                            <Setter TargetName="content" Property="RenderTransform" >
+                                <Setter.Value>
+                                    <TranslateTransform Y="1.0" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

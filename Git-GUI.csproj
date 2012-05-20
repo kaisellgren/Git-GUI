@@ -245,9 +245,6 @@
     <Page Include="Styles\GridSplitter.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\NewTabButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Styles\NewTabList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -459,6 +456,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\Cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\CloseWindow.png" />
+    <Resource Include="Resources\Icons\MaximizeWindow.png" />
+    <Resource Include="Resources\Icons\MinimizeWindow.png" />
+    <Resource Include="Resources\Icons\RestoreWindow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

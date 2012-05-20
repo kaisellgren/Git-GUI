@@ -5,20 +5,41 @@
         xmlns:local="clr-namespace:GG"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-        Title="Git-GUI" Icon="Resources/Icons/Git-GUI.png" WindowState="Normal" Style="{StaticResource WindowGlassStyle}" Loaded="OnLoad" d:DesignWidth="1152" d:DesignHeight="546">
+        Title="Git-GUI" Icon="Resources/Icons/Git-GUI.png" WindowState="Normal" Style="{StaticResource WindowGlassStyle}" Loaded="OnLoad" StateChanged="WindowStateChanged" d:DesignWidth="1152" d:DesignHeight="546">
     <Window.InputBindings>
         <KeyBinding Command="{Binding CloseTabCommand}" Key="W" Modifiers="Control" />
         <KeyBinding Command="{Binding CreateTabCommand}" Key="T" Modifiers="Control" />
     </Window.InputBindings>
 
-    <DockPanel Margin="0,-24,0,0" d:DataContext="{d:DesignData Source=./DesignData/SampleApplication.xaml}">
+    <Grid Margin="0,-1,0,0" d:DataContext="{d:DesignData Source=./DesignData/SampleApplication.xaml}">
         <TabControl x:Name="RepositoryTabs"
                 d:LayoutOverrides="Margin"
                 shell:WindowChrome.IsHitTestVisibleInChrome="True"
                 Background="#e9e9e9"
                 Padding="0"
+                BorderBrush="#222"
                 ItemsSource="{Binding RepositoryViewModels}"
                 ItemTemplate="{StaticResource AppTabItemTemplate}"
                 ContentTemplateSelector="{DynamicResource AppTabContentTemplateSelector}" />
-    </DockPanel>
+
+        <!-- Application window buttons (close, maximize, restore, minimize). -->
+        <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Top" shell:WindowChrome.IsHitTestVisibleInChrome="True" Margin="0,0,-1,0">
+            <Border BorderBrush="#303030" BorderThickness="1,0,0,0">
+                <WrapPanel>
+                    <Button Style="{StaticResource WindowTopButtonStyle}" Click="MinimizeApplication">
+                        <Image Source="./Resources/Icons/MinimizeWindow.png" Stretch="None" />
+                    </Button>
+                    <Button Style="{StaticResource WindowTopButtonStyle}" Click="MaximizeApplication" x:Name="MaximizeApplicationButton">
+                        <Image Source="./Resources/Icons/MaximizeWindow.png" Stretch="None" />
+                    </Button>
+                    <Button Style="{StaticResource WindowTopButtonStyle}" Click="RestoreApplication" x:Name="RestoreApplicationButton">
+                        <Image Source="./Resources/Icons/RestoreWindow.png" Stretch="None" />
+                    </Button>
+                    <Button Style="{StaticResource WindowTopButtonStyle}" Click="CloseApplication">
+                        <Image Source="./Resources/Icons/CloseWindow.png" Stretch="None" />
+                    </Button>
+                </WrapPanel>
+            </Border>
+        </WrapPanel>
+    </Grid>
 </Window>

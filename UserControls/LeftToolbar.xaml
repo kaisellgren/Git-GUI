@@ -5,14 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
 
-    <Border CornerRadius="8,0,0,0" BorderBrush="#bbb" BorderThickness="1,1,1,0" ClipToBounds="True">
+    <Border BorderBrush="#bbb" BorderThickness="1,1,1,0">
         <Grid>
-            <Border Name="LeftToolbarMask" Background="White" CornerRadius="8,0,0,0" />
-            <Grid VerticalAlignment="Stretch" Style="{DynamicResource LeftToolbarStyle}" HorizontalAlignment="Left" Width="160" ClipToBounds="True">
-                <Grid.OpacityMask>
-                    <VisualBrush Visual="{Binding ElementName=LeftToolbarMask}"/>
-                </Grid.OpacityMask>
-                
+            <Grid VerticalAlignment="Stretch" Style="{DynamicResource LeftToolbarStyle}" HorizontalAlignment="Left" Width="160">
                 <Grid Margin="8" d:DataContext="{d:DesignData Source=../DesignData/Branches.xaml}">
                     <TreeView Background="{x:Null}" BorderThickness="0" Padding="0">
                         <TreeViewItem ItemsSource="{Binding Branches}" PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown">
