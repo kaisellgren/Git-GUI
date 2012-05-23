@@ -21,9 +21,15 @@
                       Style="{DynamicResource NewTabListViewStyle}"
                       x:Name="RecentRepositoriesList"
                       MouseDoubleClick="OnMouseDoubleClick">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource {x:Type GridViewColumnHeader}}">
+                        <Setter Property="MinWidth" Value="100" />
+                    </Style>
+                </ListView.Resources>
+                
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"  />
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
                         <GridViewColumn Header="Path" DisplayMemberBinding="{Binding RepositoryFullPath}" />
                     </GridView>
                 </ListView.View>
