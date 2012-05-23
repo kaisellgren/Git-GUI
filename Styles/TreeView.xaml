@@ -23,7 +23,7 @@
         </Style.Resources>
     </Style>
 
-    <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="0,1" StartPoint="0,0">
+    <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="0,1" StartPoint="0,0" >
         <GradientStop Color="#b3e5fc" Offset="0"/>
         <GradientStop Color="#8cc8e3" Offset="0.05"/>
         <GradientStop Color="#609fbb" Offset="0.95"/>

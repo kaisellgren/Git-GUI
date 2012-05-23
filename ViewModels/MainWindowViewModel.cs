@@ -38,14 +38,23 @@ namespace GG
                 {
                     Configuration configuration = (Configuration) serializer.Deserialize(fileStream);
 
+                    var alreadyOpenedOneRepo = false;
+
                     // Fill the "RecentRepositories" collection and load them.
                     foreach (RecentRepositoryConfiguration recent in configuration.RecentRepositories)
                     {
                         RepositoryViewModel repo = new RepositoryViewModel { Name = recent.Name, RepositoryFullPath = recent.RepositoryFullPath };
-                        repo.Load();
 
-                        RepositoryViewModels.Add(repo);
                         RecentRepositories.Add(repo);
+
+                        // Only open the most recent one.
+                        if (alreadyOpenedOneRepo == false)
+                        {
+                            repo.Load();
+                            RepositoryViewModels.Add(repo);
+                        }
+
+                        alreadyOpenedOneRepo = true;
                     }
                 }
             }

@@ -21,6 +21,7 @@ namespace GG
         public string Name { get; set; }
         public string RepositoryFullPath { get; set; }
         public bool   NotOpened { get; set; }
+        private bool alreadyLoaded = false;
 
         public RangedObservableCollection<Commit>     Commits { get; set; }
         public RangedObservableCollection<StatusItem> StatusItems { get; set; }
@@ -147,17 +148,29 @@ namespace GG
         /// <summary>
         /// A method that loads the entire repository.
         /// </summary>
-        public void Load()
+        public bool Load()
         {
+            if (alreadyLoaded == true)
+                throw new Exception("You may not load the repository more than once.");
+
             if (NotOpened == false)
             {
                 Console.WriteLine("Loading and constructing repository data for \"" + RepositoryFullPath + "\".");
 
-                ConstructRepository();
-                LoadRepositoryStatus();
+                var result = ConstructRepository();
 
-                ListenToDirectoryChanges();
+                if (result == true)
+                {
+                    LoadRepositoryStatus();
+                    ListenToDirectoryChanges();
+                }
+
+                return result;
             }
+
+            alreadyLoaded = true;
+
+            return false;
         }
 
         /// <summary>
@@ -165,52 +178,65 @@ namespace GG
         /// 
         /// This will limit the amount of changesets to 100 / n.
         /// </summary>
-        private void ConstructRepository()
+        private bool ConstructRepository()
         {
-            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+            bool result;
 
-            // Create tags.
-            Console.WriteLine("Constructs repository tags for \"" + RepositoryFullPath + "\".");
-            foreach (LibGit2Sharp.Tag tag in repo.Tags)
+            try
             {
-                Tag t = Tag.Create(repo, tag);
+                LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
-                if (t.HasCommitAsTarget)
-                    Tags.Add(t);
+                // Create tags.
+                Console.WriteLine("Constructs repository tags for \"" + RepositoryFullPath + "\".");
+                foreach (LibGit2Sharp.Tag tag in repo.Tags)
+                {
+                    Tag t = Tag.Create(repo, tag);
+
+                    if (t.HasCommitAsTarget)
+                        Tags.Add(t);
+                }
+
+                // Create commits.
+                Console.WriteLine("Constructs repository commits for \"" + RepositoryFullPath + "\".");
+                List<Commit> commitList = new List<Commit>();
+                foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }).Take(CommitsPerPage))
+                {
+                    commitList.Add(Commit.Create(repo, commit, Tags));
+                }
+                Commits.AddRange(commitList);
+
+                // Create branches.
+                Console.WriteLine("Constructs repository branches for \"" + RepositoryFullPath + "\".");
+                foreach (LibGit2Sharp.Branch branch in repo.Branches)
+                {
+                    Branch b = Branch.Create(repo, branch, Commits, CommitsPerPage);
+                    Branches.Add(b);
+                }
+
+                // Post-process branches (tips and tracking branches).
+                Console.WriteLine("Post-processing repository branches for \"" + RepositoryFullPath + "\".");
+                foreach (Branch branch in Branches)
+                {
+                    branch.PostProcess(Branches, Commits);
+                }
+
+                // Post-process commits (commit parents).
+                Console.WriteLine("Post-processing repository commits for \"" + RepositoryFullPath + "\".");
+                foreach (Commit commit in Commits)
+                {
+                    commit.PostProcess(Commits, Branches);
+                }
+
+                repo.Dispose();
+
+                result = true;
+            }
+            catch (Exception e)
+            {
+                result = false;
             }
 
-            // Create commits.
-            Console.WriteLine("Constructs repository commits for \"" + RepositoryFullPath + "\".");
-            List<Commit> commitList = new List<Commit>();
-            foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }).Take(CommitsPerPage))
-            {
-                commitList.Add(Commit.Create(repo, commit, Tags));
-            }
-            Commits.AddRange(commitList);
-
-            // Create branches.
-            Console.WriteLine("Constructs repository branches for \"" + RepositoryFullPath + "\".");
-            foreach (LibGit2Sharp.Branch branch in repo.Branches)
-            {
-                Branch b = Branch.Create(repo, branch, Commits, CommitsPerPage);
-                Branches.Add(b);
-            }
-
-            // Post-process branches (tips and tracking branches).
-            Console.WriteLine("Post-processing repository branches for \"" + RepositoryFullPath + "\".");
-            foreach (Branch branch in Branches)
-            {
-                branch.PostProcess(Branches, Commits);
-            }
-
-            // Post-process commits (commit parents).
-            Console.WriteLine("Post-processing repository commits for \"" + RepositoryFullPath + "\".");
-            foreach (Commit commit in Commits)
-            {
-                commit.PostProcess(Commits, Branches);
-            }
-
-            repo.Dispose();
+            return result;
         }
 
         /// <summary>
@@ -258,6 +284,14 @@ namespace GG
         }
 
 #endregion
+
+        /// <summary>
+        /// Sets this repository as the active tab on the tab control.
+        /// </summary>
+        public void SetThisRepositoryAsTheActiveTab()
+        {
+            UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs").SelectedItem = this;
+        }
 
         /// <summary>
         /// Refresh some data when the repository directory changes.

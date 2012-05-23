@@ -20,7 +20,7 @@ namespace GG.Models
         public List<Branch> Branches     { get; set; }
         public List<Branch> BranchesAround { get; set; }
         public List<string> ParentHashes { get; set; }
-        public uint         ParentCount  { get; set; }
+        public int          ParentCount  { get; set; }
         public List<Commit> Parents      { get; set; }
         public List<Commit> Siblings     { get; set; }
 

@@ -93,7 +93,11 @@ namespace GG.Libraries
                 commitSiblings.OrderBy(o => o.Hash.ToString());
 
                 // Retrieve the index of this commit's branch on the list. This index determines the horizontal positions of dots (commit dots).
-                int indexOfCurrentBranch = branchesAroundCommit.IndexOf(commit.Branches.ElementAt(0));
+                int indexOfCurrentBranch;
+                if (commit.Branches.Count > 0)
+                    indexOfCurrentBranch = branchesAroundCommit.IndexOf(commit.Branches.ElementAt(0));
+                else
+                    indexOfCurrentBranch = 0;
                 int indexOfAmongSiblings = commitSiblings.IndexOf(commit);
                 int horizontalIndex = indexOfCurrentBranch + (indexOfAmongSiblings >= 0 ? indexOfAmongSiblings : 0);
 
@@ -139,53 +143,55 @@ namespace GG.Libraries
                     graph.Children.Add(dotInner);
                 }
 
-                // Draw the line to the parent dot(s)/commit(s).
-                foreach (string hash in commit.ParentHashes)
+                if (commit.Branches.Count > 0)
                 {
-                    // Retrieve the parent commit dot position.
-                    var positions = commitDotPositions.Where(o => o.Key == hash);
-
-                    if (positions.Count() > 0)
+                    // Draw the line to the parent dot(s)/commit(s).
+                    foreach (string hash in commit.ParentHashes)
                     {
-                        int[] parentPosition = commitDotPositions.Where(o => o.Key == hash).First().Value;
+                        // Retrieve the parent commit dot position.
+                        var positions = commitDotPositions.Where(o => o.Key == hash);
 
-                        Brush lineColor = BranchColors[commit.Branches.ElementAt(0).Name];
-
-                        // Calculate line positions.
-                        float startLineX1 = dotX + dotSize / 2;
-                        float startLineY1 = dotY + dotSize / 2;
-                        float endLineX2 = parentPosition[0] + dotSize / 2;
-                        float endLineY2 = parentPosition[1] + dotSize / 2;
-                        float startLineX2;
-                        float startLineY2;
-                        float endLineX1;
-                        float endLineY1;
-
-                        if (commit.IsMergeCommit())
+                        if (positions.Count() > 0)
                         {
-                            startLineX2 = endLineX2;
-                            startLineY2 = startLineY1;
+                            int[] parentPosition = commitDotPositions.Where(o => o.Key == hash).First().Value;
 
-                            endLineX1 = endLineX2;
-                            endLineY1 = startLineY1;
-                        }
-                        else
-                        {
-                            startLineX2 = startLineX1;
-                            startLineY2 = parentPosition[1] - cellHeight / 2 + dotSize / 2 + 6;
+                            Brush lineColor = BranchColors[commit.Branches.ElementAt(0).Name];
 
-                            endLineX1 = startLineX1;
-                            endLineY1 = parentPosition[1] - cellHeight / 2 + dotSize / 2 + 12;
-                        }
+                            // Calculate line positions.
+                            float startLineX1 = dotX + dotSize / 2;
+                            float startLineY1 = dotY + dotSize / 2;
+                            float endLineX2 = parentPosition[0] + dotSize / 2;
+                            float endLineY2 = parentPosition[1] + dotSize / 2;
+                            float startLineX2;
+                            float startLineY2;
+                            float endLineX1;
+                            float endLineY1;
 
-                        // Construct and draw the line path.
-                        Path path = new Path
-                        {
-                            Stroke = lineColor,
-                            StrokeThickness = 3,
-                            Data = new PathGeometry
+                            if (commit.IsMergeCommit())
                             {
-                                Figures = new PathFigureCollection
+                                startLineX2 = endLineX2;
+                                startLineY2 = startLineY1;
+
+                                endLineX1 = endLineX2;
+                                endLineY1 = startLineY1;
+                            }
+                            else
+                            {
+                                startLineX2 = startLineX1;
+                                startLineY2 = parentPosition[1] - cellHeight / 2 + dotSize / 2 + 6;
+
+                                endLineX1 = startLineX1;
+                                endLineY1 = parentPosition[1] - cellHeight / 2 + dotSize / 2 + 12;
+                            }
+
+                            // Construct and draw the line path.
+                            Path path = new Path
+                            {
+                                Stroke = lineColor,
+                                StrokeThickness = 3,
+                                Data = new PathGeometry
+                                {
+                                    Figures = new PathFigureCollection
                             {
                                 new PathFigure
                                 {
@@ -204,10 +210,11 @@ namespace GG.Libraries
                                     }
                                 }
                             }
-                            }
-                        };
+                                }
+                            };
 
-                        graph.Children.Add(path);
+                            graph.Children.Add(path);
+                        }
                     }
                 }
 
