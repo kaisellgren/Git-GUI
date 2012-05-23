@@ -48,7 +48,7 @@
                     <TextBlock VerticalAlignment="Center">Open Local Repository</TextBlock>
                 </DockPanel>
             </Button>
-            <Button IsEnabled="False">
+            <Button Click="OnCreateLocalRepository">
                 <DockPanel>
                     <Image DockPanel.Dock="Left" Source="../Resources/Icons/Add.png" Stretch="None" />
                     <TextBlock VerticalAlignment="Center">Create Local Repository</TextBlock>
@@ -60,12 +60,12 @@
                     <TextBlock VerticalAlignment="Center">Clone Repository</TextBlock>
                 </DockPanel>
             </Button>
-            <Button IsEnabled="False">
+            <!--<Button>
                 <DockPanel>
                     <Image DockPanel.Dock="Left" Source="../Resources/Icons/SVN.png" Stretch="None" />
                     <TextBlock VerticalAlignment="Center">Clone SVN Repository</TextBlock>
                 </DockPanel>
-            </Button>
+            </Button>-->
         </WrapPanel>
     </DockPanel>
 </UserControl>
