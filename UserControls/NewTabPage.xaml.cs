@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GG.Libraries;
+using GG.UserControls.Dialogs;
 
 namespace GG.UserControls
 {

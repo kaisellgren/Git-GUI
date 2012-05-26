@@ -22,6 +22,7 @@
                 <ResourceDictionary Source="Templates/AppTabItemTemplate.xaml"/>
                 <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
                 <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
+                <ResourceDictionary Source="Styles/Separator.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

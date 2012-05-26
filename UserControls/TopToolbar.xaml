@@ -1,10 +1,11 @@
 ﻿<UserControl x:Class="GG.UserControls.TopToolbar"
+             x:Name="TopToolbarUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="80" d:DesignWidth="605">
     
     <StackPanel>
         <WrapPanel Style="{DynamicResource TopToolbarStyle}">
@@ -15,6 +16,36 @@
                         <TextBlock>Settings</TextBlock>
                     </StackPanel>
                 </Button>
+                
+                <Separator Width="30" Height="1" Style="{StaticResource VerticalSeparatorStyle}" />
+
+                <Button Command="{Binding Path=CreateBranchCommand, ElementName=TopToolbarUserControl}">
+                    <StackPanel>
+                        <Image Source="../Resources/Icons/Branch-24.png" Stretch="None" />
+                        <TextBlock>Branch</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel>
+                        <Image Source="../Resources/Icons/Stash-24.png" Stretch="None" />
+                        <TextBlock>Stash</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel>
+                        <Image Source="../Resources/Icons/Search.png" Stretch="None" />
+                        <TextBlock>Search</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button>
+                    <StackPanel>
+                        <Image Source="../Resources/Icons/Statistics.png" Stretch="None" />
+                        <TextBlock>Statistics</TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <Separator Width="30" Height="1" Style="{StaticResource VerticalSeparatorStyle}" />
+
                 <Button>
                     <StackPanel>
                         <Image Source="../Resources/Icons/Fetch.png" Stretch="None" />
@@ -31,18 +62,6 @@
                     <StackPanel>
                         <Image Source="../Resources/Icons/Push.png" Stretch="None" />
                         <TextBlock>Push</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button>
-                    <StackPanel>
-                        <Image Source="../Resources/Icons/Search.png" Stretch="None" />
-                        <TextBlock>Search</TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button>
-                    <StackPanel>
-                        <Image Source="../Resources/Icons/Statistics.png" Stretch="None" />
-                        <TextBlock>Statistics</TextBlock>
                     </StackPanel>
                 </Button>
             </WrapPanel>
