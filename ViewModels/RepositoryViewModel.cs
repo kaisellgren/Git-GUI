@@ -93,13 +93,16 @@ namespace GG
 
             dialog.ShowDialog();
 
-            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            if (dialog.DialogResult == true)
             {
-                var sha = repo.Head.Tip.Sha.ToString();
-                repo.Branches.Create(dialog.ResponseText, repo.Head.Tip.Sha.ToString());
-            }
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    var sha = repo.Head.Tip.Sha.ToString();
+                    repo.Branches.Create(dialog.ResponseText, repo.Head.Tip.Sha.ToString());
+                }
 
-            ConstructRepository();
+                ConstructRepository();
+            }
         }
 
         /// <summary>
