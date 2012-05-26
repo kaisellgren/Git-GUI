@@ -21,34 +21,9 @@ namespace GG.UserControls
     /// </summary>
     public partial class TopToolbar : UserControl
     {
-        public DelegateCommand CreateBranchCommand { get; private set; }
-
         public TopToolbar()
         {
             InitializeComponent();
-
-            CreateBranchCommand = new DelegateCommand(CreateBranch);
-        }
-
-        /// <summary>
-        /// Creates a branch.
-        /// </summary>
-        /// <param name="action"></param>
-        private void CreateBranch(object action)
-        {
-            Console.WriteLine("foo");
-
-            var dialog = new PromptDialog
-            {
-                Title = "Creating a new branch",
-                Message = "Please give a name for your new branch:"
-            };
-
-            dialog.ShowDialog();
-
-            var name = dialog.DialogResult;
-
-            Console.WriteLine(name);
         }
     }
 }

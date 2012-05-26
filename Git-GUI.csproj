@@ -152,7 +152,6 @@
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppTabDataTemplateSelector.cs" />
-    <Compile Include="Command.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Converters\ExtensionToImageConverter.cs" />
     <Compile Include="Converters\StatusGridGroupToColorConverter.cs" />

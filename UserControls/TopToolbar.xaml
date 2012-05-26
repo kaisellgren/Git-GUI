@@ -1,5 +1,4 @@
 ﻿<UserControl x:Class="GG.UserControls.TopToolbar"
-             x:Name="TopToolbarUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,7 +18,7 @@
                 
                 <Separator Width="30" Height="1" Style="{StaticResource VerticalSeparatorStyle}" />
 
-                <Button Command="{Binding Path=CreateBranchCommand, ElementName=TopToolbarUserControl}">
+                <Button Command="{Binding CreateBranchCommand}">
                     <StackPanel>
                         <Image Source="../Resources/Icons/Branch-24.png" Stretch="None" />
                         <TextBlock>Branch</TextBlock>

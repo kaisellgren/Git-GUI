@@ -13,6 +13,7 @@ using GG.ViewModels;
 using GG.Models;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
+using GG.UserControls.Dialogs;
 
 namespace GG
 {
@@ -60,6 +61,8 @@ namespace GG
             StatusItemsGrouped.SortDescriptions.Add(new SortDescription("GenericStatus", ListSortDirection.Descending));
 
             // Initialize commands.
+            CreateBranchCommand = new DelegateCommand(CreateBranch);
+
             OpenAboutCommand = new DelegateCommand(OpenAbout);
             StageUnstageCommand = new DelegateCommand(StageUnstage);
             DeleteFileCommand = new DelegateCommand(DeleteFile);
@@ -70,9 +73,34 @@ namespace GG
         /// </summary>
         #region Commands.
 
+        public DelegateCommand CreateBranchCommand { get; set; }
+
         public DelegateCommand OpenAboutCommand { get; private set; }
         public DelegateCommand StageUnstageCommand { get; private set; }
         public DelegateCommand DeleteFileCommand { get; private set; }
+
+        /// <summary>
+        /// Creates a branch.
+        /// </summary>
+        /// <param name="action"></param>
+        public void CreateBranch(object action)
+        {
+            var dialog = new PromptDialog
+            {
+                Title = "Creating a new branch",
+                Message = "Please give a name for your new branch:"
+            };
+
+            dialog.ShowDialog();
+
+            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            {
+                var sha = repo.Head.Tip.Sha.ToString();
+                repo.Branches.Create(dialog.ResponseText, repo.Head.Tip.Sha.ToString());
+            }
+
+            ConstructRepository();
+        }
 
         /// <summary>
         /// Stages or unstages the selected item.
