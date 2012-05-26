@@ -18,7 +18,7 @@
                                 <TextBlock>Copy message</TextBlock>
                             </WrapPanel>
                         </Button>
-                        <Button Margin="0,3,3,3">
+                        <Button Margin="0,3,3,3" Style="{StaticResource GreenButtonStyle}">
                             <WrapPanel>
                                 <Image Source="../Resources/Icons/RepositoryWrite.png" Width="16" Margin="0,0,4,0" />
                                 <TextBlock>Commit</TextBlock>
