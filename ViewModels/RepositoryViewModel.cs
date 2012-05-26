@@ -44,13 +44,13 @@ namespace GG
         public RepositoryViewModel()
         {
             // Initialize empty collections.
-            Commits       = new RangedObservableCollection<Commit> { };
-            StatusItems   = new RangedObservableCollection<StatusItem> { };
-            Branches      = new ObservableCollection<Branch> { };
-            Tags          = new ObservableCollection<Tag> { };
-            Remotes       = new ObservableCollection<Remote> { };
-            Submodules    = new ObservableCollection<Submodule> { };
-            Stashes       = new ObservableCollection<Stash> { };
+            Commits = new RangedObservableCollection<Commit> { };
+            StatusItems = new RangedObservableCollection<StatusItem> { };
+            Branches = new ObservableCollection<Branch> { };
+            Tags = new ObservableCollection<Tag> { };
+            Remotes = new ObservableCollection<Remote> { };
+            Submodules = new ObservableCollection<Submodule> { };
+            Stashes = new ObservableCollection<Stash> { };
 
             CommitsPerPage = 50;
 
@@ -71,7 +71,6 @@ namespace GG
         #region Commands.
 
         public DelegateCommand OpenAboutCommand { get; private set; }
-
         public DelegateCommand StageUnstageCommand { get; private set; }
         public DelegateCommand DeleteFileCommand { get; private set; }
 
@@ -92,6 +91,8 @@ namespace GG
                 else
                     repo.Index.Stage(RepositoryFullPath + "/" + item.Filename);
             }
+
+            repo.Dispose();
         }
 
         /// <summary>
@@ -178,16 +179,18 @@ namespace GG
         /// 
         /// This will limit the amount of changesets to 100 / n.
         /// </summary>
-        private bool ConstructRepository()
+        public bool ConstructRepository()
         {
             bool result;
-
+            LibGit2Sharp.Repository repo = null;
+            
             try
             {
-                LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+                repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
                 // Create tags.
                 Console.WriteLine("Constructs repository tags for \"" + RepositoryFullPath + "\".");
+                Tags.Clear();
                 foreach (LibGit2Sharp.Tag tag in repo.Tags)
                 {
                     Tag t = Tag.Create(repo, tag);
@@ -198,6 +201,7 @@ namespace GG
 
                 // Create commits.
                 Console.WriteLine("Constructs repository commits for \"" + RepositoryFullPath + "\".");
+                Commits.Clear();
                 List<Commit> commitList = new List<Commit>();
                 foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }).Take(CommitsPerPage))
                 {
@@ -207,9 +211,10 @@ namespace GG
 
                 // Create branches.
                 Console.WriteLine("Constructs repository branches for \"" + RepositoryFullPath + "\".");
+                Branches.Clear();
                 foreach (LibGit2Sharp.Branch branch in repo.Branches)
                 {
-                    Branch b = Branch.Create(repo, branch, Commits, CommitsPerPage);
+                    Branch b = Branch.Create(this, repo, branch);
                     Branches.Add(b);
                 }
 
@@ -227,14 +232,15 @@ namespace GG
                     commit.PostProcess(Commits, Branches);
                 }
 
-                repo.Dispose();
-
                 result = true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 result = false;
             }
+
+            if (repo is LibGit2Sharp.Repository)
+                repo.Dispose();
 
             return result;
         }

@@ -28,13 +28,13 @@ namespace GG.Models
         public int AheadBy { get; set; }
         public int BehindBy { get; set; }
 
+        private RepositoryViewModel repositoryViewModel { get; set; }
+
         /// <summary>
         /// Creates a new branch model.
         /// </summary>
-        /// <param name="repo"></param>
-        /// <param name="branch"></param>
         /// <returns></returns>
-        public static Branch Create(LibGit2Sharp.Repository repo, LibGit2Sharp.Branch branch, ObservableCollection<Commit> commits, int commitsPerPage)
+        public static Branch Create(RepositoryViewModel repositoryViewModel, LibGit2Sharp.Repository repo, LibGit2Sharp.Branch branch)
         {
             Branch newBranch = new Branch
             {
@@ -48,10 +48,12 @@ namespace GG.Models
                 TrackedBranchName = branch.TrackedBranch != null ? branch.TrackedBranch.Name : null
             };
 
+            newBranch.repositoryViewModel = repositoryViewModel;
+
             // Loop through the first N commits and let them know about me.
-            foreach (LibGit2Sharp.Commit branchCommit in branch.Commits.Take(commitsPerPage))
+            foreach (LibGit2Sharp.Commit branchCommit in branch.Commits.Take(repositoryViewModel.CommitsPerPage))
             {
-                Commit commit = commits.Where(c => c.Hash == branchCommit.Sha.ToString()).FirstOrDefault();
+                Commit commit = repositoryViewModel.Commits.Where(c => c.Hash == branchCommit.Sha.ToString()).FirstOrDefault();
 
                 if (commit != null)
                 {
@@ -80,6 +82,20 @@ namespace GG.Models
             
             // Set the Tip to be an actual Commit model.
             Tip = commits.Where(c => c.Hash == TipHash).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Deletes this branch.
+        /// </summary>
+        public void Delete()
+        {
+            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(repositoryViewModel.RepositoryFullPath);
+
+            repo.Branches.Delete(Name);
+
+            repo.Dispose();
+
+            repositoryViewModel.ConstructRepository();
         }
     }
 }
