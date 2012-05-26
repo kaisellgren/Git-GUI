@@ -61,6 +61,9 @@
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="#aaa" />
+                                </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="border" Property="BorderBrush" Value="#c0c0c0" />
                                     <Setter Property="Foreground" Value="#555" />

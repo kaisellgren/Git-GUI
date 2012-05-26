@@ -9,7 +9,7 @@
     <StackPanel>
         <WrapPanel Style="{DynamicResource TopToolbarStyle}">
             <WrapPanel Margin="4,0,0,0">
-                <Button>
+                <Button IsEnabled="False">
                     <StackPanel>
                         <Image Source="../Resources/Icons/Settings.png" Stretch="None" />
                         <TextBlock>Settings</TextBlock>
@@ -24,19 +24,19 @@
                         <TextBlock>Branch</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button>
+                <Button IsEnabled="False">
                     <StackPanel>
                         <Image Source="../Resources/Icons/Stash-24.png" Stretch="None" />
                         <TextBlock>Stash</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button>
+                <Button IsEnabled="False">
                     <StackPanel>
                         <Image Source="../Resources/Icons/Search.png" Stretch="None" />
                         <TextBlock>Search</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button>
+                <Button IsEnabled="False">
                     <StackPanel>
                         <Image Source="../Resources/Icons/Statistics.png" Stretch="None" />
                         <TextBlock>Statistics</TextBlock>
@@ -45,19 +45,19 @@
 
                 <Separator Width="30" Height="1" Style="{StaticResource VerticalSeparatorStyle}" />
 
-                <Button>
+                <Button IsEnabled="False">
                     <StackPanel>
                         <Image Source="../Resources/Icons/Fetch.png" Stretch="None" />
                         <TextBlock>Fetch</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button>
+                <Button IsEnabled="False">
                     <StackPanel>
                         <Image Source="../Resources/Icons/Pull.png" Stretch="None" />
                         <TextBlock>Pull</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button>
+                <Button IsEnabled="False">
                     <StackPanel>
                         <Image Source="../Resources/Icons/Push.png" Stretch="None" />
                         <TextBlock>Push</TextBlock>
