@@ -50,41 +50,47 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border Name="border" BorderThickness="1" Padding="4,2" BorderBrush="Transparent" CornerRadius="3" Background="{TemplateBinding Background}">
-                                <Grid>
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="contentShadow" Style="{StaticResource ShadowStyle}">
-                                        <ContentPresenter.RenderTransform>
-                                            <TranslateTransform X="1.0" Y="1.0" />
-                                        </ContentPresenter.RenderTransform>
-                                    </ContentPresenter>
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="content"/>
-                                </Grid>
+                            <Border Name="border" BorderThickness="1" BorderBrush="Transparent" CornerRadius="3" Background="{TemplateBinding Background}">
+                                <Border Name="InnerBorder" BorderThickness="1" BorderBrush="Transparent" Padding="4,2" CornerRadius="3">
+                                    <Grid>
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="contentShadow" Style="{StaticResource ShadowStyle}">
+                                            <ContentPresenter.RenderTransform>
+                                                <TranslateTransform X="1.0" Y="1.0" />
+                                            </ContentPresenter.RenderTransform>
+                                        </ContentPresenter>
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="content"/>
+                                    </Grid>
+                                </Border>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="#aaa" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="BorderBrush" Value="#c0c0c0" />
+                                    <Setter TargetName="InnerBorder" Property="BorderBrush" Value="#99ffffff" />
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#bbb" />
                                     <Setter Property="Foreground" Value="#555" />
                                     <Setter Property="Background">
                                         <Setter.Value>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
-                                                <GradientStop Color="#f0f0f0" Offset="0.35"/>
-                                                <GradientStop Color="#e0e0e0" Offset="0.95"/>
-                                                <GradientStop Color="#d9d9d9" Offset="1"/>
+                                                <GradientStop Color="#ffffff" Offset="0"/>
+                                                <GradientStop Color="#e9e9e9" Offset="0.15"/>
+                                                <GradientStop Color="#dddddd" Offset="0.85"/>
                                             </LinearGradientBrush>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border" Property="BorderBrush" Value="#d0d0d0" />
+                                    <Setter TargetName="InnerBorder" Property="BorderBrush" Value="#fff" />
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#999" />
                                     <Setter Property="Background">
                                         <Setter.Value>
                                             <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" >
-                                                <GradientStop Color="#f0f0f0" Offset="0.35"/>
-                                                <GradientStop Color="#e0e0e0" Offset="0.95"/>
-                                                <GradientStop Color="#d9d9d9" Offset="1"/>
+                                                <GradientStop Color="#fff" Offset="0"/>
+                                                <GradientStop Color="#eee" Offset="0.10"/>
+                                                <GradientStop Color="#eee" Offset="0.80"/>
+                                                <GradientStop Color="#ddd" Offset="0.90"/>
+                                                <GradientStop Color="#aaa" Offset="1"/>
                                             </LinearGradientBrush>
                                         </Setter.Value>
                                     </Setter>
