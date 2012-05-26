@@ -2,21 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="ListBoxItem" x:Key="DisplayTagsItemStyle">
-        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Foreground" Value="#fff" />
         <Setter Property="FontSize" Value="11" />
         <Setter Property="Margin" Value="0,0,4,0" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
-        <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
     <Style TargetType="ListBox" x:Key="DisplayTagsStyle">
-        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
@@ -38,16 +31,17 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListBoxItem">
-                            <Border Padding="3,1,3,2" SnapsToDevicePixels="true" CornerRadius="4" BorderThickness="1" BorderBrush="#444" UseLayoutRounding="True">
+                            <Border CornerRadius="3" BorderThickness="1" BorderBrush="#888">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientStop Offset="0" Color="#B9C8D9" />
-                                        <GradientStop Offset="0.15" Color="#8DA3BE" />
-                                        <GradientStop Offset="0.9" Color="#8DA3BE" />
-                                        <GradientStop Offset="1" Color="#72859D" />
+                                        <GradientStop Color="#5ca8e9" Offset="0"/>
+                                        <GradientStop Color="#4892d0" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Border.Background>
-                                <ContentPresenter />
+                                
+                                <Border Padding="2,0,2,1" CornerRadius="3" BorderThickness="1" BorderBrush="#55ffffff">
+                                    <ContentPresenter />
+                                </Border>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
