@@ -1,0 +1,11 @@
+﻿<local:RepositoryViewModel xmlns:local="clr-namespace:GG"
+                           xmlns:models="clr-namespace:GG.Models"
+                           xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <local:RepositoryViewModel.Commits>
+        <models:Commit Hash="0123456789abcdef" Description="A sample commit." AuthorName="Kai Sellgren" AuthorEmail="foo@foo.foo">
+            <models:Commit.DisplayTags>
+                <sys:String>master</sys:String>
+            </models:Commit.DisplayTags>
+        </models:Commit>
+    </local:RepositoryViewModel.Commits>
+</local:RepositoryViewModel>
