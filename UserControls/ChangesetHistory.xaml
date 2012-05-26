@@ -27,9 +27,6 @@
                 <DataGridTemplateColumn.CellTemplate><DataTemplate></DataTemplate></DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
                 
-            <DataGridTextColumn Binding="{Binding Path=HashShort}" Header="Hash"></DataGridTextColumn>
-            <DataGridTextColumn Binding="{Binding Path=Branches}" Header="Branches"></DataGridTextColumn>
-                
             <DataGridTemplateColumn Header="Description" Width="*">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
@@ -44,6 +41,7 @@
                 
             <DataGridTextColumn Binding="{Binding Path=FormattedDate}" Header="Date"></DataGridTextColumn>
             <DataGridTextColumn Binding="{Binding Path=Author}" Header="Author"></DataGridTextColumn>
+            <DataGridTextColumn Binding="{Binding Path=HashShort}" Header="Hash"></DataGridTextColumn>
         </DataGrid.Columns>
     </DataGrid>
 </UserControl>
