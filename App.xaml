@@ -23,6 +23,7 @@
                 <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
                 <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
                 <ResourceDictionary Source="Styles/Separator.xaml"/>
+                <ResourceDictionary Source="Styles/Border.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
