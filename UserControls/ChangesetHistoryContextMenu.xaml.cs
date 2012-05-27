@@ -84,6 +84,12 @@ namespace GG.UserControls
                         }
                     }
                 }
+
+                if (branch.Tip == commit && branch != (Branch) repositoryViewModel.Head)
+                {
+                    Items.Insert(menuItemIndex++, CreateMenuItem(String.Format("Merge \"{0}\" into \"{1}\"", branch.Name, ((Branch) repositoryViewModel.Head).Name), "Merge"));
+                    numberOfCheckoutItems++;
+                }
             }
 
             if (numberOfMergeItems > 1)
