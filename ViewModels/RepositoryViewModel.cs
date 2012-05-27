@@ -31,6 +31,7 @@ namespace GG
         public ObservableCollection<Remote>           Remotes { get; set; }
         public ObservableCollection<Submodule>        Submodules { get; set; }
         public ObservableCollection<Stash>            Stashes { get; set; }
+        public ObservableCollection<String>           RecentCommitMessages { get; private set; }
         public ListCollectionView                     StatusItemsGrouped { get; set; }
 
         /// <summary>
@@ -39,6 +40,7 @@ namespace GG
         public object Head { get; set; }
 
         public int CommitsPerPage { get; set; }
+        public int RecentCommitMessageCount { get; set; }
 
         /// <summary>
         /// The delegate used for reloading the status grid items upon filesystem changes.
@@ -59,6 +61,7 @@ namespace GG
             Stashes = new ObservableCollection<Stash> { };
 
             CommitsPerPage = 50;
+            RecentCommitMessageCount = 10;
 
             // Initialize status item view and group.
             StatusItemsGrouped = new ListCollectionView(StatusItems);
@@ -199,6 +202,7 @@ namespace GG
                 if (result == true)
                 {
                     LoadRepositoryStatus();
+                    LoadRecentCommitMessages(RecentCommitMessageCount);
                     ListenToDirectoryChanges();
                 }
 
@@ -326,6 +330,14 @@ namespace GG
             StatusItems.AddRange(itemList);
 
             repo.Dispose();
+        }
+
+        /// <summary>
+        /// Stores the last numCommits commit messages.
+        /// </summary>
+        private void LoadRecentCommitMessages(int numCommits)
+        {
+            RecentCommitMessages = new ObservableCollection<String>(Commits.Take(10).Select(c => c.Description).ToArray());
         }
 
 #endregion
