@@ -9,13 +9,19 @@
     <UserControl.Template>
         <ControlTemplate>
             <StackPanel>
+                <Popup Name="Commit_Messages_Popup" IsOpen="True" StaysOpen="False" PlacementTarget="{Binding ElementName=Copy_Commit_Button}">
+                    <ListBox Name="Commit_Messages_ListBox" SelectionMode="Single" MouseDown="Commit_Messages_ListBox_MouseDown">
+                        <ListBoxItem Content="Commit Msg1"></ListBoxItem>
+                        <ListBoxItem Content="Commit Msg2"></ListBoxItem>
+                    </ListBox>
+                </Popup>
                 <DockPanel Style="{DynamicResource PanelHeaderStyle}">
                     <TextBlock DockPanel.Dock="Left" Style="{DynamicResource PanelHeaderTextStyle}" Text="{TemplateBinding local:Panel.HeaderText}" />
                     <WrapPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
-                        <Button Margin="3">
+                        <Button Name="Copy_Commit_Button" Margin="3" ClickMode="Press" Click="Button_Click">
                             <WrapPanel>
                                 <Image Source="../Resources/Icons/MessageWrite.png" Width="16" Margin="0,0,4,0" />
-                                <TextBlock>Copy message</TextBlock>
+                                <TextBlock>Copy Commit</TextBlock>
                             </WrapPanel>
                         </Button>
                         <Button Margin="0,3,3,3" Style="{StaticResource GreenButtonStyle}">
