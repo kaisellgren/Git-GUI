@@ -118,5 +118,15 @@ namespace GG.Libraries
                 yield return branch;
             }
         }
+
+        /// <summary>
+        /// Returns all branches that track the given branch.
+        /// </summary>
+        /// <param name="branch"></param>
+        /// <returns></returns>
+        public static IEnumerable<Branch> GetBranchesThatTrack(Branch branch, ObservableCollection<Branch> branches)
+        {
+            return branches.Where(b => b.TrackedBranch == branch);
+        }
     }
 }

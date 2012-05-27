@@ -28,7 +28,7 @@ namespace GG.UserControls.Dialogs
 
             Application.Current.MainWindow.Effect = new BlurEffect
             {
-                Radius = 4
+                Radius = 3
             };
 
             Closing += OnClosing;

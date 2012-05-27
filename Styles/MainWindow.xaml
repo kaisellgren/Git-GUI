@@ -7,24 +7,22 @@
     <Style x:Key="WindowGlassStyle" TargetType="{x:Type local:MainWindow}">
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
-                <shell:WindowChrome GlassFrameThickness="0" CornerRadius="0" />
+                <shell:WindowChrome GlassFrameThickness="0" CornerRadius="6" />
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MainWindow}">
-                    <Border BorderBrush="#000" BorderThickness="1">
-                        <Grid>
-                            <Grid.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#727272" Offset="0" />
-                                    <GradientStop Color="#505050" Offset="0.05" />
-                                    <GradientStop Color="#3d3d3d" Offset="1" />
-                                </LinearGradientBrush>
-                            </Grid.Background>
+                    <Border BorderBrush="#000" BorderThickness="1" CornerRadius="5">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#727272" Offset="0" />
+                                <GradientStop Color="#505050" Offset="0.05" />
+                                <GradientStop Color="#3d3d3d" Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.Background>
 
-                            <ContentPresenter Margin="5" Content="{TemplateBinding Content}"/>
-                        </Grid>
+                        <ContentPresenter Margin="5" Content="{TemplateBinding Content}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

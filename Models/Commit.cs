@@ -89,6 +89,11 @@ namespace GG.Models
                 }
             }
 
+            // Process display tags.
+            List<string> displayTags = new List<string>();
+            if (repo.Head.Tip == commit)
+                displayTags.Add("HEAD");
+
             // Process ParentHashes.
             List<string> parentHashes = new List<string>();
             foreach (LibGit2Sharp.Commit parentCommit in commit.Parents)
@@ -101,7 +106,7 @@ namespace GG.Models
             c.AuthorName   = commit.Author.Name;
             c.Date         = commit.Author.When.DateTime;
             c.Description  = commit.MessageShort;
-            c.DisplayTags  = new List<string>();
+            c.DisplayTags  = displayTags;
             c.Branches     = new List<Branch>();
             c.Tags         = commitTags;
             c.Hash         = commit.Sha.ToString();

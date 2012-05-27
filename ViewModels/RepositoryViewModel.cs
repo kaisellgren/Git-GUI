@@ -34,6 +34,11 @@ namespace GG
         public ObservableCollection<String>           RecentCommitMessages { get; private set; }
         public ListCollectionView                     StatusItemsGrouped { get; set; }
 
+        /// <summary>
+        /// The HEAD. This can either be a reference to a Commit or a Branch.
+        /// </summary>
+        public object Head { get; set; }
+
         public int CommitsPerPage { get; set; }
         public int RecentCommitMessageCount { get; set; }
 
@@ -257,6 +262,9 @@ namespace GG
                 Console.WriteLine("Post-processing repository branches for \"" + RepositoryFullPath + "\".");
                 foreach (Branch branch in Branches)
                 {
+                    if (repo.Head.CanonicalName == branch.CanonicalName)
+                        Head = branch;
+
                     branch.PostProcess(Branches, Commits);
                 }
 
