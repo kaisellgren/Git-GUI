@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GG.Libraries;
 
 namespace GG.UserControls
 {
@@ -49,15 +50,15 @@ namespace GG.UserControls
         {
             InitializeComponent();
         }
-        
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //Can't access the popup from this scope. Why not?
-        }
 
-        private void Commit_Messages_ListBox_MouseDown(object sender, MouseButtonEventArgs e)
+        private void CommitMessagesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
+            ComboBox myComboBox = UIHelper.FindChild<ComboBox>(this, "CommitMessagesComboBox");
+            //this causes null reference exception since myCombox has all null values for some reason
+            //System.Windows.Forms.Clipboard.SetText(myComboBox.Text);
+
+            //this properly resets the combobox
+            myComboBox.SelectedIndex = -1;
         }
     }
 }
