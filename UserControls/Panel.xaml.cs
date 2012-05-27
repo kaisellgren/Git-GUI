@@ -49,5 +49,15 @@ namespace GG.UserControls
         {
             InitializeComponent();
         }
+        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //Can't access the popup from this scope. Why not?
+        }
+
+        private void Commit_Messages_ListBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+           
+        }
     }
 }
