@@ -13,13 +13,13 @@ No. Git-GUI is standalone, it does not need Git installation.
 No. Git-GUI is a software written by me (Kai Sellgren) as a hobby project.
 
 #####How does it look like?
-<a href="http://img811.imageshack.us/img811/4550/57846257.png"><img src="http://img29.imageshack.us/img29/5825/67965659.png" alt="Git-GUI" /></a>
+<a href="http://img502.imageshack.us/img502/1176/screenshoton5272012at85.png"><img src="http://img32.imageshack.us/img32/3193/70794004.png" alt="Git-GUI" /></a>
 
 *Remember: heavily work in progress!*
 
 #####What do I need to run it?
-- Windows. Right now you need Windows Vista/7/8 with Aero, but the final product will also work on XP, and even without Aero.
-- You need to have .NET framework 4.0 runtime installed/updated. Windows Update will do that for you if it does not have already.
+- Windows Vista, 7 or 8.
+- You need to have .NET framework 4.5 runtime installed/updated. Windows Update will do that for you if it does not have already.
 
 ### Project goals
 I aim to make a complete product that features the majority of Git functionality including from basic stuff to Stashes, Remotes and Bisects.
