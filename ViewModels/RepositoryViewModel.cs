@@ -33,6 +33,11 @@ namespace GG
         public ObservableCollection<Stash>            Stashes { get; set; }
         public ListCollectionView                     StatusItemsGrouped { get; set; }
 
+        /// <summary>
+        /// The HEAD. This can either be a reference to a Commit or a Branch.
+        /// </summary>
+        public object Head { get; set; }
+
         public int CommitsPerPage { get; set; }
 
         /// <summary>
@@ -253,6 +258,9 @@ namespace GG
                 Console.WriteLine("Post-processing repository branches for \"" + RepositoryFullPath + "\".");
                 foreach (Branch branch in Branches)
                 {
+                    if (repo.Head.CanonicalName == branch.CanonicalName)
+                        Head = branch;
+
                     branch.PostProcess(Branches, Commits);
                 }
 

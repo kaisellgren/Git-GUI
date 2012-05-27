@@ -116,7 +116,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LibGit2Sharp, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -172,6 +172,9 @@
     <Compile Include="Models\StatusItem.cs" />
     <Compile Include="Models\Submodule.cs" />
     <Compile Include="Models\Tag.cs" />
+    <Compile Include="UserControls\ChangesetHistoryContextMenu.xaml.cs">
+      <DependentUpon>ChangesetHistoryContextMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\CommitPanel.xaml.cs">
       <DependentUpon>CommitPanel.xaml</DependentUpon>
     </Compile>
@@ -302,6 +305,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ChangesetHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ChangesetHistoryContextMenu.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\CommitPanel.xaml">

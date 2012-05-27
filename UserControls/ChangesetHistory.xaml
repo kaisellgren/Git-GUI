@@ -3,10 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:userControls="clr-namespace:GG.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300"
              d:DesignWidth="600"
              d:DataContext="{d:DesignData Source=../DesignData/ChangesetHistory.xaml}">
+    
+    <UserControl.Resources>
+        <userControls:ChangesetHistoryContextMenu x:Key="changesetHistoryContextMenu" />
+    </UserControl.Resources>
     
     <DataGrid CanUserSortColumns="False"
               CanUserAddRows="False"
@@ -14,6 +19,7 @@
               CanUserResizeColumns="True"
               CanUserReorderColumns="True"
               SelectionUnit="FullRow"
+              SelectionMode="Single"
               HeadersVisibility="Column"
               VirtualizingPanel.IsVirtualizing="True"
               VirtualizingPanel.VirtualizationMode="Recycling"
@@ -22,7 +28,8 @@
               Grid.Row="0"
               Loaded="OnDataContextChanged"
               x:Name="ChangesetHistoryGrid"
-              Style="{DynamicResource ChangesetHistoryDataGridStyle}">
+              Style="{DynamicResource ChangesetHistoryDataGridStyle}"
+              ContextMenu="{StaticResource changesetHistoryContextMenu}">
             
         <DataGrid.Columns>
             <DataGridTemplateColumn Header="Graph" Width="128">

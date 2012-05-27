@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:wt="http://schemas.microsoft.com/wpf/2008/toolkit">
+    
     <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="#bbb" />
@@ -151,6 +154,7 @@
     
     <Style TargetType="{x:Type DataGridCell}">
         <Setter Property="BorderBrush" Value="#dddddd" />
+        <Setter Property="Foreground" Value="#000" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="Height" Value="24" />
         <Setter Property="BorderThickness" Value="0,0,1,1" />
@@ -169,19 +173,43 @@
                             <Setter Property="BorderThickness" Value="0,1,0,0" TargetName="OuterBorder" />
                             <Setter Property="BorderBrush" Value="#7ea3be" />
                             <Setter Property="BorderBrush" Value="#7ea3be" TargetName="OuterBorder" />
-                            <Setter Property="Foreground" Value="#000" />
+                            <Setter Property="Foreground" Value="#fff" />
                             <Setter Property="Background">
                                 <Setter.Value>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientStop Color="#d6e5ef" Offset="0" />
-                                        <GradientStop Color="#b2cadb" Offset="0.1" />
-                                        <GradientStop Color="#aac2d3" Offset="0.8" />
-                                        <GradientStop Color="#9ab3c6" Offset="0.9" />
-                                        <GradientStop Color="#c2d4e0" Offset="1" />
+                                        <GradientStop Color="#b3e5fc" Offset="0"/>
+                                        <GradientStop Color="#8cc8e3" Offset="0.1"/>
+                                        <GradientStop Color="#83bad2" Offset="0.45"/>
+                                        <GradientStop Color="#609fbb" Offset="0.9"/>
+                                        <GradientStop Color="#9fd3eb" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
+                        
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="Selector.IsSelectionActive" Value="False" />
+                            </MultiTrigger.Conditions>
+                            
+                            <Setter Property="BorderThickness" Value="0,1,0,0" TargetName="OuterBorder" />
+                            <Setter Property="BorderBrush" Value="#bebebe" />
+                            <Setter Property="BorderBrush" Value="#bebebe" TargetName="OuterBorder" />
+                            <Setter Property="Foreground" Value="#000" />
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#fcfcfc" Offset="0"/>
+                                        <GradientStop Color="#e3e3e3" Offset="0.1"/>
+                                        <GradientStop Color="#d2d2d2" Offset="0.45"/>
+                                        <GradientStop Color="#c8c8c8" Offset="0.9"/>
+                                        <GradientStop Color="#ebebeb" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        
                         <Trigger Property="IsSelected" Value="False">
                             <Setter Property="BorderBrush" Value="Transparent" TargetName="OuterBorder" />
                             <Setter Property="BorderThickness" Value="0,1,0,0" TargetName="OuterBorder" />
