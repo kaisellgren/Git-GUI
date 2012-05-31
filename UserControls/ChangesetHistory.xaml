@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:userControls="clr-namespace:GG.UserControls"
+             xmlns:converters="clr-namespace:GG.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300"
              d:DesignWidth="600"
@@ -11,6 +12,8 @@
     
     <UserControl.Resources>
         <userControls:ChangesetHistoryContextMenu x:Key="changesetHistoryContextMenu" />
+        <converters:IsHeadToFontWeightConverter x:Key="isHeadToFontWeightConverter" />
+        <converters:IsHeadToTextDecorationsConverter x:Key="isHeadToTextDecorationsConverter" />
     </UserControl.Resources>
     
     <DataGrid CanUserSortColumns="False"
@@ -28,9 +31,10 @@
               Grid.Row="0"
               Loaded="OnDataContextChanged"
               x:Name="ChangesetHistoryGrid"
+              Tag="{Binding}"
               Style="{DynamicResource ChangesetHistoryDataGridStyle}"
               ContextMenu="{StaticResource changesetHistoryContextMenu}">
-            
+        
         <DataGrid.Columns>
             <DataGridTemplateColumn Header="Graph" Width="128">
                 <DataGridTemplateColumn.CellTemplate><DataTemplate></DataTemplate></DataGridTemplateColumn.CellTemplate>
@@ -42,15 +46,44 @@
                         <WrapPanel>
                             <ListBox ItemsSource="{Binding DisplayTags}" Style="{DynamicResource DisplayTagsBlueStyle}" />
                             <ListBox ItemsSource="{Binding Tags}" Style="{DynamicResource DisplayTagsOrangeStyle}" />
-                            <TextBlock Text="{Binding Path=Description}" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Path=Description}"
+                                       VerticalAlignment="Center"
+                                       FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
+                                       TextDecorations="{Binding IsHead, Converter={StaticResource isHeadToTextDecorationsConverter}}" />
                         </WrapPanel>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-                
-            <DataGridTextColumn Binding="{Binding Path=FormattedDate}" Header="Date"></DataGridTextColumn>
-            <DataGridTextColumn Binding="{Binding Path=Author}" Header="Author"></DataGridTextColumn>
-            <DataGridTextColumn Binding="{Binding Path=HashShort}" Header="Hash"></DataGridTextColumn>
+
+            <DataGridTemplateColumn Header="Date">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=FormattedDate}"
+                                   FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
+                                   TextDecorations="{Binding IsHead, Converter={StaticResource isHeadToTextDecorationsConverter}}" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+
+            <DataGridTemplateColumn Header="Author">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Author}"
+                                   FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
+                                   TextDecorations="{Binding IsHead, Converter={StaticResource isHeadToTextDecorationsConverter}}" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+
+            <DataGridTemplateColumn Header="Hash">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=HashShort}"
+                                   FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
+                                   TextDecorations="{Binding IsHead, Converter={StaticResource isHeadToTextDecorationsConverter}}" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
         </DataGrid.Columns>
     </DataGrid>
 </UserControl>
