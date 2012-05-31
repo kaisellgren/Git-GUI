@@ -35,9 +35,9 @@ namespace GG
         public ListCollectionView                     StatusItemsGrouped { get; set; }
 
         /// <summary>
-        /// The HEAD. This can either be a reference to a Commit or a Branch.
+        /// The HEAD. This can either be a reference to a DetachedHead or a Branch.
         /// </summary>
-        public object Head { get; set; }
+        public Branch Head { get; set; }
 
         public int CommitsPerPage { get; set; }
         public int RecentCommitMessageCount { get; set; }
@@ -70,7 +70,8 @@ namespace GG
 
             // Initialize commands.
             CreateBranchCommand = new DelegateCommand(CreateBranch);
-
+            ResetSoftCommand = new DelegateCommand(ResetSoft);
+            ResetMixedCommand = new DelegateCommand(ResetMixed);
             OpenAboutCommand = new DelegateCommand(OpenAbout);
             StageUnstageCommand = new DelegateCommand(StageUnstage);
             DeleteFileCommand = new DelegateCommand(DeleteFile);
@@ -82,10 +83,41 @@ namespace GG
         #region Commands.
 
         public DelegateCommand CreateBranchCommand { get; set; }
-
+        public DelegateCommand ResetSoftCommand { get; set; }
+        public DelegateCommand ResetMixedCommand { get; set; }
         public DelegateCommand OpenAboutCommand { get; private set; }
         public DelegateCommand StageUnstageCommand { get; private set; }
         public DelegateCommand DeleteFileCommand { get; private set; }
+
+        /// <summary>
+        /// Resets (reset --mixed) the repository to the given changeset.
+        /// </summary>
+        /// <param name="action"></param>
+        public void ResetMixed(object action)
+        {
+            Commit commit = action as Commit;
+
+            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            {
+                repo.Reset(LibGit2Sharp.ResetOptions.Soft, commit.Hash);
+                ConstructRepository();
+            }
+        }
+
+        /// <summary>
+        /// Resets (reset --soft) the repository to the given changeset.
+        /// </summary>
+        /// <param name="action"></param>
+        public void ResetSoft(object action)
+        {
+            Commit commit = action as Commit;
+
+            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            {
+                repo.Reset(LibGit2Sharp.ResetOptions.Mixed, commit.Hash);
+                ConstructRepository();
+            }
+        }
 
         /// <summary>
         /// Creates a branch.
@@ -193,6 +225,7 @@ namespace GG
             if (alreadyLoaded == true)
                 throw new Exception("You may not load the repository more than once.");
 
+            // The "New Tab" page should not load data, i.e., the repository is not yet opened.
             if (NotOpened == false)
             {
                 Console.WriteLine("Loading and constructing repository data for \"" + RepositoryFullPath + "\".");
@@ -223,7 +256,7 @@ namespace GG
         {
             bool result;
             LibGit2Sharp.Repository repo = null;
-            
+
             try
             {
                 repo = new LibGit2Sharp.Repository(RepositoryFullPath);
@@ -262,8 +295,12 @@ namespace GG
                 Console.WriteLine("Post-processing repository branches for \"" + RepositoryFullPath + "\".");
                 foreach (Branch branch in Branches)
                 {
-                    if (repo.Head.CanonicalName == branch.CanonicalName)
+                    // Set the HEAD property if it matches.
+                    if (repo.Head.Name == branch.Name)
+                    {
                         Head = branch;
+                        branch.Tip.IsHead = true;
+                    }
 
                     branch.PostProcess(Branches, Commits);
                 }
@@ -272,6 +309,17 @@ namespace GG
                 Console.WriteLine("Post-processing repository commits for \"" + RepositoryFullPath + "\".");
                 foreach (Commit commit in Commits)
                 {
+                    // Set the HEAD property to a DetachedHead branch if the HEAD matched and it was null.
+                    if (Head == null && repo.Head.Tip.Sha == commit.Hash)
+                    {
+                        Head = new DetachedHead
+                        {
+                            Tip = commit
+                        };
+
+                        commit.IsHead = true;
+                    }
+
                     commit.PostProcess(Commits, Branches);
                 }
 

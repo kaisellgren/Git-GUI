@@ -23,6 +23,7 @@ namespace GG.Models
         public int          ParentCount  { get; set; }
         public List<Commit> Parents      { get; set; }
         public List<Commit> Siblings     { get; set; }
+        public bool         IsHead       { get; set; }
 
         /// <summary>
         /// Returns the date of this changeset in relative format.
