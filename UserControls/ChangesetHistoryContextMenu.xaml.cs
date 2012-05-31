@@ -65,19 +65,28 @@ namespace GG.UserControls
             }
 
             if (numberOfCheckoutItems > 1)
-                Items.Insert(menuItemIndex++, new Separator());
+            {
+                Items.Insert(menuItemIndex++, new Separator
+                {
+                    Tag = "Dynamic"
+                });
+            }
 
             // Add Merge menu items.
             var numberOfMergeItems = 0;
 
             foreach (Branch branch in commit.Branches)
             {
-                if (branch.Tip == commit/* && branch != (Branch) repositoryViewModel.Head*/)
+                if (branch.Tip == commit && branch != (Branch) repositoryViewModel.Head)
                 {
                     // Add those that track this branch.
                     foreach (Branch branchThatTracks in RepoUtil.GetBranchesThatTrack(branch, repositoryViewModel.Branches))
                     {
-                        if (branchThatTracks.BehindBy > 0 && branchThatTracks.IsRemote == false && branch.Tip != branchThatTracks.Tip)
+                        if (branchThatTracks.BehindBy > 0 &&
+                            branchThatTracks.IsRemote == false &&
+                            branch.Tip != branchThatTracks.Tip &&
+                            repositoryViewModel.Head is DetachedHead == false &&
+                            branch.Tip != branchThatTracks.Tip)
                         {
                             Items.Insert(menuItemIndex++, CreateMenuItem(String.Format("Merge \"{0}\" into \"{1}\"", branch.Name, branchThatTracks.Name), "Merge"));
                             numberOfCheckoutItems++;
@@ -85,15 +94,23 @@ namespace GG.UserControls
                     }
                 }
 
-                if (branch.Tip == commit && branch != (Branch) repositoryViewModel.Head)
+                if (branch.Tip == commit &&
+                    branch != (Branch) repositoryViewModel.Head &&
+                    repositoryViewModel.Head is DetachedHead == false &&
+                    commit != ((Branch) repositoryViewModel.Head).Tip)
                 {
-                    //Items.Insert(menuItemIndex++, CreateMenuItem(String.Format("Merge \"{0}\" into \"{1}\"", branch.Name, ((Commit) repositoryViewModel.Head).Name), "Merge"));
-                    //numberOfCheckoutItems++;
+                    Items.Insert(menuItemIndex++, CreateMenuItem(String.Format("Merge \"{0}\" into \"{1}\"", branch.Name, ((Branch) repositoryViewModel.Head).Name), "Merge"));
+                    numberOfCheckoutItems++;
                 }
             }
 
             if (numberOfMergeItems > 1)
-                Items.Insert(menuItemIndex++, new Separator());
+            {
+                Items.Insert(menuItemIndex++, new Separator
+                {
+                    Tag = "Dynamic"
+                });
+            }
         }
 
         /// <summary>
