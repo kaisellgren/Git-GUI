@@ -9,23 +9,20 @@ using GG.Models;
 
 namespace GG.Converters
 {
-    namespace GG.Converters
+    /// <summary>
+    /// Converts LibGit2Sharp.Status into a single character string.
+    /// </summary>
+    class RecentCommitMessageConverter : IValueConverter
     {
-        /// <summary>
-        /// Converts LibGit2Sharp.Status into a single character string.
-        /// </summary>
-        class RecentCommitMessageConverter : IValueConverter
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                RecentCommitMessage message = (RecentCommitMessage)value;
-                return message.CroppedMessage;
-            }
+            RecentCommitMessage message = (RecentCommitMessage)value;
+            return message.CroppedMessage;
+        }
 
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                throw new NotImplementedException();
-            }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }
