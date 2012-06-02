@@ -56,7 +56,7 @@
                         <WrapPanel>
                             <ListBox ItemsSource="{Binding DisplayTags}" Style="{DynamicResource DisplayTagsBlueStyle}" />
                             <ListBox ItemsSource="{Binding Tags}" Style="{DynamicResource DisplayTagsOrangeStyle}" />
-                            <TextBlock Text="{Binding Path=Description}"
+                            <TextBlock Text="{Binding Path=ShortDescription}"
                                        VerticalAlignment="Center"
                                        FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
                                        TextDecorations="{Binding IsHead, Converter={StaticResource isHeadToTextDecorationsConverter}}" />

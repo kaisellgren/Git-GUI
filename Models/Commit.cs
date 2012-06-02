@@ -10,20 +10,21 @@ namespace GG.Models
 {
     public class Commit
     {
-        public string       AuthorEmail  { set; get; }
-        public string       AuthorName   { set; get; }
-        public DateTime     Date         { set; get; }
-        public string       Description  { set; get; }
-        public List<string> DisplayTags  { get; set; }
-        public List<string> Tags         { get; set; }
-        public string       Hash         { set; get; }
-        public List<Branch> Branches     { get; set; }
-        public List<Branch> BranchesAround { get; set; }
-        public List<string> ParentHashes { get; set; }
-        public int          ParentCount  { get; set; }
-        public List<Commit> Parents      { get; set; }
-        public List<Commit> Siblings     { get; set; }
-        public bool         IsHead       { get; set; }
+        public string       AuthorEmail      { get; set; }
+        public string       AuthorName       { get; set; }
+        public DateTime     Date             { get; set; }
+        public string       Description      { get; set; }
+        public string       ShortDescription { get; set; }
+        public List<string> DisplayTags      { get; set; }
+        public List<string> Tags             { get; set; }
+        public string       Hash             { get; set; }
+        public List<Branch> Branches         { get; set; }
+        public List<Branch> BranchesAround   { get; set; }
+        public List<string> ParentHashes     { get; set; }
+        public int          ParentCount      { get; set; }
+        public List<Commit> Parents          { get; set; }
+        public List<Commit> Siblings         { get; set; }
+        public bool         IsHead           { get; set; }
 
         /// <summary>
         /// Returns the ObjectId of LibGit2Sharp.
@@ -111,7 +112,8 @@ namespace GG.Models
             c.AuthorEmail  = commit.Author.Email;
             c.AuthorName   = commit.Author.Name;
             c.Date         = commit.Author.When.DateTime;
-            c.Description  = commit.MessageShort;
+            c.Description  = commit.Message;
+            c.ShortDescription = commit.Message.Right(72).RemoveLineBreaks();
             c.DisplayTags  = displayTags;
             c.Branches     = new List<Branch>();
             c.Tags         = commitTags;

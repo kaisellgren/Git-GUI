@@ -29,8 +29,12 @@
                   Tag="{Binding}"
                   x:Name="StatusGridElement">
             <DataGrid.InputBindings>
-                <KeyBinding Command="{Binding StageUnstageCommand}" Gesture="Enter" />
-                <KeyBinding Command="{Binding StageUnstageCommand}" Gesture="Delete" />
+                <KeyBinding Command="{Binding StageUnstageCommand}"
+                            CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                            Gesture="Enter" />
+                <KeyBinding Command="{Binding StageUnstageCommand}"
+                            CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                            Gesture="Delete" />
             </DataGrid.InputBindings>
             
             <DataGrid.Columns>

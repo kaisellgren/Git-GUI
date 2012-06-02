@@ -11,8 +11,8 @@ namespace GG.Models
     /// </summary>
     public class RecentCommitMessage
     {
-        public string CroppedMessage { set; get; }
-        public string FullMessage { set; get; }
+        public string CroppedMessage { get; private set; }
+        public string FullMessage { get; private set; }
 
         public RecentCommitMessage(string message)
         {

@@ -13,21 +13,19 @@
         </Setter>
     </Style>
 
-    <Style x:Key="PanelHeaderTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+    <Style x:Key="PanelHeaderTitleStyle" TargetType="{x:Type ContentPresenter}">
+        <Style.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect ShadowDepth="1" BlurRadius="1" Color="Black" Opacity="0.5" RenderingBias="Quality" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
         <Setter Property="Margin" Value="4,0,0,0" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
-        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
-        <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Effect">
-            <Setter.Value>
-                <DropShadowEffect ShadowDepth="1" BlurRadius="1" Color="Black" Opacity="0.5" RenderingBias="Quality" />
-            </Setter.Value>
-        </Setter>
     </Style>
 </ResourceDictionary>

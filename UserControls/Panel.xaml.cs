@@ -21,28 +21,28 @@ namespace GG.UserControls
     /// </summary>
     public partial class Panel : UserControl
     {
-        #region HeaderText property.
+        #region Header property.
         /// <summary>
-        /// The text to use for the header.
+        /// The text or content to use for the header.
         /// </summary>
-        public string HeaderText
+        public object Header
         {
-            get { return (string) GetValue(HeaderTextProperty); }
-            set { SetValue(HeaderTextProperty, value); }
+            get { return (object) GetValue(HeaderProperty); }
+            set { SetValue(HeaderProperty, value); }
         }
 
-        public static DependencyProperty HeaderTextProperty =
-            DependencyProperty.Register("HeaderText",
-                                        typeof(string),
+        public static DependencyProperty HeaderProperty =
+            DependencyProperty.Register("Header",
+                                        typeof(object),
                                         typeof(Panel),
-                                        new PropertyMetadata("Title", new PropertyChangedCallback(HeaderTextPropertyChanged)));
+                                        new PropertyMetadata(null));
 
-        private static void HeaderTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void HeaderPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as Panel;
             if (control != null)
             {
-                control.HeaderText = (string) e.NewValue;
+                control.Header = (object) e.NewValue;
             }
         }
         #endregion

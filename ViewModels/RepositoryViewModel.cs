@@ -15,6 +15,7 @@ using GG.Libraries;
 using GG.ViewModels;
 using GG.Models;
 using GG.UserControls.Dialogs;
+using System.Collections;
 
 namespace GG
 {
@@ -90,14 +91,14 @@ namespace GG
         /// </summary>
         #region Commands.
 
-        public DelegateCommand ExportPatchCommand  { get; set; }
-        public DelegateCommand CopyPatchCommand    { get; set; }
-        public DelegateCommand AddNoteCommand      { get; set; }
-        public DelegateCommand CopyHashCommand     { get; set; }
-        public DelegateCommand TagCommand          { get; set; }
-        public DelegateCommand CreateBranchCommand { get; set; }
-        public DelegateCommand ResetSoftCommand    { get; set; }
-        public DelegateCommand ResetMixedCommand   { get; set; }
+        public DelegateCommand ExportPatchCommand  { get; private set; }
+        public DelegateCommand CopyPatchCommand    { get; private set; }
+        public DelegateCommand AddNoteCommand      { get; private set; }
+        public DelegateCommand CopyHashCommand     { get; private set; }
+        public DelegateCommand TagCommand          { get; private set; }
+        public DelegateCommand CreateBranchCommand { get; private set; }
+        public DelegateCommand ResetSoftCommand    { get; private set; }
+        public DelegateCommand ResetMixedCommand   { get; private set; }
         public DelegateCommand OpenAboutCommand    { get; private set; }
         public DelegateCommand StageUnstageCommand { get; private set; }
         public DelegateCommand DeleteFileCommand   { get; private set; }
@@ -261,11 +262,12 @@ namespace GG
         /// <param name="action"></param>
         private void StageUnstage(object action)
         {
-            DataGrid statusGrid = UIHelper.FindChild<DataGrid>(Application.Current.MainWindow, "StatusGridElement");
+            var collection = (IList) action;
+            var items = collection.Cast<StatusItem>();
 
             var repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
-            foreach (StatusItem item in statusGrid.SelectedItems)
+            foreach (StatusItem item in items)
             {
                 if (item.GenericStatus == "Staged")
                     repo.Index.Unstage(RepositoryFullPath + "/" + item.Filename);
@@ -310,11 +312,12 @@ namespace GG
         /// <param name="action"></param>
         private void DeleteFile(object action)
         {
+            var collection = (IList) action;
+            var items = collection.Cast<StatusItem>();
             LibGit2Sharp.Repository repo = null;
-            DataGrid statusGrid = UIHelper.FindChild<DataGrid>(Application.Current.MainWindow, "StatusGridElement");
 
             // Loop through all selected status items and remove the files physically (and in some cases also from the repository).
-            foreach (StatusItem item in statusGrid.SelectedItems)
+            foreach (StatusItem item in items)
             {
                 // TODO: --cached ?
 

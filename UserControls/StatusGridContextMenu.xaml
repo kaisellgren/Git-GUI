@@ -3,13 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Opened="OnOpened">
     
-    <MenuItem x:Name="Stage" Header="Stage" InputGestureText="Enter" Command="{Binding PlacementTarget.Tag.StageUnstageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+    <MenuItem x:Name="Stage"
+              Header="Stage"
+              InputGestureText="Enter"
+              Command="{Binding PlacementTarget.Tag.StageUnstageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+              CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Add.png" Stretch="None" />
         </MenuItem.Icon>
     </MenuItem>
 
-    <MenuItem x:Name="Unstage" Header="Unstage" InputGestureText="Enter" Command="{Binding PlacementTarget.Tag.StageUnstageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+    <MenuItem x:Name="Unstage"
+              Header="Unstage"
+              InputGestureText="Enter"
+              Command="{Binding PlacementTarget.Tag.StageUnstageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+              CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Unstage.png" Stretch="None" />
         </MenuItem.Icon>
@@ -37,7 +45,7 @@
 
     <Separator />-->
 
-    <MenuItem Header="Ignore">
+    <MenuItem Header="Ignore" IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Ignore.png" Stretch="None" />
         </MenuItem.Icon>
@@ -73,7 +81,7 @@
         </MenuItem>
     </MenuItem>
 
-    <MenuItem Header="Revert...">
+    <MenuItem Header="Revert..." IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Revert.png" Stretch="None" />
         </MenuItem.Icon>
@@ -83,7 +91,7 @@
 
     <MenuItem Header="Copy">
         <MenuItem.Icon>
-            <Image Source="../Resources/Icons/Copy.png" Stretch="None" />
+            <Image Source="../Resources/Icons/Clipboard.png" Stretch="None" />
         </MenuItem.Icon>
 
         <MenuItem Header="Copy file">
@@ -99,7 +107,11 @@
         </MenuItem>
     </MenuItem>
 
-    <MenuItem x:Name="Delete" Header="Delete..." InputGestureText="Delete" Command="{Binding PlacementTarget.Tag.DeleteFileCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+    <MenuItem x:Name="Delete"
+              Header="Delete..."
+              InputGestureText="Delete"
+              Command="{Binding PlacementTarget.Tag.DeleteFileCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+              CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Delete.png" Stretch="None" />
         </MenuItem.Icon>

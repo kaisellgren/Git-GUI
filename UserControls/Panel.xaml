@@ -11,7 +11,7 @@
         <ControlTemplate>
             <StackPanel>
                 <DockPanel Style="{DynamicResource PanelHeaderStyle}">
-                    <TextBlock DockPanel.Dock="Left" Style="{DynamicResource PanelHeaderTextStyle}" Text="{TemplateBinding local:Panel.HeaderText}" />
+                    <ContentPresenter DockPanel.Dock="Left" Style="{DynamicResource PanelHeaderTitleStyle}" Content="{TemplateBinding local:Panel.Header}" />
                     <WrapPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
                         <ComboBox ToolTip="Copy a previous commit message. The entire message will be copied."
                                   ItemsSource="{Binding RecentCommitMessages}"

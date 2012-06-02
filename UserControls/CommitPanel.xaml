@@ -5,11 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:GG.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="387" d:DesignWidth="493">
+             d:DesignHeight="480" d:DesignWidth="640">
     <DockPanel>
         <!-- TODO: Panel should be a reusable component... I've only made the title to be reusable, the rest is hard-coded as Commit Panel stuff in Panel XAML... move it in here...  -->
-        <controls:Panel HeaderText="Parent: (b4ab9102) Modified configuration files.">
-            
+        <controls:Panel>
+            <controls:Panel.Header>
+                <WrapPanel>
+                    <TextBlock Text="Parent: (" />
+                    <TextBlock Text="{Binding Head.Tip.HashShort}" />
+                    <TextBlock Text=") " />
+                    <TextBlock Text="{Binding Head.Tip.ShortDescription}" />
+                </WrapPanel>
+            </controls:Panel.Header>
         </controls:Panel>
     </DockPanel>
 </UserControl>
