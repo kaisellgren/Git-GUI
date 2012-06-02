@@ -80,6 +80,7 @@ namespace GG
             OpenAboutCommand = new DelegateCommand(OpenAbout);
             StageUnstageCommand = new DelegateCommand(StageUnstage);
             DeleteFileCommand = new DelegateCommand(DeleteFile);
+            CommitCommand = new DelegateCommand(CommitChanges);
         }
 
         /// <summary>
@@ -87,17 +88,18 @@ namespace GG
         /// </summary>
         #region Commands.
 
-        public DelegateCommand ExportPatchCommand { get; set; }
-        public DelegateCommand CopyPatchCommand { get; set; }
-        public DelegateCommand AddNoteCommand { get; set; }
-        public DelegateCommand CopyHashCommand { get; set; }
-        public DelegateCommand TagCommand { get; set; }
+        public DelegateCommand ExportPatchCommand  { get; set; }
+        public DelegateCommand CopyPatchCommand    { get; set; }
+        public DelegateCommand AddNoteCommand      { get; set; }
+        public DelegateCommand CopyHashCommand     { get; set; }
+        public DelegateCommand TagCommand          { get; set; }
         public DelegateCommand CreateBranchCommand { get; set; }
-        public DelegateCommand ResetSoftCommand { get; set; }
-        public DelegateCommand ResetMixedCommand { get; set; }
-        public DelegateCommand OpenAboutCommand { get; private set; }
+        public DelegateCommand ResetSoftCommand    { get; set; }
+        public DelegateCommand ResetMixedCommand   { get; set; }
+        public DelegateCommand OpenAboutCommand    { get; private set; }
         public DelegateCommand StageUnstageCommand { get; private set; }
-        public DelegateCommand DeleteFileCommand { get; private set; }
+        public DelegateCommand DeleteFileCommand   { get; private set; }
+        public DelegateCommand CommitCommand       { get; private set; }
 
         /// <summary>
         /// Exports the given changeset as a patch to a file.
@@ -270,6 +272,17 @@ namespace GG
             }
 
             repo.Dispose();
+        }
+
+        /// <summary>
+        /// Commits the currently staged files.
+        /// </summary>
+        /// <param name="action"></param>
+        private void CommitChanges(object action)
+        {
+            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+            LibGit2Sharp.RepositoryExtensions.Commit(repo, action.ToString(), false);
+            ConstructRepository();
         }
 
         /// <summary>

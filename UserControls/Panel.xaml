@@ -2,12 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:converter="clr-namespace:GG.Converters"
              xmlns:local="clr-namespace:GG.UserControls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <local:RecentCommitMessageConverter x:Key ="recentCommitMessageConverter"/>
+        <converter:RecentCommitMessageConverter x:Key ="recentCommitMessageConverter"/>
     </UserControl.Resources>
     
     <UserControl.Template>
@@ -27,10 +28,11 @@
                             </WrapPanel>
                         </Button>
                     </WrapPanel>
+                    
                 </DockPanel>
                 <Grid>
                     <StackPanel Margin="4">
-                        <TextBox Name="CommitMessageTextBox" ToolTip="Enter your commit message." Height="64"></TextBox>
+                        <TextBox Name="CommitMessageTextBox" ToolTip="Enter your commit message." Height="64">WWWWWWWWWWWWWWWWWWW</TextBox>
                     </StackPanel>
                 </Grid>
             </StackPanel>
