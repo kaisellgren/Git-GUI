@@ -530,7 +530,7 @@ namespace GG
 
             foreach (Commit commit in Commits.Take(RecentCommitMessageCount))
             {
-                RecentCommitMessages.Add(new RecentCommitMessage(commit.Description));
+                RecentCommitMessages.Add(new RecentCommitMessage(commit.ShortDescription));
             }
         }
 
