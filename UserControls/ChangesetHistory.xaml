@@ -35,6 +35,16 @@
               Style="{DynamicResource ChangesetHistoryDataGridStyle}"
               ContextMenu="{StaticResource changesetHistoryContextMenu}">
         
+        <DataGrid.InputBindings>
+            <KeyBinding Key="C" Modifiers="Control"
+                        Command="{Binding CopyHashCommand}"
+                        CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+            
+            <KeyBinding Key="S" Modifiers="Control"
+                        Command="{Binding ExportPatchCommand}"
+                        CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+        </DataGrid.InputBindings>
+        
         <DataGrid.Columns>
             <DataGridTemplateColumn Header="Graph" Width="128">
                 <DataGridTemplateColumn.CellTemplate><DataTemplate></DataTemplate></DataGridTemplateColumn.CellTemplate>

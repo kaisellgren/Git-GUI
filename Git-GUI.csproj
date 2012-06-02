@@ -424,7 +424,7 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\Add.png" />
     <Resource Include="Resources\Icons\Annotate.png" />
-    <Resource Include="Resources\Icons\Backout.png" />
+    <Resource Include="Resources\Icons\Revert.png" />
     <Resource Include="Resources\Icons\Cancel.png" />
     <Resource Include="Resources\Icons\Checkout.png" />
     <Resource Include="Resources\Icons\Clipboard.png" />
@@ -490,6 +490,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\Reset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\AddNote.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Patch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Archive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\ResetHard.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

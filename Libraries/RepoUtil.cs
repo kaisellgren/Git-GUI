@@ -10,6 +10,23 @@ namespace GG.Libraries
     class RepoUtil
     {
         /// <summary>
+        /// Retrives the tree changes for the given commit.
+        /// </summary>
+        /// <returns></returns>
+        public static LibGit2Sharp.TreeChanges GetTreeChangesForCommit(LibGit2Sharp.Repository repo, Commit commit)
+        {
+            // Retrieve the Tree for this commit.
+            LibGit2Sharp.Tree thisTree = ((LibGit2Sharp.Commit) repo.Lookup(commit.ObjectId)).Tree;
+
+            // Retrieve the Tree for the previous commit (parent).
+            // TODO: What about Merge commits?
+            LibGit2Sharp.Tree parentTree = ((LibGit2Sharp.Commit) repo.Lookup(commit.Parents.ElementAt(0).ObjectId)).Tree;
+
+            // Take the diff.
+            return repo.Diff.Compare(parentTree, thisTree);
+        }
+
+        /// <summary>
         /// Returns a list of visual branches which are around the given commit.
         /// </summary>
         /// <param name="commit"></param>

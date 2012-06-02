@@ -26,6 +26,11 @@ namespace GG.Models
         public bool         IsHead       { get; set; }
 
         /// <summary>
+        /// Returns the ObjectId of LibGit2Sharp.
+        /// </summary>
+        public LibGit2Sharp.ObjectId ObjectId { get; set; }
+
+        /// <summary>
         /// Returns the date of this changeset in relative format.
         /// </summary>
         public string FormattedDate
@@ -114,6 +119,7 @@ namespace GG.Models
             c.ParentHashes = parentHashes;
             c.ParentCount  = commit.ParentsCount;
             c.Parents      = new List<Commit>();
+            c.ObjectId     = commit.Id;
 
             return c;
         }

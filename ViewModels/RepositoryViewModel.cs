@@ -69,6 +69,11 @@ namespace GG
             StatusItemsGrouped.SortDescriptions.Add(new SortDescription("GenericStatus", ListSortDirection.Descending));
 
             // Initialize commands.
+            ExportPatchCommand = new DelegateCommand(ExportPatch);
+            CopyPatchCommand = new DelegateCommand(CopyPatch);
+            AddNoteCommand = new DelegateCommand(AddNote);
+            CopyHashCommand = new DelegateCommand(CopyHash);
+            TagCommand = new DelegateCommand(CreateTag);
             CreateBranchCommand = new DelegateCommand(CreateBranch);
             ResetSoftCommand = new DelegateCommand(ResetSoft);
             ResetMixedCommand = new DelegateCommand(ResetMixed);
@@ -82,12 +87,113 @@ namespace GG
         /// </summary>
         #region Commands.
 
+        public DelegateCommand ExportPatchCommand { get; set; }
+        public DelegateCommand CopyPatchCommand { get; set; }
+        public DelegateCommand AddNoteCommand { get; set; }
+        public DelegateCommand CopyHashCommand { get; set; }
+        public DelegateCommand TagCommand { get; set; }
         public DelegateCommand CreateBranchCommand { get; set; }
         public DelegateCommand ResetSoftCommand { get; set; }
         public DelegateCommand ResetMixedCommand { get; set; }
         public DelegateCommand OpenAboutCommand { get; private set; }
         public DelegateCommand StageUnstageCommand { get; private set; }
         public DelegateCommand DeleteFileCommand { get; private set; }
+
+        /// <summary>
+        /// Exports the given changeset as a patch to a file.
+        /// </summary>
+        /// <param name="action"></param>
+        public void ExportPatch(object action)
+        {
+            Commit commit = action as Commit;
+
+            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            {
+                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                dialog.FileName = commit.Description.Substring(0, 72);
+                dialog.DefaultExt = ".patch";
+                dialog.Filter = "Patch files|*.patch";
+
+                if (dialog.ShowDialog() == true)
+                {
+                    // Save the patch to a file.
+                    File.WriteAllText(dialog.FileName, RepoUtil.GetTreeChangesForCommit(repo, commit).Patch);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Copies the given changeset as a patch to clipboard.
+        /// </summary>
+        /// <param name="action"></param>
+        public void CopyPatch(object action)
+        {
+            Commit commit = action as Commit;
+
+            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            {
+                Clipboard.SetText(RepoUtil.GetTreeChangesForCommit(repo, commit).Patch);
+            }
+        }
+
+        /// <summary>
+        /// Adds a new note for the given commit.
+        /// </summary>
+        /// <param name="action"></param>
+        public void AddNote(object action)
+        {
+            var dialog = new PromptDialog();
+            dialog.Title = "Add a note";
+            dialog.Message = "Enter the note to add for the commit:";
+
+            dialog.ShowDialog();
+
+            if (dialog.DialogResult == true)
+            {
+                Commit commit = action as Commit;
+
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    //repo.Notes.Create(commit.Hash, dialog.ResponseText);
+                    ConstructRepository();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Copies the hash of a commit.
+        /// </summary>
+        /// <param name="action"></param>
+        public void CopyHash(object action)
+        {
+            Commit commit = action as Commit;
+
+            Clipboard.SetText(commit.Hash);
+        }
+
+        /// <summary>
+        /// Creates a tag.
+        /// </summary>
+        /// <param name="action"></param>
+        public void CreateTag(object action)
+        {
+            var dialog = new PromptDialog();
+            dialog.Title = "Create a new tag";
+            dialog.Message = "Enter the name for the tag:";
+
+            dialog.ShowDialog();
+
+            if (dialog.DialogResult == true)
+            {
+                Commit commit = action as Commit;
+
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    repo.Tags.Create(dialog.ResponseText, commit.Hash);
+                    ConstructRepository();
+                }
+            }
+        }
 
         /// <summary>
         /// Resets (reset --mixed) the repository to the given changeset.
@@ -276,7 +382,7 @@ namespace GG
                 Console.WriteLine("Constructs repository commits for \"" + RepositoryFullPath + "\".");
                 Commits.Clear();
                 List<Commit> commitList = new List<Commit>();
-                foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs }).Take(CommitsPerPage))
+                foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Branches }).Take(CommitsPerPage))
                 {
                     commitList.Add(Commit.Create(repo, commit, Tags));
                 }
