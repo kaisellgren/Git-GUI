@@ -24,5 +24,15 @@ namespace GG
             else
                 return str.Substring(len - length, length);
         }
+
+        /// <summary>
+        /// Removes line breaks.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string RemoveLineBreaks(this string str)
+        {
+            return str.Replace("\n", "").Replace("\r", "");
+        }
     }
 }
