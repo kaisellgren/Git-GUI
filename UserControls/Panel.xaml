@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:local="clr-namespace:GG.UserControls"
-             xmlns:converters="clr-namespace:GG.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -21,7 +20,8 @@
                                   SelectionChanged="OnRecentCommitMessagesSelectionChanged"
                                   Width="150" Margin="0,4,4,4">
                         </ComboBox>
-                        <Button Margin="0,3,3,3" Style="{StaticResource GreenButtonStyle}">
+                        <Button  Margin="0,3,3,3" Style="{StaticResource GreenButtonStyle}" 
+                                 CommandTarget="{Binding CommitCommand}" CommandParameter="{Binding Text, ElementName=CommitMessageTextBox}">
                             <WrapPanel>
                                 <Image Source="../Resources/Icons/RepositoryWrite.png" Width="16" Margin="0,0,4,0" />
                                 <TextBlock>Commit</TextBlock>

@@ -14,6 +14,7 @@ using GG.Models;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
 using GG.UserControls.Dialogs;
+using GG.Libraries;
 
 namespace GG
 {
@@ -81,7 +82,7 @@ namespace GG
             OpenAboutCommand = new DelegateCommand(OpenAbout);
             StageUnstageCommand = new DelegateCommand(StageUnstage);
             DeleteFileCommand = new DelegateCommand(DeleteFile);
-            CommitCommand = new DelegateCommand(CommitChanges);
+            CommitCommand = new DelegateCommand(CommitChanges, CommitChanges_CanExecute);
         }
 
         /// <summary>
@@ -281,9 +282,21 @@ namespace GG
         /// <param name="action"></param>
         private void CommitChanges(object action)
         {
+            //need to pass author, commitor, and the commit message
             LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
             LibGit2Sharp.RepositoryExtensions.Commit(repo, action.ToString(), false);
             ConstructRepository();
+        }
+
+        /// <summary>
+        /// Checks if there is anything to commit
+        /// </summary>
+        /// <param name="action"></param>
+        private bool CommitChanges_CanExecute(object action)
+        {
+            //somehow get the commit message here from the messagebox
+            //var commitMessageBox = UIHelper.FindChild<TextBox>(this, "CommitMessageTextBox");
+            return true;
         }
 
         /// <summary>
