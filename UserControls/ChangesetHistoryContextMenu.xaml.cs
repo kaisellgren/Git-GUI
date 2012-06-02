@@ -7,6 +7,7 @@ using System.Linq;
 using GG.Models;
 using System.Windows;
 using GG.Libraries;
+using System.Windows.Documents;
 
 namespace GG.UserControls
 {
@@ -48,6 +49,10 @@ namespace GG.UserControls
             var menuItemIndex = 0;
             var commit = GetCurrentSelectedCommit();
             var repositoryViewModel = GetRepositoryViewModel();
+            var highlightColor = new SolidColorBrush()
+            {
+                Color = Color.FromRgb(8, 94, 160)
+            };
 
             // Remove previously added Dynamic menu items. We determine dynamically added menu items by their Tag == "Dynamic".
             RemoveDynamicallyAddedMenuItems();
@@ -59,9 +64,29 @@ namespace GG.UserControls
                 // Only if the right clicked commit is the tip of the branch, AND the branch is not already checkout out, continue.
                 if (branch.Tip == commit && ((Branch) repositoryViewModel.Head) != branch && branch.IsRemote == false)
                 {
-                    Items.Insert(menuItemIndex++, CreateMenuItem(String.Format("Checkout \"{0}\"", branch.Name), "Checkout"));
+                    var text = new TextBlock();
+                    text.Inlines.AddRange(new Inline[]
+                    {
+                        new Run("Checkout "),
+                        new Run(branch.Name) {Foreground = highlightColor}
+                    });
+
+                    Items.Insert(menuItemIndex++, CreateMenuItem(text, "Checkout"));
                     numberOfCheckoutItems++;
                 }
+            }
+
+            if (numberOfCheckoutItems == 0)
+            {
+                var text = new TextBlock();
+                text.Inlines.AddRange(new Inline[]
+                {
+                    new Run("Checkout commit "),
+                    new Run(commit.HashShort) {Foreground = highlightColor}
+                });
+
+                Items.Insert(menuItemIndex++, CreateMenuItem(text, "Checkout"));
+                numberOfCheckoutItems++;
             }
 
             if (numberOfCheckoutItems > 1)
@@ -88,7 +113,16 @@ namespace GG.UserControls
                             repositoryViewModel.Head is DetachedHead == false &&
                             branch.Tip != branchThatTracks.Tip)
                         {
-                            Items.Insert(menuItemIndex++, CreateMenuItem(String.Format("Merge \"{0}\" into \"{1}\"", branch.Name, branchThatTracks.Name), "Merge"));
+                            var text = new TextBlock();
+                            text.Inlines.AddRange(new Inline[]
+                            {
+                                new Run("Merge "),
+                                new Run(branch.Name) {Foreground = highlightColor},
+                                new Run(" into "),
+                                new Run(branchThatTracks.Name) {Foreground = highlightColor}
+                            });
+
+                            Items.Insert(menuItemIndex++, CreateMenuItem(text, "Merge"));
                             numberOfCheckoutItems++;
                         }
                     }
@@ -99,7 +133,16 @@ namespace GG.UserControls
                     repositoryViewModel.Head is DetachedHead == false &&
                     commit != ((Branch) repositoryViewModel.Head).Tip)
                 {
-                    Items.Insert(menuItemIndex++, CreateMenuItem(String.Format("Merge \"{0}\" into \"{1}\"", branch.Name, ((Branch) repositoryViewModel.Head).Name), "Merge"));
+                    var text = new TextBlock();
+                    text.Inlines.AddRange(new Inline[]
+                    {
+                        new Run("Merge "),
+                        new Run(branch.Name) {Foreground = highlightColor},
+                        new Run(" into "),
+                        new Run(((Branch) repositoryViewModel.Head).Name) {Foreground = highlightColor}
+                    });
+
+                    Items.Insert(menuItemIndex++, CreateMenuItem(text, "Merge"));
                     numberOfCheckoutItems++;
                 }
             }
@@ -138,7 +181,7 @@ namespace GG.UserControls
         /// Creates and returns a new menu item.
         /// </summary>
         /// <returns></returns>
-        private MenuItem CreateMenuItem(string header, string icon)
+        private MenuItem CreateMenuItem(object header, string icon)
         {
             return new MenuItem
             {

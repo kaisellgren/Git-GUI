@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Opened="OnOpened">
 
-    <MenuItem x:Name="Reset" Header="Reset">
+    <Separator />
+    
+    <MenuItem x:Name="Reset" Header="Reset to this commit">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Reset.png" Stretch="None" />
         </MenuItem.Icon>
@@ -29,14 +31,14 @@
         </MenuItem>
     </MenuItem>
 
-    <MenuItem Header="Revert..." IsEnabled="False"
+    <MenuItem Header="Revert this commit..." IsEnabled="False"
               InputGestureText="Delete">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Revert.png" Stretch="None" />
         </MenuItem.Icon>
     </MenuItem>
     
-    <MenuItem Header="Tag..."
+    <MenuItem Header="Tag this commit..."
               Command="{Binding PlacementTarget.Tag.TagCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
               CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
         <MenuItem.Icon>
@@ -44,14 +46,14 @@
         </MenuItem.Icon>
     </MenuItem>
     
-    <MenuItem Header="Add a note..."
+    <!--<MenuItem Header="Add a note..."
               IsEnabled="False"
               Command="{Binding PlacementTarget.Tag.AddNoteCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
               CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/AddNote.png" Stretch="None" />
         </MenuItem.Icon>
-    </MenuItem>
+    </MenuItem>-->
     
     <Separator />
 
@@ -78,7 +80,7 @@
             </MenuItem.Icon>
         </MenuItem>
         
-        <MenuItem Header="Email patch..." IsEnabled="False">
+        <!--<MenuItem Header="Email patch..." IsEnabled="False">
             <MenuItem.Icon>
                 <Image Source="../Resources/Icons/Email.png" Stretch="None" />
             </MenuItem.Icon>
@@ -88,7 +90,7 @@
             <MenuItem.Icon>
                 <Image Source="../Resources/Icons/Archive.png" Stretch="None" />
             </MenuItem.Icon>
-        </MenuItem>
+        </MenuItem>-->
         
         <MenuItem Header="Copy patch..."
                   Command="{Binding PlacementTarget.Tag.CopyPatchCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
