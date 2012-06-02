@@ -6,15 +6,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:RecentCommitMessageConverter x:Key ="recentCommitMessageConverter"/>
+    </UserControl.Resources>
+    
     <UserControl.Template>
         <ControlTemplate>
             <StackPanel>
                 <DockPanel Style="{DynamicResource PanelHeaderStyle}">
                     <TextBlock DockPanel.Dock="Left" Style="{DynamicResource PanelHeaderTextStyle}" Text="{TemplateBinding local:Panel.HeaderText}" />
                     <WrapPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
-                        <ComboBox ToolTip="Copy a previous commit message. Entire message will be copied. Messages here might be cropped."
-                            ItemsSource="{Binding RecentCommitMessages}"
-                            Name="CommitMessagesComboBox" SelectionChanged="CommitMessagesComboBox_SelectionChanged" Width="150" Margin="0,4,4,4">
+                        <ComboBox ToolTip="Copy a previous commit message. The entire message will be copied."
+                            ItemsSource="{Binding RecentCommitMessages, Converter={StaticResource recentCommitMessageConverter}}"
+                            Name="RecentCommitMessages" SelectionChanged="OnRecentCommitMessagesSelectionChanged" Width="150" Margin="0,4,4,4">
                         </ComboBox>
                         <Button Margin="0,3,3,3" Style="{StaticResource GreenButtonStyle}">
                             <WrapPanel>
@@ -26,7 +30,7 @@
                 </DockPanel>
                 <Grid>
                     <StackPanel Margin="4">
-                        <TextBox ToolTip="Enter your commit message." Height="64">WWWWWWWWWWWWWWWWWWW</TextBox>
+                        <TextBox Name="CommitMessageTextBox" ToolTip="Enter your commit message." Height="64"></TextBox>
                     </StackPanel>
                 </Grid>
             </StackPanel>

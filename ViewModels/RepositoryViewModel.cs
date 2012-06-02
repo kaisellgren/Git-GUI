@@ -24,15 +24,15 @@ namespace GG
         public bool   NotOpened { get; set; }
         private bool alreadyLoaded = false;
 
-        public RangedObservableCollection<Commit>     Commits { get; set; }
-        public RangedObservableCollection<StatusItem> StatusItems { get; set; }
-        public ObservableCollection<Branch>           Branches { get; set; }
-        public ObservableCollection<Tag>              Tags { get; set; }
-        public ObservableCollection<Remote>           Remotes { get; set; }
-        public ObservableCollection<Submodule>        Submodules { get; set; }
-        public ObservableCollection<Stash>            Stashes { get; set; }
-        public ObservableCollection<String>           RecentCommitMessages { get; private set; }
-        public ListCollectionView                     StatusItemsGrouped { get; set; }
+        public RangedObservableCollection<Commit>        Commits { get; set; }
+        public RangedObservableCollection<StatusItem>    StatusItems { get; set; }
+        public ObservableCollection<Branch>              Branches { get; set; }
+        public ObservableCollection<Tag>                 Tags { get; set; }
+        public ObservableCollection<Remote>              Remotes { get; set; }
+        public ObservableCollection<Submodule>           Submodules { get; set; }
+        public ObservableCollection<Stash>               Stashes { get; set; }
+        public ObservableCollection<RecentCommitMessage> RecentCommitMessages { get; private set; }
+        public ListCollectionView                        StatusItemsGrouped { get; set; }
 
         /// <summary>
         /// The HEAD. This can either be a reference to a DetachedHead or a Branch.
@@ -341,7 +341,7 @@ namespace GG
                 if (result == true)
                 {
                     LoadRepositoryStatus();
-                    LoadRecentCommitMessages(RecentCommitMessageCount);
+                    LoadRecentCommitMessages();
                     ListenToDirectoryChanges();
                 }
 
@@ -487,11 +487,11 @@ namespace GG
         }
 
         /// <summary>
-        /// Stores the last numCommits commit messages.
+        /// Stores the last RecentCommitMessageCount commit messages.
         /// </summary>
-        private void LoadRecentCommitMessages(int numCommits)
+        private void LoadRecentCommitMessages()
         {
-            RecentCommitMessages = new ObservableCollection<String>(Commits.Take(10).Select(c => c.Description).ToArray());
+            RecentCommitMessages = new ObservableCollection<String>(Commits.Take(this.RecentCommitMessageCount).Select(c => c.Description).ToArray());
         }
 
 #endregion

@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GG.Libraries;
+using GG.Models;
 
 namespace GG.UserControls
 {
@@ -51,14 +52,21 @@ namespace GG.UserControls
             InitializeComponent();
         }
 
-        private void CommitMessagesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnRecentCommitMessagesSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox myComboBox = UIHelper.FindChild<ComboBox>(this, "CommitMessagesComboBox");
-            //this causes null reference exception since myCombox has all null values for some reason
-            //System.Windows.Forms.Clipboard.SetText(myComboBox.Text);
+            var recentCommitMessages = UIHelper.FindChild<ComboBox>(this, "RecentCommitMessages");
+            var commitMessageBox = UIHelper.FindChild<TextBox>(this, "CommitMessageTextBox");
 
+            var item = recentCommitMessages.SelectedItem as RecentCommitMessage;
+
+            RecentCommitMessage selectedCommitMessage = (RecentCommitMessage)(item.DataContext);
+
+            //this causes null reference exception since myCombox has all null values for some reason
+            System.Windows.Forms.Clipboard.SetText(selectedCommitMessage.FullMessage);
+
+            commitMessageBox.Text.Insert(0, selectedCommitMessage.FullMessage);
             //this properly resets the combobox
-            myComboBox.SelectedIndex = -1;
+            recentCommitMessages.SelectedIndex = -1;
         }
     }
 }
