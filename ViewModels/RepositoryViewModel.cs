@@ -294,9 +294,14 @@ namespace GG
         /// <param name="action"></param>
         private bool CommitChanges_CanExecute(object action)
         {
-            //somehow get the commit message here from the messagebox
-            //var commitMessageBox = UIHelper.FindChild<TextBox>(this, "CommitMessageTextBox");
-            return true;
+            if (action != null)
+            {
+                return action.ToString().Length > 0;
+            }
+            else
+            {
+                return false;
+            }         
         }
 
         /// <summary>

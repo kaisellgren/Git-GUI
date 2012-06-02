@@ -21,7 +21,7 @@
                                   Width="150" Margin="0,4,4,4">
                         </ComboBox>
                         <Button  Margin="0,3,3,3" Style="{StaticResource GreenButtonStyle}" 
-                                 CommandTarget="{Binding CommitCommand}" CommandParameter="{Binding Text, ElementName=CommitMessageTextBox}">
+                                 Command="{Binding CommitCommand}" CommandParameter="{Binding Text, ElementName=CommitMessageTextBox}">
                             <WrapPanel>
                                 <Image Source="../Resources/Icons/RepositoryWrite.png" Width="16" Margin="0,0,4,0" />
                                 <TextBlock>Commit</TextBlock>
