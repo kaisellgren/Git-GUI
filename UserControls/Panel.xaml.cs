@@ -54,19 +54,20 @@ namespace GG.UserControls
 
         private void OnRecentCommitMessagesSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Retrieve elements.
             var recentCommitMessages = UIHelper.FindChild<ComboBox>(this, "RecentCommitMessages");
             var commitMessageBox = UIHelper.FindChild<TextBox>(this, "CommitMessageTextBox");
 
-            var item = recentCommitMessages.SelectedItem as RecentCommitMessage;
+            var selectedRecentCommitMessage = recentCommitMessages.SelectedItem as RecentCommitMessage;
 
-            RecentCommitMessage selectedCommitMessage = (RecentCommitMessage)(item.DataContext);
+            if (selectedRecentCommitMessage != null)
+            {
+                // Set the commit text box value.
+                commitMessageBox.Text = selectedRecentCommitMessage.FullMessage;
 
-            //this causes null reference exception since myCombox has all null values for some reason
-            System.Windows.Forms.Clipboard.SetText(selectedCommitMessage.FullMessage);
-
-            commitMessageBox.Text.Insert(0, selectedCommitMessage.FullMessage);
-            //this properly resets the combobox
-            recentCommitMessages.SelectedIndex = -1;
+                // Reset the drop down menu.
+                recentCommitMessages.SelectedIndex = -1;
+            }
         }
     }
 }

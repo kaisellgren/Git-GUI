@@ -8,19 +8,13 @@ namespace GG.Models
 {
     public class RecentCommitMessage
     {
-        private string croppedMessage;
-        public int croppedMessageLength { set; get; }
-
-        public string CroppedMessage { 
-            set
-            {
-                croppedMessage = value.Substring(0, this.croppedMessageLength);
-            }
-            get
-            {
-                return croppedMessage;
-            }
-        }
+        public string CroppedMessage { set; get; }
         public string FullMessage { set; get; }
+
+        public RecentCommitMessage(string message)
+        {
+            FullMessage = message;
+            CroppedMessage = message.Substring(0, message.Length >= 72 ? 72 : message.Length);
+        }
     }
 }
