@@ -12,19 +12,41 @@
 
         <MenuItem Header="Soft"
                   Command="{Binding PlacementTarget.Tag.ResetSoftCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                  CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                  CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                  ToolTipService.ShowDuration="60000">
+            <MenuItem.ToolTip>
+                <TextBlock Width="320" TextWrapping="Wrap">
+                    Does not touch the index file nor the working tree at all, but resets the head to commit just like all modes of reset do.<LineBreak />
+                    <LineBreak />
+                    This leaves all your changed files "Changes to be committed", as git status would put it.
+                </TextBlock>
+            </MenuItem.ToolTip>
+            
             <MenuItem.Icon>
                 <Image Source="../Resources/Icons/Reset.png" Stretch="None" />
             </MenuItem.Icon>
         </MenuItem>
         <MenuItem Header="Mixed (Default)"
                   Command="{Binding PlacementTarget.Tag.ResetMixedCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                  CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+                  CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                  ToolTipService.ShowDuration="60000">
+            <MenuItem.ToolTip>
+                <TextBlock Width="320" TextWrapping="Wrap">
+                    Resets the index, but not the working tree (i.e., the changed files are preserved, but not marked for commit) and reports what has not been updated.
+                </TextBlock>
+            </MenuItem.ToolTip>
+            
             <MenuItem.Icon>
                 <Image Source="../Resources/Icons/Reset.png" Stretch="None" />
             </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="Hard" IsEnabled="False">
+        <MenuItem Header="Hard" IsEnabled="False" ToolTipService.ShowDuration="60000">
+            <MenuItem.ToolTip>
+                <TextBlock Width="320" TextWrapping="Wrap">
+                    Resets the index and working tree. <TextBlock FontWeight="Bold">Any changes to tracked files in the working tree since the commit are discarded.</TextBlock>
+                </TextBlock>
+            </MenuItem.ToolTip>
+            
             <MenuItem.Icon>
                 <Image Source="../Resources/Icons/ResetHard.png" Stretch="None" />
             </MenuItem.Icon>
@@ -32,7 +54,14 @@
     </MenuItem>
 
     <MenuItem Header="Revert this commit..." IsEnabled="False"
-              InputGestureText="Delete">
+              InputGestureText="Delete"
+              ToolTipService.ShowDuration="60000">
+        <MenuItem.ToolTip>
+            <TextBlock Width="320" TextWrapping="Wrap">
+                Revert is used to create an inverse commit, reverting the change the patch introduced.
+            </TextBlock>
+        </MenuItem.ToolTip>
+        
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Revert.png" Stretch="None" />
         </MenuItem.Icon>
