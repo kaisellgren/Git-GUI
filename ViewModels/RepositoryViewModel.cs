@@ -8,13 +8,13 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Windows.Controls;
+using System.Windows.Media.Effects;
+using Microsoft.Win32;
 using GG.Libraries;
 using GG.ViewModels;
 using GG.Models;
-using System.Windows.Controls;
-using System.Windows.Media.Effects;
 using GG.UserControls.Dialogs;
-using GG.Libraries;
 
 namespace GG
 {
@@ -113,7 +113,7 @@ namespace GG
 
             using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
             {
-                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
                 dialog.FileName = commit.Description.Substring(0, commit.Description.Length >= 72 ? 72 : commit.Description.Length);
                 dialog.DefaultExt = ".patch";
                 dialog.Filter = "Patch files|*.patch";
@@ -263,7 +263,7 @@ namespace GG
         {
             DataGrid statusGrid = UIHelper.FindChild<DataGrid>(Application.Current.MainWindow, "StatusGridElement");
 
-            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+            var repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
             foreach (StatusItem item in statusGrid.SelectedItems)
             {
@@ -481,7 +481,7 @@ namespace GG
         {
             Console.WriteLine("Loading status data for \"" + RepositoryFullPath + "\".");
 
-            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+            var repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
             StatusItems.Clear();
 
