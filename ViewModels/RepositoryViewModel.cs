@@ -114,7 +114,7 @@ namespace GG
             using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
             {
                 SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-                dialog.FileName = commit.Description.Substring(0, commit.Description.Length >= 72 ? 72 : commit.Description.Length);
+                dialog.FileName = commit.Description.Right(72);
                 dialog.DefaultExt = ".patch";
                 dialog.Filter = "Patch files|*.patch";
 
