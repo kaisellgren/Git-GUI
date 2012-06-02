@@ -59,6 +59,7 @@ namespace GG
             Remotes = new ObservableCollection<Remote> { };
             Submodules = new ObservableCollection<Submodule> { };
             Stashes = new ObservableCollection<Stash> { };
+            RecentCommitMessages = new ObservableCollection<RecentCommitMessage>();
 
             CommitsPerPage = 50;
             RecentCommitMessageCount = 10;
@@ -491,7 +492,12 @@ namespace GG
         /// </summary>
         private void LoadRecentCommitMessages()
         {
-            RecentCommitMessages = new ObservableCollection<String>(Commits.Take(this.RecentCommitMessageCount).Select(c => c.Description).ToArray());
+            RecentCommitMessages.Clear();
+
+            foreach (Commit commit in Commits.Take(RecentCommitMessageCount))
+            {
+                RecentCommitMessages.Add(new RecentCommitMessage(commit.Description));
+            }
         }
 
 #endregion

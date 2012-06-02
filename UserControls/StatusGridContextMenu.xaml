@@ -17,7 +17,7 @@
 
     <Separator x:Name="StageSeparator" />
 
-    <MenuItem Header="Annotate..." IsEnabled="False">
+    <!--<MenuItem Header="Annotate..." IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Annotate.png" Stretch="None" />
         </MenuItem.Icon>
@@ -35,9 +35,9 @@
         </MenuItem.Icon>
     </MenuItem>
 
-    <Separator />
+    <Separator />-->
 
-    <MenuItem Header="Ignore" IsEnabled="False">
+    <MenuItem Header="Ignore">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Ignore.png" Stretch="None" />
         </MenuItem.Icon>
@@ -73,15 +73,15 @@
         </MenuItem>
     </MenuItem>
 
-    <MenuItem Header="Revert..." IsEnabled="False">
+    <MenuItem Header="Revert...">
         <MenuItem.Icon>
-            <Image Source="../Resources/Icons/Backout.png" Stretch="None" />
+            <Image Source="../Resources/Icons/Revert.png" Stretch="None" />
         </MenuItem.Icon>
     </MenuItem>
 
     <Separator />
 
-    <MenuItem Header="Copy" IsEnabled="False">
+    <MenuItem Header="Copy">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Copy.png" Stretch="None" />
         </MenuItem.Icon>
@@ -105,11 +105,11 @@
         </MenuItem.Icon>
     </MenuItem>
 
-    <MenuItem Header="Edit..." IsEnabled="False">
+    <!--<MenuItem Header="Edit..." IsEnabled="False">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Edit.png" Stretch="None" />
         </MenuItem.Icon>
-    </MenuItem>
+    </MenuItem>-->
 
     <MenuItem Header="Rename..." IsEnabled="False">
         <MenuItem.Icon>
