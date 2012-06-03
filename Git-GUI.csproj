@@ -189,6 +189,9 @@
     <Compile Include="UserControls\CommitPanel.xaml.cs">
       <DependentUpon>CommitPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DiffPanel.xaml.cs">
+      <DependentUpon>DiffPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Panel.xaml.cs">
       <DependentUpon>Panel.xaml</DependentUpon>
     </Compile>
@@ -323,6 +326,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\CommitPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DiffPanel.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\LeftToolbar.xaml">

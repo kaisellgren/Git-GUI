@@ -18,9 +18,11 @@
             <Style TargetType="TextBlock">
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="FontWeight" Value="SemiBold" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect ShadowDepth="1" BlurRadius="1" Color="Black" Opacity="0.5" RenderingBias="Quality" />
+                        <DropShadowEffect ShadowDepth="1" BlurRadius="0" Color="Black" Opacity="0.4" RenderingBias="Quality" />
                     </Setter.Value>
                 </Setter>
             </Style>

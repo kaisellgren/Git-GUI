@@ -21,6 +21,8 @@ namespace GG
 {
     public class RepositoryViewModel : BaseViewModel
     {
+        #region Properties and fields.
+
         public string Name { get; set; }
         public string RepositoryFullPath { get; set; }
         public bool   NotOpened { get; set; }
@@ -45,11 +47,28 @@ namespace GG
         public int RecentCommitMessageCount { get; set; }
 
         /// <summary>
+        /// Stores the diff text for the diff panel.
+        /// </summary>
+        private string _StatusItemDiff;
+
+        public string StatusItemDiff
+        {
+            get { return _StatusItemDiff; }
+            set
+            {
+                _StatusItemDiff = value;
+                RaisePropertyChanged("StatusItemDiff");
+            }
+        }
+
+        /// <summary>
         /// The delegate used for reloading the status grid items upon filesystem changes.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         delegate void ReloadStatusDelegate(object sender, FileSystemEventArgs e);
+
+        #endregion
 
         public RepositoryViewModel()
         {
@@ -84,6 +103,9 @@ namespace GG
             StageUnstageCommand = new DelegateCommand(StageUnstage);
             DeleteFileCommand = new DelegateCommand(DeleteFile);
             CommitCommand = new DelegateCommand(CommitChanges, CommitChanges_CanExecute);
+
+            // Diff panel.
+            StatusItemDiff = "";
         }
 
         /// <summary>
@@ -535,6 +557,26 @@ namespace GG
         }
 
 #endregion
+
+        /// <summary>
+        /// Updates the diff panel text.
+        /// </summary>
+        /// <param name="items"></param>
+        public void UpdateStatusItemDiff(IList collection)
+        {
+            var diff = "a";
+            var items = collection.Cast<StatusItem>();
+
+            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            {
+                foreach (StatusItem item in items)
+                {
+                    diff += repo.Diff.Compare(repo.Head.Tip.Tree, LibGit2Sharp.DiffTarget.Index).Patch;
+                }
+            }
+
+            StatusItemDiff = diff;
+        }
 
         /// <summary>
         /// Sets this repository as the active tab on the tab control.

@@ -26,6 +26,7 @@
                   VirtualizingPanel.IsVirtualizing="True"
                   VirtualizingPanel.VirtualizationMode="Recycling"
                   ContextMenu="{StaticResource statusGridContextMenu}"
+                  SelectionChanged="StatusGridElement_SelectionChanged"
                   Tag="{Binding}"
                   x:Name="StatusGridElement">
             <DataGrid.InputBindings>

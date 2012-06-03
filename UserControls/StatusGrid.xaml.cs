@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GG.Libraries;
 
 namespace GG.UserControls
 {
@@ -22,6 +23,16 @@ namespace GG.UserControls
         public StatusGrid()
         {
             InitializeComponent();
+        }
+
+        private void StatusGridElement_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Retrieve repository view model.
+            var repositoryTabs = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
+            var repositoryViewModel = repositoryTabs.SelectedItem as RepositoryViewModel;
+
+            // Tell repository view model to update status item diff.
+            repositoryViewModel.UpdateStatusItemDiff(StatusGridElement.SelectedItems);
         }
     }
 }
