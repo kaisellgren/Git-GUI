@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="Styles/ChangesetHistoryDataGrid.xaml"/>
                 <ResourceDictionary Source="Styles/TreeView.xaml"/>
                 <ResourceDictionary Source="Styles/Button.xaml"/>
+                <ResourceDictionary Source="Styles/SplitButton.xaml"/>
                 <ResourceDictionary Source="Styles/NewTabList.xaml"/>
                 <ResourceDictionary Source="Styles/TextBlock.xaml"/>
                 <ResourceDictionary Source="Templates/AppTabContentTemplate.xaml"/>
@@ -24,6 +25,7 @@
                 <ResourceDictionary Source="Templates/AppTabNew.xaml"/>
                 <ResourceDictionary Source="Styles/Separator.xaml"/>
                 <ResourceDictionary Source="Styles/Border.xaml"/>
+                <ResourceDictionary Source="Styles/ComboBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

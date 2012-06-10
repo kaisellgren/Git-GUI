@@ -162,6 +162,7 @@
     <Compile Include="Converters\IsHeadToTextDecorationsConverter.cs" />
     <Compile Include="Converters\ExtensionToImageConverter.cs" />
     <Compile Include="Converters\IsHeadToFontWeightConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\StatusGridGroupToColorConverter.cs" />
     <Compile Include="Converters\StatusToCharacterConverter.cs" />
     <Compile Include="Converters\StatusToColorConverter.cs" />
@@ -193,12 +194,14 @@
     <Compile Include="UserControls\DiffPanel.xaml.cs">
       <DependentUpon>DiffPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MenuButton.cs" />
     <Compile Include="UserControls\Panel.xaml.cs">
       <DependentUpon>Panel.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Dialogs\PromptDialog.xaml.cs">
       <DependentUpon>PromptDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\SplitButton.cs" />
     <Compile Include="UserControls\StatusGrid.xaml.cs">
       <DependentUpon>StatusGrid.xaml</DependentUpon>
     </Compile>
@@ -284,6 +287,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Separator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\SplitButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
