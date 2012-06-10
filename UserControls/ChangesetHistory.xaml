@@ -54,8 +54,8 @@
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <WrapPanel>
-                            <ListBox ItemsSource="{Binding DisplayTags}" Style="{DynamicResource DisplayTagsBlueStyle}" />
-                            <ListBox ItemsSource="{Binding Tags}" Style="{DynamicResource DisplayTagsOrangeStyle}" />
+                            <ListBox ItemsSource="{Binding DisplayTags}" Style="{DynamicResource DisplayTagsBlueStyle}" IsHitTestVisible="False" />
+                            <ListBox ItemsSource="{Binding Tags}" Style="{DynamicResource DisplayTagsOrangeStyle}" IsHitTestVisible="False" />
                             <TextBlock Text="{Binding Path=ShortDescription}"
                                        VerticalAlignment="Center"
                                        FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
