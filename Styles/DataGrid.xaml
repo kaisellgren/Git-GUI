@@ -168,6 +168,7 @@
                             <ContentPresenter x:Name="CellContent" SnapsToDevicePixels="True" RenderOptions.ClearTypeHint="Enabled" TextOptions.TextFormattingMode="Display" VerticalAlignment="Center" />
                         </Border>
                     </Border>
+                    
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="BorderThickness" Value="0,1,0,0" TargetName="OuterBorder" />
@@ -186,13 +187,11 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                        
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="False" />
-                            </MultiTrigger.Conditions>
-                            
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource AncestorType=DataGrid}}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
                             <Setter Property="BorderThickness" Value="0,1,0,0" TargetName="OuterBorder" />
                             <Setter Property="BorderBrush" Value="#bebebe" />
                             <Setter Property="BorderBrush" Value="#bebebe" TargetName="OuterBorder" />
@@ -208,12 +207,28 @@
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                        </MultiTrigger>
-                        
-                        <Trigger Property="IsSelected" Value="False">
-                            <Setter Property="BorderBrush" Value="Transparent" TargetName="OuterBorder" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                <Condition Binding="{Binding ContextMenu.IsOpen, RelativeSource={RelativeSource AncestorType=DataGrid}}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
                             <Setter Property="BorderThickness" Value="0,1,0,0" TargetName="OuterBorder" />
-                        </Trigger>
+                            <Setter Property="BorderBrush" Value="#7ea3be" />
+                            <Setter Property="BorderBrush" Value="#7ea3be" TargetName="OuterBorder" />
+                            <Setter Property="Foreground" Value="#fff" />
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#b3e5fc" Offset="0"/>
+                                        <GradientStop Color="#8cc8e3" Offset="0.1"/>
+                                        <GradientStop Color="#83bad2" Offset="0.45"/>
+                                        <GradientStop Color="#609fbb" Offset="0.9"/>
+                                        <GradientStop Color="#9fd3eb" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

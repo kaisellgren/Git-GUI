@@ -11,25 +11,27 @@
         <ControlTemplate>
             <DockPanel>
                 <StackPanel DockPanel.Dock="Top">
-                    <DockPanel Style="{DynamicResource PanelHeaderStyle}">
-                        <ContentPresenter DockPanel.Dock="Left" Style="{DynamicResource PanelHeaderTitleStyle}" Content="{TemplateBinding userControls:Panel.Header}" />
-                        <WrapPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
-                            <ComboBox ToolTip="Copy a previous commit message. The entire message will be copied."
-                                      ItemsSource="{Binding RecentCommitMessages}"
-                                      DisplayMemberPath="CroppedMessage"
-                                      Name="RecentCommitMessages"
-                                      SelectionChanged="OnRecentCommitMessagesSelectionChanged"
-                                      Width="150" Margin="0,4,4,4">
-                            </ComboBox>
-                            <Button  Margin="0,3,3,3" Style="{StaticResource GreenButtonStyle}" 
-                                     Command="{Binding CommitCommand}" CommandParameter="{Binding Text, ElementName=CommitMessageTextBox}">
-                                <WrapPanel>
-                                    <Image Source="../Resources/Icons/RepositoryWrite.png" Width="16" Margin="0,0,4,0" />
-                                    <TextBlock>Commit</TextBlock>
-                                </WrapPanel>
-                            </Button>
-                        </WrapPanel>
-                    </DockPanel>
+                    <Border BorderBrush="#7ea3be" BorderThickness="1">
+                        <DockPanel Style="{DynamicResource PanelHeaderStyle}">
+                            <ContentPresenter DockPanel.Dock="Left" Style="{DynamicResource PanelHeaderTitleStyle}" Content="{TemplateBinding userControls:Panel.Header}" />
+                            <WrapPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
+                                <ComboBox ToolTip="Copy a previous commit message. The entire message will be copied."
+                                          ItemsSource="{Binding RecentCommitMessages}"
+                                          DisplayMemberPath="CroppedMessage"
+                                          Name="RecentCommitMessages"
+                                          SelectionChanged="OnRecentCommitMessagesSelectionChanged"
+                                          Width="150" Margin="0,4,4,4">
+                                </ComboBox>
+                                <Button  Margin="0,3,3,3"
+                                         Command="{Binding CommitCommand}" CommandParameter="{Binding Text, ElementName=CommitMessageTextBox}">
+                                    <WrapPanel>
+                                        <Image Source="../Resources/Icons/RepositoryWrite.png" Width="16" Margin="0,0,4,0" />
+                                        <TextBlock>Commit</TextBlock>
+                                    </WrapPanel>
+                                </Button>
+                            </WrapPanel>
+                        </DockPanel>
+                    </Border>
                     <Grid>
                         <StackPanel Margin="4">
                             <TextBox Name="CommitMessageTextBox" ToolTip="Enter your commit message." Height="64"></TextBox>

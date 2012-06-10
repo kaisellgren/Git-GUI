@@ -7,7 +7,7 @@
               Header="Stage"
               InputGestureText="Enter"
               Command="{Binding PlacementTarget.Tag.StageUnstageCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-              CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
+              CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Add.png" Stretch="None" />
         </MenuItem.Icon>

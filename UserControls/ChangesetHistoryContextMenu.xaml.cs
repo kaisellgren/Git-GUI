@@ -57,6 +57,11 @@ namespace GG.UserControls
             // Remove previously added Dynamic menu items. We determine dynamically added menu items by their Tag == "Dynamic".
             RemoveDynamicallyAddedMenuItems();
 
+            if (commit == null)
+            {
+                return;
+            }
+
             // Add Checkout menu items. TODO: Add also non-branch-checkouts.
             var numberOfCheckoutItems = 0;
             foreach (Branch branch in commit.Branches)
@@ -193,6 +198,17 @@ namespace GG.UserControls
                     Source = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Icons/" + icon + ".png", UriKind.Absolute))
                 }
             };
+        }
+
+        private void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            var commit = GetCurrentSelectedCommit();
+
+            if (commit == null)
+            {
+                e.Handled = true;
+                return;
+            }
         }
     }
 }

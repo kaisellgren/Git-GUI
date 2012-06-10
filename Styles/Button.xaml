@@ -1,66 +1,48 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:GG"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
     
-    <Style x:Key="ButtonFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <LinearGradientBrush x:Key="ButtonNormalBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#fcfcfc" Offset="0"/>
+        <GradientStop Color="#ebebeb" Offset="0.1"/>
+        <GradientStop Color="#d2d2d2" Offset="0.7"/>
+        <GradientStop Color="#b5b5b5" Offset="0.9"/>
+        <GradientStop Color="#ffffff" Offset="1"/>
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="ButtonMouseOverBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#ffffff" Offset="0"/>
+        <GradientStop Color="#f3f3f3" Offset="0.1"/>
+        <GradientStop Color="#eaeaea" Offset="0.7"/>
+        <GradientStop Color="#b5b5b5" Offset="0.9"/>
+        <GradientStop Color="#ffffff" Offset="1"/>
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="ButtonPressedBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#ffffff" Offset="0"/>
+        <GradientStop Color="#b5b5b5" Offset="0.1"/>
+        <GradientStop Color="#d2d2d2" Offset="0.3"/>
+        <GradientStop Color="#ebebeb" Offset="0.9"/>
+        <GradientStop Color="#fcfcfc" Offset="1"/>
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="ButtonDisabledBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#e0e0e0" Offset="0" />
+        <GradientStop Color="#e0e0e0" Offset="0.1" />
+        <GradientStop Color="#e0e0e0" Offset="0.5" />
+        <GradientStop Color="#e0e0e0" Offset="0.9" />
+        <GradientStop Color="#e0e0e0" Offset="1" />
+    </LinearGradientBrush>
     
     <Style TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                    <GradientStop Color="#F3F3F3" Offset="0"/>
-                    <GradientStop Color="#EBEBEB" Offset="0.5"/>
-                    <GradientStop Color="#DDDDDD" Offset="0.5"/>
-                    <GradientStop Color="#CDCDCD" Offset="1"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="BorderBrush" Value="#707070"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Foreground" Value="#222"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="2" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Themes:ButtonChrome x:Name="Chrome" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}" RenderDefaulted="{TemplateBinding IsDefaulted}" SnapsToDevicePixels="true">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderOptions.ClearTypeHint="Enabled" TextOptions.TextRenderingMode="ClearType" TextOptions.TextFormattingMode="Display" />
-                    </Themes:ButtonChrome>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="ToggleButton.IsChecked" Value="true">
-                            <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="#ADADAD"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    
-    <!-- Custom button colors. -->
-    
-    <Style TargetType="{x:Type Button}" x:Key="GreenButtonStyle" BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="Foreground" Value="#fff" />
+        <Setter Property="Foreground" Value="#222" />
+        <Setter Property="Background" Value="{StaticResource ButtonNormalBrush}" />   
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Name="border" BorderThickness="1" BorderBrush="#446c06" CornerRadius="3" Background="{TemplateBinding Background}">
-                        <Border BorderBrush="#55ffffff" BorderThickness="1" CornerRadius="3" Padding="6,4">
+                    <Border Name="OuterBorder" BorderThickness="1" BorderBrush="#666" CornerRadius="3" Background="{TemplateBinding Background}">
+                        <Border Name="InnerBorder" BorderBrush="#55ffffff" BorderThickness="1" CornerRadius="3" Padding="6,4">
                             <Grid>
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="contentShadow" Style="{StaticResource ShadowStyle}">
                                     <ContentPresenter.RenderTransform>
@@ -71,60 +53,86 @@
                             </Grid>
                         </Border>
                     </Border>
-
+                    
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                                        <GradientStop Color="#aae64b" Offset="0"/>
-                                        <GradientStop Color="#7eb922" Offset="0.16"/>
-                                        <GradientStop Color="#6aa016" Offset="0.57"/>
-                                        <GradientStop Color="#649714" Offset="0.86"/>
-                                        <GradientStop Color="#7eb922" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <StopStoryboard BeginStoryboardName="mouseOverStoryboard" />
+                                <StopStoryboard BeginStoryboardName="mouseLeaveStoryboard" />
+                                <StopStoryboard BeginStoryboardName="mouseUpStoryboard" />
+                                <StopStoryboard BeginStoryboardName="mousePressedStoryboard" />
 
+                                <BeginStoryboard x:Name="disabledStoryboard">
+                                    <Storyboard>
+                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource ButtonDisabledBrush}" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource ButtonNormalBrush}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+
+                            <Setter Property="BorderBrush" Value="#aaa" TargetName="OuterBorder" />
+                            <Setter Property="Foreground" Value="#aaa" />
+                        </Trigger>
+                        
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientStop Color="#bbf75c" Offset="0"/>
-                                        <GradientStop Color="#8fba33" Offset="0.16"/>
-                                        <GradientStop Color="#7bb127" Offset="0.57"/>
-                                        <GradientStop Color="#75a825" Offset="0.86"/>
-                                        <GradientStop Color="#8fca33" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="mouseOverStoryboard">
+                                    <Storyboard>
+                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource ButtonMouseOverBrush}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="mouseUpStoryboard"/>
+                                <BeginStoryboard x:Name="mouseLeaveStoryboard">
+                                    <Storyboard>
+                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource ButtonNormalBrush}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" >
-                                <Setter.Value>
-                                    <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" >
-                                        <GradientStop Color="#aae64b" Offset="0"/>
-                                        <GradientStop Color="#7eb922" Offset="0.16"/>
-                                        <GradientStop Color="#6aa016" Offset="0.57"/>
-                                        <GradientStop Color="#649714" Offset="0.86"/>
-                                        <GradientStop Color="#7eb922" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="mousePressedStoryboard">
+                                    <Storyboard>
+                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource ButtonPressedBrush}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard x:Name="mouseUpStoryboard">
+                                    <Storyboard>
+                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource ButtonMouseOverBrush}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                             <Setter TargetName="content" Property="RenderTransform" >
                                 <Setter.Value>
                                     <TranslateTransform Y="1.0" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Resources>
+            <Style TargetType="Image">
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
     </Style>
 
     <!-- Window top buttons (maximize, close, etc.). -->

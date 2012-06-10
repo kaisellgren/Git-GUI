@@ -1,7 +1,8 @@
 ﻿<ContextMenu x:Class="GG.UserControls.ChangesetHistoryContextMenu"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Opened="OnOpened">
+             Opened="OnOpened"
+             ContextMenuOpening="OnContextMenuOpening">
 
     <Separator />
     

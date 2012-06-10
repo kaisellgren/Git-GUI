@@ -38,33 +38,29 @@
 
         <WrapPanel DockPanel.Dock="Bottom" Margin="0,32,0,0">
             <WrapPanel.Resources>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="Margin" Value="0,0,8,0" />
                     <Setter Property="Padding" Value="4" />
-                </Style>
-                
-                <Style TargetType="Image">
-                    <Setter Property="Margin" Value="0,0,4,0" />
                 </Style>
             </WrapPanel.Resources>
             
             <Button Click="OnOpenLocalRepository">
-                <DockPanel>
-                    <Image DockPanel.Dock="Left" Source="../Resources/Icons/Open.png" Stretch="None" />
+                <WrapPanel>
+                    <Image Source="../Resources/Icons/Open.png" Stretch="None" Margin="0,0,4,0" />
                     <TextBlock VerticalAlignment="Center">Open Local Repository</TextBlock>
-                </DockPanel>
+                </WrapPanel>
             </Button>
             <Button Click="OnCreateLocalRepository">
-                <DockPanel>
-                    <Image DockPanel.Dock="Left" Source="../Resources/Icons/Add.png" Stretch="None" />
+                <WrapPanel>
+                    <Image Source="../Resources/Icons/Add.png" Stretch="None" Margin="0,0,4,0" />
                     <TextBlock VerticalAlignment="Center">Create Local Repository</TextBlock>
-                </DockPanel>
+                </WrapPanel>
             </Button>
             <Button IsEnabled="False">
-                <DockPanel>
-                    <Image DockPanel.Dock="Left" Source="../Resources/Icons/Clone.png" Stretch="None" />
+                <WrapPanel>
+                    <Image Source="../Resources/Icons/Clone.png" Stretch="None" Margin="0,0,4,0" />
                     <TextBlock VerticalAlignment="Center">Clone Repository</TextBlock>
-                </DockPanel>
+                </WrapPanel>
             </Button>
             <!--<Button>
                 <DockPanel>
