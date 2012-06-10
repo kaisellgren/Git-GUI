@@ -35,13 +35,15 @@
         <GradientStop Color="#e0e0e0" Offset="1" />
     </LinearGradientBrush>
     
+    <SolidColorBrush x:Key="ButtonNormalBorderBrush" Color="#666" />
+    
     <Style TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="#222" />
         <Setter Property="Background" Value="{StaticResource ButtonNormalBrush}" />   
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Name="OuterBorder" BorderThickness="1" BorderBrush="#666" CornerRadius="3" Background="{TemplateBinding Background}">
+                    <Border Name="OuterBorder" BorderThickness="1" BorderBrush="{StaticResource ButtonNormalBorderBrush}" CornerRadius="3" Background="{TemplateBinding Background}">
                         <Border Name="InnerBorder" BorderBrush="#55ffffff" BorderThickness="1" CornerRadius="3" Padding="6,4">
                             <Grid>
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="contentShadow" Style="{StaticResource ShadowStyle}">

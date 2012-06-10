@@ -26,6 +26,7 @@
                 <ResourceDictionary Source="Styles/Separator.xaml"/>
                 <ResourceDictionary Source="Styles/Border.xaml"/>
                 <ResourceDictionary Source="Styles/ComboBox.xaml"/>
+                <ResourceDictionary Source="Styles/TextBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
