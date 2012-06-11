@@ -32,7 +32,6 @@
               Loaded="OnDataContextChanged"
               x:Name="ChangesetHistoryGrid"
               Tag="{Binding}"
-              Style="{DynamicResource ChangesetHistoryDataGridStyle}"
               ContextMenu="{StaticResource changesetHistoryContextMenu}">
         
         <DataGrid.InputBindings>
