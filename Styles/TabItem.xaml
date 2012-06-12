@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:GG">
+    
     <Style TargetType="{x:Type TabItem}">
         <Setter Property="Template">
             <Setter.Value>
@@ -42,11 +45,11 @@
                     </Grid>
                     
                     <ControlTemplate.Triggers>
-                        <!-- TODO: Find a way to add sliding animation when opening a new tab. 
+                        <!-- TODO: Find a way to add sliding animation when opening a new tab.
                         <EventTrigger RoutedEvent="Loaded">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <DoubleAnimation Duration="0:0:0.3" To="100" From="0" Storyboard.TargetProperty="Width" Storyboard.TargetName="Border" />
+                                    <local:BindableDoubleAnimation Duration="0:0:0.3" To="{Binding Path=ActualWidth, ElementName=Border}" From="0" Storyboard.TargetProperty="Width" Storyboard.TargetName="Border" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>-->
