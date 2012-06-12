@@ -7,6 +7,7 @@ using GG.Models;
 using System.Windows.Shapes;
 using System.Windows;
 using System.Diagnostics;
+using System.Windows.Documents;
 
 namespace GG.Libraries
 {
@@ -15,6 +16,12 @@ namespace GG.Libraries
         private Canvas graph;
         private Int16 cellHeight = 24;
         private RepositoryViewModel repositoryViewModel;
+
+        // A highlight color to reuse in tooltips.
+        private SolidColorBrush highlightColor = new SolidColorBrush()
+        {
+            Color = Color.FromRgb(8, 94, 160)
+        };
 
         // Stores the information about the last used branch color. We want to recycle these.
         private Int16 branchColorIndex = 0;
@@ -96,8 +103,6 @@ namespace GG.Libraries
                 else
                     indexOfCurrentBranch = 0;
 
-                Debug.Assert(commit.VisualPosition >= 0);
-
                 int horizontalIndex = indexOfCurrentBranch + commit.VisualPosition;
                 for (var i = indexOfCurrentBranch - 1; i >= 0; i--)
                 {
@@ -105,8 +110,8 @@ namespace GG.Libraries
                 }
 
                 // Draw the dot/ellipse based on the index of the current branch.
-                byte dotSize = 8;
-                byte horizontalDotSpacing = 10;
+                byte dotSize = 10;
+                byte horizontalDotSpacing = 12;
 
                 int dotX = horizontalDotSpacing + dotSize * horizontalIndex + horizontalDotSpacing * horizontalIndex;
                 int dotY = cellHeight * rowNumber + cellHeight / 2 - dotSize / 2;
@@ -128,6 +133,38 @@ namespace GG.Libraries
 
                 graph.Children.Add(dot);
 
+                // ToolTip for commits.
+                var commitTooltip = new TextBlock
+                {
+                    MaxWidth = 320,
+                    TextWrapping = TextWrapping.Wrap
+                };
+
+                // ToolTip for paths.
+                var pathTooltip = new TextBlock
+                {
+                    MaxWidth = 320,
+                    TextWrapping = TextWrapping.Wrap
+                };
+
+                if (commit.Branches.Count == 1)
+                {
+                    pathTooltip.Text = commit.Branches.ElementAt(0).Name;
+                }
+                else
+                {
+                    int i = 0, count = commit.Branches.Count;
+
+                    commit.Branches.ForEach(b =>
+                    {
+                        i++;
+                        pathTooltip.Inlines.AddRange(new Inline[]
+                        {
+                            new Run(b.Name + (i < count ? ", " : "")),
+                        });
+                    });
+                }
+
                 // Regular commits have a white circle inside.
                 if (commit.IsMergeCommit() == false && commit.ParentCount < 2)
                 {
@@ -144,6 +181,48 @@ namespace GG.Libraries
                     Canvas.SetZIndex(dotInner, 2);
 
                     graph.Children.Add(dotInner);
+
+                    // ToolTip.
+                    commitTooltip.Inlines.AddRange(new Inline[]
+                    {
+                        new Run("Commit: ")  {FontWeight = FontWeights.Bold},
+                        new Run(commit.HashShort) {Foreground = highlightColor, FontWeight = FontWeights.Bold},
+                        new LineBreak(),
+                        new Run("Author: ") {FontWeight = FontWeights.Bold},
+                        new Run(commit.AuthorName) ,
+                        new LineBreak(),
+                        new Run("Date: ") {FontWeight = FontWeights.Bold},
+                        new Run(commit.FormattedDate),
+                        new LineBreak(),
+                        new LineBreak(),
+                        new Run(commit.Description.TrimEnd())
+                    });
+
+                    dotInner.ToolTip = commitTooltip;
+                    ToolTipService.SetShowDuration(dotInner, 60000);
+                    ToolTipService.SetInitialShowDelay(dotInner, 1);
+                }
+                else
+                {
+                    // Tooltip.
+                    commitTooltip.Inlines.AddRange(new Inline[]
+                    {
+                        new Run("Merge commit: ")  {FontWeight = FontWeights.Bold},
+                        new Run(commit.HashShort) {Foreground = highlightColor, FontWeight = FontWeights.Bold},
+                        new LineBreak(),
+                        new Run("Author: ") {FontWeight = FontWeights.Bold},
+                        new Run(commit.AuthorName) ,
+                        new LineBreak(),
+                        new Run("Date: ") {FontWeight = FontWeights.Bold},
+                        new Run(commit.FormattedDate),
+                        new LineBreak(),
+                        new LineBreak(),
+                        new Run(commit.Description.TrimEnd())
+                    });
+
+                    dot.ToolTip = commitTooltip;
+                    ToolTipService.SetShowDuration(dot, 60000);
+                    ToolTipService.SetInitialShowDelay(dot, 1);
                 }
 
                 if (commit.Branches.Count > 0)
@@ -191,32 +270,36 @@ namespace GG.Libraries
                             Path path = new Path
                             {
                                 Stroke = lineColor,
-                                StrokeThickness = 3,
+                                StrokeThickness = 4,
                                 Data = new PathGeometry
                                 {
                                     Figures = new PathFigureCollection
-                            {
-                                new PathFigure
-                                {
-                                    StartPoint = new Point(startLineX1, startLineY1),
-                                    Segments = new PathSegmentCollection
                                     {
-                                        new PolyBezierSegment
+                                        new PathFigure
                                         {
-                                            Points = new PointCollection
+                                            StartPoint = new Point(startLineX1, startLineY1),
+                                            Segments = new PathSegmentCollection
                                             {
-                                                new Point(startLineX2, startLineY2),
-                                                new Point(endLineX1, endLineY1),
-                                                new Point(endLineX2, endLineY2)
+                                                new PolyBezierSegment
+                                                {
+                                                    Points = new PointCollection
+                                                    {
+                                                        new Point(startLineX2, startLineY2),
+                                                        new Point(endLineX1, endLineY1),
+                                                        new Point(endLineX2, endLineY2)
+                                                    }
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                                }
                             };
 
                             graph.Children.Add(path);
+
+                            path.ToolTip = pathTooltip;
+                            ToolTipService.SetShowDuration(path, 60000);
+                            ToolTipService.SetInitialShowDelay(path, 1);
                         }
                     }
                 }
