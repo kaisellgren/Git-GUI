@@ -25,7 +25,7 @@
         </Setter>
     </Style>
     
-    <Style x:Key="ChangesetHistoryDataGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DataGridStyle}">
+    <Style x:Key="ChangesetHistoryDataGridStyle" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
         <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
