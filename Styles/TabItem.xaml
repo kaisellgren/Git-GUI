@@ -7,6 +7,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid>
+                        <Grid.InputBindings>
+                            <MouseBinding Gesture="MiddleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CloseTabCommand}" CommandParameter="{Binding}" />
+                        </Grid.InputBindings>
+                        
                         <Border Name="Border" MaxWidth="256" BorderBrush="#666" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0" Margin="-2,0,3,-1">
                             <DockPanel>
                                 <DockPanel.Resources>
