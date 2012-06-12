@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using GG.Models;
 using System.Windows.Shapes;
 using System.Windows;
+using System.Diagnostics;
 
 namespace GG.Libraries
 {
@@ -85,12 +86,8 @@ namespace GG.Libraries
                 // Get a list of branches around this commit.
                 List<Branch> branchesAroundCommit = commit.BranchesAround;
 
-                // And a few more visual branches (merge commits create these).
-                List<Commit> commitSiblings = commit.Siblings;
-
                 // Sort the lists alphabetically.
                 branchesAroundCommit.OrderBy(o => o.Name.ToString());
-                commitSiblings.OrderBy(o => o.Hash.ToString());
 
                 // Retrieve the index of this commit's branch on the list. This index determines the horizontal positions of dots (commit dots).
                 int indexOfCurrentBranch;
@@ -98,8 +95,14 @@ namespace GG.Libraries
                     indexOfCurrentBranch = branchesAroundCommit.IndexOf(commit.Branches.ElementAt(0));
                 else
                     indexOfCurrentBranch = 0;
-                int indexOfAmongSiblings = commitSiblings.IndexOf(commit);
-                int horizontalIndex = indexOfCurrentBranch + (indexOfAmongSiblings >= 0 ? indexOfAmongSiblings : 0);
+
+                Debug.Assert(commit.VisualPosition >= 0);
+
+                int horizontalIndex = indexOfCurrentBranch + commit.VisualPosition;
+                for (var i = indexOfCurrentBranch - 1; i >= 0; i--)
+                {
+                    horizontalIndex += ((Branch) branchesAroundCommit.ElementAt(i)).RightMostVisualPosition;
+                }
 
                 // Draw the dot/ellipse based on the index of the current branch.
                 byte dotSize = 8;

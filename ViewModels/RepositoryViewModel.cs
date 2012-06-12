@@ -489,6 +489,12 @@ namespace GG
                     commit.PostProcess(Commits, Branches);
                 }
 
+                // Calculate commit visual positions for each branch tree.
+                foreach (Branch branch in Branches)
+                {
+                    RepoUtil.IncrementCommitTreeVisualPositionsRecursively(branch.Tip);
+                }
+
                 result = true;
             }
             catch (Exception)
@@ -567,6 +573,9 @@ namespace GG
         /// <param name="items"></param>
         public void UpdateStatusItemDiff(IList collection)
         {
+            if (NotOpened == true)
+                return;
+
             var diff = "";
             var items = collection.Cast<StatusItem>();
 

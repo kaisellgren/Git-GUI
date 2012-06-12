@@ -28,6 +28,11 @@ namespace GG.Models
         public int AheadBy { get; set; }
         public int BehindBy { get; set; }
 
+        /// <summary>
+        /// Stores the right most visual position of any commit within this branch tree.
+        /// </summary>
+        public int RightMostVisualPosition { get; set; }
+
         private RepositoryViewModel repositoryViewModel { get; set; }
 
         /// <summary>

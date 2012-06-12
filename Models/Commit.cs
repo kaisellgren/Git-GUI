@@ -23,8 +23,9 @@ namespace GG.Models
         public List<string> ParentHashes     { get; set; }
         public int          ParentCount      { get; set; }
         public List<Commit> Parents          { get; set; }
-        public List<Commit> Siblings         { get; set; }
+        public int          VisualPosition   { get; set; }
         public bool         IsHead           { get; set; }
+        public List<Commit> Children         { get; set; }
 
         /// <summary>
         /// Returns the ObjectId of LibGit2Sharp.
@@ -122,6 +123,8 @@ namespace GG.Models
             c.ParentCount  = commit.ParentsCount;
             c.Parents      = new List<Commit>();
             c.ObjectId     = commit.Id;
+            c.VisualPosition = -1; // -1 means it's not yet calculated.
+            c.Children     = new List<Commit>();
 
             return c;
         }
@@ -140,14 +143,12 @@ namespace GG.Models
                     Commit parentCommit = commits.Where(c => c.Hash == hash).FirstOrDefault();
 
                     if (parentCommit != null)
+                    {
                         Parents.Add(parentCommit);
+                        parentCommit.Children.Add(this);
+                    }
                 }
             }
-
-            // Set Siblings.
-            Siblings = RepoUtil.GetCommitSiblings(this, commits);
-
-            // SiblingTreeCount ?
 
             // Set BranchesAround.
             BranchesAround = RepoUtil.GetBranchesAroundCommit(this, branches);

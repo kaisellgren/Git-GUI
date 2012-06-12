@@ -39,7 +39,8 @@ namespace GG.Libraries
             // Loop through all branches and determine if they are around the specified commit.
             foreach (Branch branch in branches)
             {
-                if (branch.Tip == null)
+                // Tip has to be found and in case multiple branches share the tree, get rid of the others -- messes up visual position counting.
+                if (branch.Tip == null || list.Any(b => branch.Tip.Branches.Contains(b)) || list.Any(b => b.Tip.Branches.Contains(branch)))
                     continue;
 
                 // The branch's tip must be newer/same than the commit.
@@ -61,41 +62,43 @@ namespace GG.Libraries
         }
 
         /// <summary>
-        /// Returns all commits that share the same parent (i.e. appear visually around each other -- determines the commit dot horizontal position).
+        /// Increments the visual position for this commit tree.
         /// </summary>
         /// <param name="commit"></param>
-        /// <param name="repo"></param>
-        /// <returns></returns>
-        public static List<Commit> GetCommitSiblings(Commit commit, ObservableCollection<Commit> commits)
+        public static void IncrementCommitTreeVisualPositionsRecursively(Commit commit, int level = 0)
         {
-            List<Commit> siblings = new List<Commit>();
+            // The visual position for this commit has already been calculated or the commit does not exist.
+            if (commit == null || commit.VisualPosition != -1)
+                return;
 
-            return siblings;
+            // We have reached a commit with multiple children, we only continue if this commit is the "left most chain".
+            if (commit.Children.Count > 1 && level > 0)
+                return;
 
-            /*
-            // If there 
-            if (commit.ParentCount == 0)
-                return siblings;
+            // Update commit's visual position.
+            commit.VisualPosition = level;
 
-            // Find one of the branches this commit belongs to.
-            IEnumerable<LibGit2Sharp.Branch> myBranches = RepoUtil.GetBranchesContaininingCommit(repo, commit.Hash);
-
-            // Loop through commits of this branch.
-            foreach (string hash in commit.ParentHashes)
+            // Update commit's branches' visual positions if needed.
+            commit.Branches.ForEach(b =>
             {
-                IEnumerable<LibGit2Sharp.Commit> commitsSharingParent = repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Refs })
-                                                                                                .Where(c => c.Parents.Any(o => o.Sha.ToString() == hash));
+                if (b.RightMostVisualPosition < level)
+                    b.RightMostVisualPosition = level;
+            });
 
-                foreach (LibGit2Sharp.Commit c in commitsSharingParent)
+            if (commit.IsMergeCommit())
+            {
+                int i = 0;
+                foreach (Commit parentCommit in commit.Parents)
                 {
-                    // Make sure that the siblings share at least one branch. If they don't they are not considered siblings.
-                    if (myBranches.Any(o => RepoUtil.GetBranchesContaininingCommit(repo, c.Sha.ToString()).Contains(o)))
-                        commits.Add(c.Sha.ToString());
+                    RepoUtil.IncrementCommitTreeVisualPositionsRecursively(parentCommit, level + i);
+
+                    i++;
                 }
             }
-
-            return commits;
-            */
+            else if (commit.Parents.Count > 0)
+            {
+                RepoUtil.IncrementCommitTreeVisualPositionsRecursively(commit.Parents.ElementAt(0));
+            }
         }
 
         /// <summary>
