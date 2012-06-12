@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:GG.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
     
     <UserControl.Resources>
         <converters:NullToVisibilityConverter x:Key="nullToVisibilityConverter" />
@@ -46,7 +46,11 @@
                     </Border>
                     <Grid>
                         <StackPanel Margin="4">
-                            <TextBox Name="CommitMessageTextBox" ToolTip="Enter your commit message." Height="64"></TextBox>
+                            <TextBox Name="CommitMessageTextBox"
+                                     ToolTip="Enter your commit message."
+                                     FontSize="12"
+                                     FontFamily="Courier New"
+                                     Height="38pt" />
                         </StackPanel>
                     </Grid>
                 </StackPanel>

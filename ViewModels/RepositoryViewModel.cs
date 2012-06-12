@@ -16,6 +16,7 @@ using GG.ViewModels;
 using GG.Models;
 using GG.UserControls.Dialogs;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace GG
 {
@@ -25,7 +26,7 @@ namespace GG
 
         public string Name { get; set; }
         public string RepositoryFullPath { get; set; }
-        public bool   NotOpened { get; set; }
+        public bool NotOpened { get; set; }
         private bool alreadyLoaded = false;
 
         public RangedObservableCollection<Commit>        Commits { get; set; }
@@ -57,6 +58,8 @@ namespace GG
             set
             {
                 _StatusItemDiff = value;
+                //var regex = new Regex("+.*");
+                //regex.Replace(value, 
                 RaisePropertyChanged("StatusItemDiff");
             }
         }
@@ -136,7 +139,7 @@ namespace GG
 
             using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
             {
-                SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                SaveFileDialog dialog = new SaveFileDialog();
                 dialog.FileName = commit.Description.Right(72);
                 dialog.DefaultExt = ".patch";
                 dialog.Filter = "Patch files|*.patch";
@@ -564,15 +567,17 @@ namespace GG
         /// <param name="items"></param>
         public void UpdateStatusItemDiff(IList collection)
         {
-            var diff = "a";
+            var diff = "";
             var items = collection.Cast<StatusItem>();
 
             using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
             {
                 foreach (StatusItem item in items)
                 {
-                    diff += repo.Diff.Compare(repo.Head.Tip.Tree, LibGit2Sharp.DiffTarget.Index).Patch;
+                    
                 }
+
+                diff += repo.Diff.Compare(repo.Head.Tip.Tree, LibGit2Sharp.DiffTarget.Index).Patch;
             }
 
             StatusItemDiff = diff;
