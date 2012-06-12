@@ -42,14 +42,14 @@
                     </Grid>
                     
                     <ControlTemplate.Triggers>
-                        <!-- TODO: Find a way to add sliding animation when opening a new tab. -->
+                        <!-- TODO: Find a way to add sliding animation when opening a new tab. 
                         <EventTrigger RoutedEvent="Loaded">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <DoubleAnimation Duration="0:0:0.3" To="100" From="0" Storyboard.TargetProperty="Width" Storyboard.TargetName="Border" />
                                 </Storyboard>
                             </BeginStoryboard>
-                        </EventTrigger>
+                        </EventTrigger>-->
 
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Border" Property="Background">

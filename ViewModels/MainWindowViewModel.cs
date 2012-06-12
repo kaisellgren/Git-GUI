@@ -86,7 +86,7 @@ namespace GG
                 repositories.Remove((RepositoryViewModel) action);
 
             if (tabControl.Items.Count == 0)
-                CreateTab(new object());
+                Application.Current.Shutdown();
         }
 
         /// <summary>
