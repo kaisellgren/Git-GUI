@@ -4,7 +4,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid>
-                        <Border Name="Border" BorderBrush="#666" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0" Margin="-2,0,3,-1">
+                        <Border Name="Border" MaxWidth="256" BorderBrush="#666" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0" Margin="-2,0,3,-1">
                             <DockPanel>
                                 <DockPanel.Resources>
                                     <Style TargetType="Button">
@@ -20,7 +20,7 @@
                                         <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
                                 </TextBlock>
                                 
-                                <Button BorderBrush="{x:Null}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CloseTabCommand}">
+                                <Button BorderBrush="{x:Null}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CloseTabCommand}" CommandParameter="{Binding}">
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">
                                             <ContentPresenter Content="{TemplateBinding Content}"/>
@@ -43,13 +43,13 @@
                     
                     <ControlTemplate.Triggers>
                         <!-- TODO: Find a way to add sliding animation when opening a new tab. -->
-                        <!--<EventTrigger RoutedEvent="Loaded">
+                        <EventTrigger RoutedEvent="Loaded">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <SizeAnimation Duration="0:0:0.3" To="100" From="0" Storyboard.TargetProperty="Width" Storyboard.TargetName="Border" />
+                                    <DoubleAnimation Duration="0:0:0.3" To="100" From="0" Storyboard.TargetProperty="Width" Storyboard.TargetName="Border" />
                                 </Storyboard>
                             </BeginStoryboard>
-                        </EventTrigger>-->
+                        </EventTrigger>
 
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Border" Property="Background">

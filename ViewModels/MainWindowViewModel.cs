@@ -79,7 +79,11 @@ namespace GG
         {
             TabControl tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
             ObservableCollection<RepositoryViewModel> repositories = tabControl.ItemsSource as ObservableCollection<RepositoryViewModel>;
-            repositories.Remove(tabControl.SelectedContent as RepositoryViewModel);
+
+            if (action == null)
+                repositories.Remove((RepositoryViewModel) tabControl.SelectedContent);
+            else
+                repositories.Remove((RepositoryViewModel) action);
 
             if (tabControl.Items.Count == 0)
                 CreateTab(new object());
