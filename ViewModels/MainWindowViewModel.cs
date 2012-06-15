@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Xml.Serialization;
 using GG.Libraries;
@@ -14,13 +16,26 @@ namespace GG
 {
     class MainWindowViewModel : BaseViewModel
     {
-        public ObservableCollection<RepositoryViewModel> RepositoryViewModels { get; set; }
         public ObservableCollection<RepositoryViewModel> RecentRepositories { get; set; }
+        ObservableCollection<RepositoryViewModel> _repositoryViewModels;
+        public ObservableCollection<RepositoryViewModel> RepositoryViewModels
+        {
+            get
+            {
+                if (_repositoryViewModels == null)
+                {
+                    _repositoryViewModels = new ObservableCollection<RepositoryViewModel>();
+                    var itemsView = (IEditableCollectionView)CollectionViewSource.GetDefaultView(_repositoryViewModels);
+                    itemsView.NewItemPlaceholderPosition = NewItemPlaceholderPosition.AtEnd;
+                }
+
+                return _repositoryViewModels;
+            }
+        }
 
         public MainWindowViewModel()
         {
-            RepositoryViewModels = new ObservableCollection<RepositoryViewModel> { };
-            RecentRepositories = new ObservableCollection<RepositoryViewModel> { };
+            RecentRepositories = new ObservableCollection<RepositoryViewModel>() { };
 
             CreateTabCommand = new DelegateCommand(CreateTab);
             CloseTabCommand = new DelegateCommand(CloseTab);

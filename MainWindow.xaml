@@ -10,6 +10,14 @@
         <KeyBinding Command="{Binding CloseTabCommand}" Key="W" Modifiers="Control" />
         <KeyBinding Command="{Binding CreateTabCommand}" Key="T" Modifiers="Control" />
     </Window.InputBindings>
+    
+    
+    <Window.Resources>
+        <local:TabTemplateSelector 
+       NormalTabTemplate="{StaticResource AppTabItemTemplate}" 
+       NewTabTemplate="{StaticResource newTabButtonHeaderTemplate}" 
+       x:Key="tabTemplateSelector" />
+    </Window.Resources>
 
     <Grid Margin="0,-1,0,0" d:DataContext="{d:DesignData Source=./DesignData/SampleApplication.xaml}">
         <TabControl x:Name="RepositoryTabs"
@@ -19,7 +27,7 @@
                     Padding="0"
                     BorderBrush="#222"
                     ItemsSource="{Binding RepositoryViewModels}"
-                    ItemTemplate="{StaticResource AppTabItemTemplate}"
+                    ItemTemplateSelector="{StaticResource tabTemplateSelector}"
                     ContentTemplateSelector="{DynamicResource AppTabContentTemplateSelector}" />
 
         <!-- Application window buttons (close, maximize, restore, minimize). -->
