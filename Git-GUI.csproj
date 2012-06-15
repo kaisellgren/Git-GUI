@@ -210,6 +210,9 @@
     <Compile Include="UserControls\StatusGridContextMenu.xaml.cs">
       <DependentUpon>StatusGridContextMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\WindowStructure.xaml.cs">
+      <DependentUpon>WindowStructure.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\RepositoryViewModel.cs" />
     <Compile Include="UserControls\ChangesetHistory.xaml.cs">
@@ -325,8 +328,9 @@
     <Page Include="Styles\LeftToolbar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\MainWindow.xaml">
+    <Page Include="Styles\Window.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\TabItem.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -378,6 +382,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\TopToolbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\WindowStructure.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -540,6 +548,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\ResetHard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Alert.png" />
+    <Resource Include="Resources\Icons\Information.png" />
+    <Resource Include="Resources\Icons\Question.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

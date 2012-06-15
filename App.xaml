@@ -9,7 +9,7 @@
                 <ResourceDictionary Source="Styles/DataGrid.xaml"/>
                 <ResourceDictionary Source="Styles/LeftToolbar.xaml"/>
                 <ResourceDictionary Source="Styles/TopToolbar.xaml"/>
-                <ResourceDictionary Source="Styles/MainWindow.xaml"/>
+                <ResourceDictionary Source="Styles/Window.xaml"/>
                 <ResourceDictionary Source="Styles/Panel.xaml"/>
                 <ResourceDictionary Source="Styles/GridSplitter.xaml"/>
                 <ResourceDictionary Source="Styles/DisplayTags.xaml"/>

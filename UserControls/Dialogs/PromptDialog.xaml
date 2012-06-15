@@ -2,11 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:userControls="clr-namespace:GG.UserControls"
+        xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
         mc:Ignorable="d"
-        Icon="../../Resources/Icons/Git-GUI.ico"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Style="{StaticResource WindowGlassStyle}">
     
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -16,10 +18,68 @@
             <GradientStop Color="#f9f9f9" Offset="1" />
         </LinearGradientBrush>
     </Window.Background>
-    
-    <StackPanel Margin="32" HorizontalAlignment="Left">
-        <TextBlock x:Name="MessageBlock" Text="You have not entered a message." Margin="0,0,0,8" />
-        <TextBox x:Name="ResponseTextBox" Margin="0,0,0,8" Width="256" />
-        <Button Content="OK" Click="OnOK" HorizontalAlignment="Right" Padding="16,2" />
-    </StackPanel>
+
+    <Grid>
+        <DockPanel Background="{StaticResource DefaultBackgroundBrush}" Margin="0,30,0,0">
+            <Border DockPanel.Dock="Bottom" BorderBrush="#bbb" BorderThickness="0,1,0,0">
+                <StackPanel>
+                    <StackPanel.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#f0f0f0" Offset="0" />
+                            <GradientStop Color="#eee" Offset="0.15" />
+                            <GradientStop Color="#f9f9f9" Offset="0.5" />
+                            <GradientStop Color="#f0f0f0" Offset="0.85" />
+                            <GradientStop Color="#eee" Offset="1" />
+                        </LinearGradientBrush>
+                    </StackPanel.Background>
+
+                    <WrapPanel HorizontalAlignment="Right" Margin="8">
+                        <WrapPanel.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="MinWidth" Value="80" />
+                                <Setter Property="Margin" Value="8,0,0,0" />
+                            </Style>
+                        </WrapPanel.Resources>
+
+                        <Button Click="Ok_Click" IsEnabled="True">OK</Button>
+                        <Button Click="Close_Click" IsCancel="True">Cancel</Button>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Margin="16">
+                <StackPanel>
+                    <DockPanel>
+                        <Image DockPanel.Dock="Left" Source="../../Resources/Icons/Information.png" Stretch="None" Margin="0,0,16,0" VerticalAlignment="Center" />
+                        <TextBlock x:Name="MessageBlock" DockPanel.Dock="Right" VerticalAlignment="Center" Text="You have not entered a message." />
+                    </DockPanel>
+                </StackPanel>
+
+                <TextBox x:Name="ResponseTextBox"
+                         AcceptsReturn="False"
+                         Width="256"
+                         HorizontalAlignment="Left"
+                         Margin="64,0,0,0"
+                         PreviewKeyDown="ResponseTextBox_PreviewKeyDown" />
+            </StackPanel>
+        </DockPanel>
+        
+        <!-- Application window buttons (close, maximize, restore, minimize). -->
+        <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Top" shell:WindowChrome.IsHitTestVisibleInChrome="True" Margin="0,0,-1,0">
+            <Border BorderBrush="#303030" BorderThickness="1,0,0,0">
+                <WrapPanel>
+                    <Button Style="{StaticResource WindowTopButtonStyle}" Click="Close_Click">
+                        <Image Source="../../Resources/Icons/CloseWindow.png" Stretch="None" />
+                    </Button>
+                </WrapPanel>
+            </Border>
+        </WrapPanel>
+        
+        <TextBlock Text="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}"
+                   HorizontalAlignment="Left"
+                   Foreground="White"
+                   Margin="4,6,0,0"
+                   FontWeight="Bold" />
+    </Grid>
+        
 </Window>

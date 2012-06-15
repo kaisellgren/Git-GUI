@@ -22,7 +22,7 @@ namespace GG.UserControls.Dialogs
     /// </summary>
     public partial class PromptDialog : Window
     {
-        public PromptDialog()
+        public PromptDialog() : base()
         {
             InitializeComponent();
 
@@ -32,16 +32,6 @@ namespace GG.UserControls.Dialogs
             };
 
             Closing += OnClosing;
-        }
-
-        /// <summary>
-        /// Fired upon window closing.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void OnClosing(object sender, CancelEventArgs e)
-        {
-            Application.Current.MainWindow.Effect = null;
         }
 
         public string ResponseText
@@ -56,10 +46,39 @@ namespace GG.UserControls.Dialogs
             set { MessageBlock.Text = value; }
         }
 
-        private void OnOK(object sender, RoutedEventArgs e)
+        private void CloseSuccessfully()
         {
             DialogResult = true;
             Close();
+        }
+
+        private void Ok_Click(object sender, RoutedEventArgs e)
+        {
+            CloseSuccessfully();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        /// <summary>
+        /// Fired upon window closing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void OnClosing(object sender, CancelEventArgs e)
+        {
+            Application.Current.MainWindow.Effect = null;
+        }
+
+        private void ResponseTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                e.Handled = true;
+                CloseSuccessfully();
+            }
         }
     }
 }
