@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace GG
 {
@@ -15,6 +16,10 @@ namespace GG
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
                 templateName = "AppTabContentTemplate";
+            }
+            else if (item == CollectionView.NewItemPlaceholder)
+            {
+                templateName = "AppTabNew";
             }
             else
             {

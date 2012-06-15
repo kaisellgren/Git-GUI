@@ -177,6 +177,7 @@
     <Compile Include="Libraries\IconUtil.cs" />
     <Compile Include="Libraries\RangedObservableCollection.cs" />
     <Compile Include="Libraries\RepoUtil.cs" />
+    <Compile Include="Libraries\TabTemplateSelector.cs" />
     <Compile Include="Libraries\UIHelper.cs" />
     <Compile Include="LinearGradientAnimation.cs" />
     <Compile Include="Models\Branch.cs" />
@@ -342,6 +343,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Templates\AppTabNew.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\AppTabNewTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ChangesetHistory.xaml">
