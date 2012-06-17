@@ -24,7 +24,7 @@
                                 </DockPanel.Resources>
                                 
                                 <TextBlock x:Name="TabItemText" FontSize="12" Foreground="#444" FontWeight="SemiBold" TextOptions.TextFormattingMode="Display" Padding="16 6 12 6" RenderOptions.ClearTypeHint="Enabled" TextOptions.TextRenderingMode="ClearType" SnapsToDevicePixels="True" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
-                                        <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
+                                    <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
                                 </TextBlock>
                                 
                                 <Button BorderBrush="{x:Null}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.CloseTabCommand}" CommandParameter="{Binding}">
@@ -101,5 +101,18 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        
+        <Style.Triggers>
+            <!-- "+" tab. -->
+            <DataTrigger Binding="{Binding Name}" Value="{x:Null}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
+                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

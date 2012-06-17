@@ -7,5 +7,4 @@
             <TextBlock Text="{Binding Name}"/>
         </TextBlock>
     </DataTemplate>
-    
 </ResourceDictionary>

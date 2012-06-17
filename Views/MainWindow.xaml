@@ -5,6 +5,7 @@
         xmlns:local="clr-namespace:GG"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+        Icon="../Resources/Icons/Git-GUI.ico"
         Title="Git-GUI" Style="{StaticResource WindowGlassStyle}" Loaded="OnLoad" StateChanged="WindowStateChanged" d:DesignWidth="1152" d:DesignHeight="546">
     
     <Window.InputBindings>
