@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:GG">
+                    xmlns:local="clr-namespace:GG"
+                    xmlns:animation="clr-namespace:GG.Libraries.Animation">
 
     <LinearGradientBrush x:Key="PopupBackgroundNormalBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="#f8f8f8" Offset="0"/>
@@ -45,8 +46,8 @@
                 <Trigger.EnterActions>
                     <BeginStoryboard x:Name="mouseOverStoryboard">
                         <Storyboard>
-                            <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="Border"  Duration="0:0:0.2" To="{StaticResource ButtonMouseOverBrush}"/>
-                            <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="LeftBorder"  Duration="0:0:0.2" To="{StaticResource ButtonMouseOverBrush}"/>
+                            <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="Border"  Duration="0:0:0.2" To="{StaticResource ButtonMouseOverBrush}"/>
+                            <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="LeftBorder"  Duration="0:0:0.2" To="{StaticResource ButtonMouseOverBrush}"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
@@ -54,8 +55,8 @@
                     <StopStoryboard BeginStoryboardName="mouseUpStoryboard"/>
                     <BeginStoryboard x:Name="mouseLeaveStoryboard">
                         <Storyboard>
-                            <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="Border" Duration="0:0:0.2" To="{StaticResource ButtonNormalBrush}"/>
-                            <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="LeftBorder" Duration="0:0:0.2" To="{StaticResource ButtonNormalBrush}"/>
+                            <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="Border" Duration="0:0:0.2" To="{StaticResource ButtonNormalBrush}"/>
+                            <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="LeftBorder" Duration="0:0:0.2" To="{StaticResource ButtonNormalBrush}"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
@@ -64,8 +65,8 @@
                 <Trigger.EnterActions>
                     <BeginStoryboard x:Name="mousePressedStoryboard">
                         <Storyboard>
-                            <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="Border" Duration="0:0:0.2" To="{StaticResource ButtonPressedBrush}"/>
-                            <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="LeftBorder" Duration="0:0:0.2" To="{StaticResource ButtonPressedBrush}"/>
+                            <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="Border" Duration="0:0:0.2" To="{StaticResource ButtonPressedBrush}"/>
+                            <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="LeftBorder" Duration="0:0:0.2" To="{StaticResource ButtonPressedBrush}"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
@@ -75,8 +76,8 @@
                     <StopStoryboard BeginStoryboardName="mouseUpStoryboard"/>
                     <BeginStoryboard x:Name="mouseUpStoryboard">
                         <Storyboard>
-                            <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="Border" Duration="0:0:0.2" To="{StaticResource ButtonNormalBrush}"/>
-                            <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="LeftBorder" Duration="0:0:0.2" To="{StaticResource ButtonNormalBrush}"/>
+                            <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="Border" Duration="0:0:0.2" To="{StaticResource ButtonNormalBrush}"/>
+                            <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Storyboard.TargetName="LeftBorder" Duration="0:0:0.2" To="{StaticResource ButtonNormalBrush}"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>

@@ -3,7 +3,7 @@
                     xmlns:controls="clr-namespace:GG.UserControls">
 
     <!-- This is the content template for the application main tab control when it's just opened. -->
-    <DataTemplate x:Key="AppTabNew">
+    <DataTemplate x:Key="repoTabDashboardContentTemplate">
         <DockPanel>
             <StackPanel Height="8" DockPanel.Dock="Top">
                 <StackPanel.Background>

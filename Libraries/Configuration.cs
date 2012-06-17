@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace GG
+namespace GG.Libraries
 {
     [XmlRoot("Configuration")]
     public class Configuration

@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:GG">
+    
     <local:MainWindowViewModel x:Key="MainWindow"/>
-    <DataTemplate x:Key="newTabButtonHeaderTemplate">
+    
+    <DataTemplate x:Key="newTabTemplate">
         <Button Content="+"
         Command="{Binding Path=CreateTabCommand, Source={StaticResource MainWindow}}"/>
     </DataTemplate>

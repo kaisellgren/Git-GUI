@@ -155,12 +155,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="About.xaml.cs">
+    <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppTabDataTemplateSelector.cs" />
-    <Compile Include="BindableDoubleAnimation.cs" />
-    <Compile Include="Configuration.cs" />
+    <Compile Include="TemplateSelectors\RepoTabContentTemplateSelector.cs" />
+    <Compile Include="Libraries\Animation\BindableDoubleAnimation.cs" />
+    <Compile Include="Libraries\Configuration.cs" />
     <Compile Include="Converters\IsHeadToTextDecorationsConverter.cs" />
     <Compile Include="Converters\ExtensionToImageConverter.cs" />
     <Compile Include="Converters\IsHeadToFontWeightConverter.cs" />
@@ -168,8 +168,8 @@
     <Compile Include="Converters\StatusGridGroupToColorConverter.cs" />
     <Compile Include="Converters\StatusToCharacterConverter.cs" />
     <Compile Include="Converters\StatusToColorConverter.cs" />
-    <Compile Include="DelegateCommand.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Libraries\DelegateCommand.cs" />
+    <Compile Include="Libraries\Extensions.cs" />
     <Compile Include="Libraries\ChangesetGraph.cs" />
     <Compile Include="Libraries\DateUtil.cs" />
     <Compile Include="Libraries\FileUtil.cs" />
@@ -177,9 +177,9 @@
     <Compile Include="Libraries\IconUtil.cs" />
     <Compile Include="Libraries\RangedObservableCollection.cs" />
     <Compile Include="Libraries\RepoUtil.cs" />
-    <Compile Include="Libraries\TabTemplateSelector.cs" />
+    <Compile Include="TemplateSelectors\TabTemplateSelector.cs" />
     <Compile Include="Libraries\UIHelper.cs" />
-    <Compile Include="LinearGradientAnimation.cs" />
+    <Compile Include="Libraries\Animation\LinearGradientAnimation.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\DetachedHead.cs" />
     <Compile Include="Models\RecentCommitMessage.cs" />
@@ -233,7 +233,7 @@
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <DesignData Include="DesignData\SampleApplication.xaml" />
-    <Page Include="About.xaml">
+    <Page Include="Views\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -249,7 +249,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -258,7 +258,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Commit.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -320,8 +320,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Templates\AppTabContentTemplate.xaml">
+    <Page Include="Templates\RepoTabContentTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\DataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -339,14 +340,17 @@
     <Page Include="Styles\TopToolbar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Templates\AppTabItemTemplate.xaml">
+    <Page Include="Templates\RepoTabTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Templates\AppTabNew.xaml">
+    <Page Include="Templates\RepoTabDashboardContentTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Templates\AppTabNewTemplate.xaml">
+    <Page Include="Templates\RepoTabNewTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\ChangesetHistory.xaml">
       <Generator>MSBuild:Compile</Generator>

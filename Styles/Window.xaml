@@ -28,6 +28,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <local:AppTabDataTemplateSelector x:Key="AppTabContentTemplateSelector" />
 </ResourceDictionary>

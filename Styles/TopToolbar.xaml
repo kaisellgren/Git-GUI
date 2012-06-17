@@ -15,10 +15,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ShadowStyle">
-        <Setter Property="Control.Foreground" Value="LightGray" />
-    </Style>
-    
     <Style x:Key="TopToolbarStyle" TargetType="{x:Type Panel}">
         <Setter Property="Margin" Value="0,0,0,4" />
         <Setter Property="Background">
@@ -53,7 +49,7 @@
                             <Border Name="border" BorderThickness="1" BorderBrush="Transparent" CornerRadius="3" Background="{TemplateBinding Background}">
                                 <Border Name="InnerBorder" BorderThickness="1" BorderBrush="Transparent" Padding="4,2" CornerRadius="3">
                                     <Grid>
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="contentShadow" Style="{StaticResource ShadowStyle}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="contentShadow">
                                             <ContentPresenter.RenderTransform>
                                                 <TranslateTransform X="1.0" Y="1.0" />
                                             </ContentPresenter.RenderTransform>

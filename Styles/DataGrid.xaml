@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:GG">
+                    xmlns:local="clr-namespace:GG"
+                    xmlns:animation="clr-namespace:GG.Libraries.Animation">
 
     <LinearGradientBrush x:Key="DataGridColumnHeaderBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="#fcfcfc" Offset="0"/>
@@ -94,7 +95,7 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource DataGridHighlightBrush}" />
+                                        <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource DataGridHighlightBrush}" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -102,7 +103,7 @@
                                 <StopStoryboard BeginStoryboardName="mouseUpStoryboard" />
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource DataGridColumnHeaderBrush}" />
+                                        <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource DataGridColumnHeaderBrush}" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -116,14 +117,14 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource DataGridColumnHeaderPressedBrush}" />
+                                        <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource DataGridColumnHeaderPressedBrush}" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard x:Name="mouseUpStoryboard">
                                     <Storyboard>
-                                        <local:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource DataGridHighlightBrush}" />
+                                        <animation:LinearGradientAnimation Storyboard.TargetProperty="Background" Duration="0:0:0.2" To="{StaticResource DataGridHighlightBrush}" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

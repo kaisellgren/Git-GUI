@@ -4,9 +4,7 @@
         Title="About Git-GUI"
         Height="400" Width="400"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
-        Icon="Resources/Icons/Git-GUI.ico"
-        WindowStyle="ThreeDBorderWindow">
+        ResizeMode="NoResize">
     
     <Window.Resources>
         <Style TargetType="TextBlock">

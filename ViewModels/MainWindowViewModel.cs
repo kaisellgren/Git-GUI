@@ -115,7 +115,7 @@ namespace GG
 
             RepositoryViewModel repository = new RepositoryViewModel
             {
-                Name = "New Tab",
+                Name = "Dashboard",
                 NotOpened = true,
                 RepositoryFullPath = ""
             };

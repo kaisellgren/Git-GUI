@@ -3,7 +3,7 @@
                     xmlns:controls="clr-namespace:GG.UserControls">
     
     <!-- This is the content template for the application main tab control. -->
-    <DataTemplate x:Key="AppTabContentTemplate">
+    <DataTemplate x:Key="repoTabContentTemplate">
         <DockPanel Background="{StaticResource DefaultBackgroundBrush}">
             <controls:MainMenu DockPanel.Dock="Top" Margin="4,4,0,0" />
             <controls:TopToolbar DockPanel.Dock="Top" />

@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace GG
+namespace GG.Libraries.Animation
 {
     public class BindableDoubleAnimation : DoubleAnimationBase
     {
