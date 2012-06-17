@@ -14,6 +14,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GG.UserControls.Dialogs
 {
@@ -34,6 +35,11 @@ namespace GG.UserControls.Dialogs
             Closing += OnClosing;
 
             ResponseTextBox.Focus();
+
+            Application.Current.Dispatcher.BeginInvoke(
+                DispatcherPriority.Loaded,
+                new Action(() => InvalidateVisual())
+            );
         }
 
         public string ResponseText
