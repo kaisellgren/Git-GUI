@@ -100,8 +100,13 @@ namespace GG
             else
                 repositories.Remove((RepositoryViewModel) action);
 
-            if (tabControl.Items.Count == 0)
+            // Shut down when all tabs are closed. The "+" tab is counted as a tab.
+            if (tabControl.Items.Count == 1)
                 Application.Current.Shutdown();
+
+            // Make sure the "+" tab is never selected.
+            if (tabControl.SelectedIndex == tabControl.Items.Count - 1)
+                tabControl.SelectedIndex -= 1;
         }
 
         /// <summary>
