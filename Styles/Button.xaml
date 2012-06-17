@@ -12,6 +12,14 @@
         <GradientStop Color="#ffffff" Offset="1"/>
     </LinearGradientBrush>
     
+    <LinearGradientBrush x:Key="ButtonDefaultNormalBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#fcfcfc" Offset="0"/>
+        <GradientStop Color="#ebebeb" Offset="0.1"/>
+        <GradientStop Color="#a9c0d2" Offset="0.7"/>
+        <GradientStop Color="#a3bac8" Offset="0.9"/>
+        <GradientStop Color="#ffffff" Offset="1"/>
+    </LinearGradientBrush>
+    
     <LinearGradientBrush x:Key="ButtonMouseOverBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="#ffffff" Offset="0"/>
         <GradientStop Color="#f3f3f3" Offset="0.1"/>
@@ -37,6 +45,7 @@
     </LinearGradientBrush>
     
     <SolidColorBrush x:Key="ButtonNormalBorderBrush" Color="#666" />
+    <SolidColorBrush x:Key="ButtonDefaultBorderBrush" Color="#1f82d6" />
     
     <Style x:Key="ButtonContentPresenterStyle">
         <Setter Property="Control.Foreground" Value="LightGray" />
@@ -44,7 +53,7 @@
     
     <Style TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="#222" />
-        <Setter Property="Padding" Value="6,4" />
+        <Setter Property="Padding" Value="4,2" />
         <Setter Property="Background" Value="{StaticResource ButtonNormalBrush}" />   
         <Setter Property="Template">
             <Setter.Value>
@@ -57,12 +66,28 @@
                                         <TranslateTransform X="1.0" Y="1.0" />
                                     </ContentPresenter.RenderTransform>
                                 </ContentPresenter>
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="content" />
+                                
+                                <Rectangle x:Name="TextBorder" StrokeDashArray="2 2 2" Stroke="Transparent" StrokeThickness="1" RadiusX="0" RadiusY="0" />
+                                
+                                <Border BorderThickness="0" Padding="2">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Name="content" />
+                                </Border>
                             </Grid>
                         </Border>
                     </Border>
                     
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefault" Value="True">
+                            <Setter Property="Background" Value="{StaticResource ButtonDefaultNormalBrush}" />
+                        </Trigger>
+                        
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource ButtonDefaultBorderBrush}" TargetName="OuterBorder" />
+                            <Setter Property="BorderBrush" Value="#b2dcff" TargetName="InnerBorder" />
+                            <Setter Property="Stroke" Value="#888" TargetName="TextBorder" />
+                            <Setter Property="Foreground" Value="#004a89" />
+                        </Trigger>
+                        
                         <Trigger Property="IsEnabled" Value="False">
                             <Trigger.EnterActions>
                                 <StopStoryboard BeginStoryboardName="mouseOverStoryboard" />
@@ -159,6 +184,7 @@
     </Style>
 
     <Style x:Key="WindowTopButtonStyle" TargetType="Button">
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{StaticResource WindowTopButtonFocusVisualStyle}" />

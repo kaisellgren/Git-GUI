@@ -32,6 +32,8 @@ namespace GG.UserControls.Dialogs
             };
 
             Closing += OnClosing;
+
+            ResponseTextBox.Focus();
         }
 
         public string ResponseText

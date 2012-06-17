@@ -41,7 +41,7 @@
                             </Style>
                         </WrapPanel.Resources>
 
-                        <Button Click="Ok_Click" IsEnabled="True">OK</Button>
+                        <Button Click="Ok_Click" IsDefault="True">OK</Button>
                         <Button Click="Close_Click" IsCancel="True">Cancel</Button>
                     </WrapPanel>
                 </StackPanel>

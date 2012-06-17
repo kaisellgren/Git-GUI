@@ -8,7 +8,10 @@
         <Setter Property="BorderBrush" Value="#aaaaaa" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="2,4" />
-        <Setter Property="Foreground" Value="#000" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
