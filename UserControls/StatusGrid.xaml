@@ -98,7 +98,7 @@
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
                                         <StackPanel>
                                             <Border BorderBrush="#aaa" BorderThickness="0,1,0,1">
-                                                <Grid Style="{DynamicResource DataGridGroupItemStyle}">
+                                                <Grid Style="{StaticResource DataGridGroupItemStyle}">
                                                     <StackPanel Orientation="Horizontal" Margin="4,3,0,3">
                                                         <TextBlock Text="{Binding Name}" Foreground="{Binding Path=Name, Converter={StaticResource statusGridGroupToColorConverter}}" />
                                                         <TextBlock xml:space="preserve" Foreground="{Binding Path=Name, Converter={StaticResource statusGridGroupToColorConverter}}">: </TextBlock>

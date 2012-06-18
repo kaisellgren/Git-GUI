@@ -9,7 +9,7 @@
 
     <Border BorderBrush="#bbb" BorderThickness="1,1,1,0">
         <Grid>
-            <Grid VerticalAlignment="Stretch" Style="{DynamicResource LeftToolbarStyle}" HorizontalAlignment="Left" Width="160">
+            <Grid VerticalAlignment="Stretch" Style="{StaticResource LeftToolbarStyle}" HorizontalAlignment="Left" Width="160">
                 <Grid Margin="8" d:DataContext="{d:DesignData Source=../DesignData/Branches.xaml}">
                     <TreeView Background="{x:Null}" BorderThickness="0" Padding="0">
                         <TreeView.InputBindings>
@@ -19,14 +19,14 @@
                         <TreeViewItem ItemsSource="{Binding Branches}" PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown">
                             <TreeViewItem.Header>
                                 <WrapPanel>
-                                    <Image Source="../Resources/Icons/Branch.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
-                                    <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">BRANCHES</TextBlock>
+                                    <Image Source="../Resources/Icons/Branch.png" Stretch="None" Style="{StaticResource LeftToolbarTitleImageStyle}" />
+                                    <TextBlock Style="{StaticResource LeftToolbarTitleStyle}">BRANCHES</TextBlock>
                                 </WrapPanel>
                             </TreeViewItem.Header>
 
                             <TreeViewItem.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" Style="{DynamicResource LeftToolbarTitleStyle}" Tag="{Binding ElementName=LeftToolbarUserControl}">
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource LeftToolbarTitleStyle}" Tag="{Binding ElementName=LeftToolbarUserControl}">
                                         <TextBlock.ContextMenu>
                                             <ContextMenu>
                                                 <MenuItem Header="Checkout">
@@ -54,8 +54,8 @@
                         <TreeViewItem ItemsSource="{Binding Tags}">
                             <TreeViewItem.Header>
                                 <WrapPanel>
-                                    <Image Source="../Resources/Icons/Tag.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
-                                    <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">TAGS</TextBlock>
+                                    <Image Source="../Resources/Icons/Tag.png" Stretch="None" Style="{StaticResource LeftToolbarTitleImageStyle}" />
+                                    <TextBlock Style="{StaticResource LeftToolbarTitleStyle}">TAGS</TextBlock>
                                 </WrapPanel>
                             </TreeViewItem.Header>
                         </TreeViewItem>
@@ -63,8 +63,8 @@
                         <TreeViewItem ItemsSource="{Binding Remotes}">
                             <TreeViewItem.Header>
                                 <WrapPanel>
-                                    <Image Source="../Resources/Icons/Remote.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
-                                    <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">REMOTES</TextBlock>
+                                    <Image Source="../Resources/Icons/Remote.png" Stretch="None" Style="{StaticResource LeftToolbarTitleImageStyle}" />
+                                    <TextBlock Style="{StaticResource LeftToolbarTitleStyle}">REMOTES</TextBlock>
                                 </WrapPanel>
                             </TreeViewItem.Header>
                         </TreeViewItem>
@@ -72,8 +72,8 @@
                         <TreeViewItem ItemsSource="{Binding Stashes}">
                             <TreeViewItem.Header>
                                 <WrapPanel>
-                                    <Image Source="../Resources/Icons/Stash.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
-                                    <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">STASHES</TextBlock>
+                                    <Image Source="../Resources/Icons/Stash.png" Stretch="None" Style="{StaticResource LeftToolbarTitleImageStyle}" />
+                                    <TextBlock Style="{StaticResource LeftToolbarTitleStyle}">STASHES</TextBlock>
                                 </WrapPanel>
                             </TreeViewItem.Header>
                         </TreeViewItem>
@@ -81,8 +81,8 @@
                         <TreeViewItem ItemsSource="{Binding Submodules}">
                             <TreeViewItem.Header>
                                 <WrapPanel>
-                                    <Image Source="../Resources/Icons/Submodule.png" Stretch="None" Style="{DynamicResource LeftToolbarTitleImageStyle}" />
-                                    <TextBlock Style="{DynamicResource LeftToolbarTitleStyle}">SUBMODULES</TextBlock>
+                                    <Image Source="../Resources/Icons/Submodule.png" Stretch="None" Style="{StaticResource LeftToolbarTitleImageStyle}" />
+                                    <TextBlock Style="{StaticResource LeftToolbarTitleStyle}">SUBMODULES</TextBlock>
                                 </WrapPanel>
                             </TreeViewItem.Header>
                         </TreeViewItem>

@@ -18,8 +18,8 @@
             <DockPanel>
                 <StackPanel DockPanel.Dock="Top">
                     <Border BorderBrush="#7ea3be" BorderThickness="1">
-                        <DockPanel Style="{DynamicResource PanelHeaderStyle}">
-                            <ContentPresenter DockPanel.Dock="Left" Style="{DynamicResource PanelHeaderTitleStyle}" Content="{TemplateBinding userControls:Panel.Header}" />
+                        <DockPanel Style="{StaticResource PanelHeaderStyle}">
+                            <ContentPresenter DockPanel.Dock="Left" Style="{StaticResource PanelHeaderTitleStyle}" Content="{TemplateBinding userControls:Panel.Header}" />
                             <WrapPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
                                 <Grid>
                                     <ComboBox ToolTip="Copy a previous commit message. The entire message will be copied."

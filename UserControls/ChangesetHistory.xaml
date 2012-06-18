@@ -28,7 +28,6 @@
               VirtualizingPanel.VirtualizationMode="Recycling"
               ItemsSource="{Binding Commits}"
               AutoGenerateColumns="False"
-              Grid.Row="0"
               Loaded="OnDataContextChanged"
               x:Name="ChangesetHistoryGrid"
               Tag="{Binding}"
@@ -54,8 +53,8 @@
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <WrapPanel>
-                            <ListBox ItemsSource="{Binding DisplayTags}" Style="{DynamicResource DisplayTagsBlueStyle}" IsHitTestVisible="False" />
-                            <ListBox ItemsSource="{Binding Tags}" Style="{DynamicResource DisplayTagsOrangeStyle}" IsHitTestVisible="False" />
+                            <ListBox ItemsSource="{Binding DisplayTags}" Style="{StaticResource DisplayTagsBlueStyle}" IsHitTestVisible="False" />
+                            <ListBox ItemsSource="{Binding Tags}" Style="{StaticResource DisplayTagsOrangeStyle}" IsHitTestVisible="False" />
                             <TextBlock Text="{Binding Path=ShortDescription}"
                                        VerticalAlignment="Center"
                                        FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
@@ -65,7 +64,7 @@
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
 
-            <DataGridTemplateColumn Header="Date">
+            <DataGridTemplateColumn Header="Date" Width="128">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=FormattedDate}"
@@ -75,7 +74,7 @@
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
 
-            <DataGridTemplateColumn Header="Author">
+            <DataGridTemplateColumn Header="Author" Width="224">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=Author}"
@@ -85,7 +84,7 @@
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
 
-            <DataGridTemplateColumn Header="Hash">
+            <DataGridTemplateColumn Header="Hash" Width="64">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=HashShort}"

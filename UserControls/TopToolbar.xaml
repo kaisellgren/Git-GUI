@@ -7,7 +7,7 @@
              d:DesignHeight="80" d:DesignWidth="605">
     
     <StackPanel>
-        <WrapPanel Style="{DynamicResource TopToolbarStyle}">
+        <WrapPanel Style="{StaticResource TopToolbarStyle}">
             <WrapPanel Margin="4,0,0,0">
                 <Button IsEnabled="False">
                     <StackPanel>

@@ -38,7 +38,7 @@
                         <Border Grid.Row="0" x:Name="OuterBorder" BorderThickness="1">
                             <Track x:Name="PART_Track" IsDirectionReversed="true" Focusable="false">
                                 <Track.Thumb>
-                                    <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" BorderBrush="#b6b6b6" Style="{DynamicResource ScrollThumbs}" />
+                                    <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" BorderBrush="#b6b6b6" Style="{StaticResource ScrollThumbs}" />
                                 </Track.Thumb>
                                 <Track.IncreaseRepeatButton>
                                     <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />

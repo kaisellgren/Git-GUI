@@ -24,6 +24,9 @@ namespace GG.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return COLOR_RED;
+
             LibGit2Sharp.FileStatus status = (LibGit2Sharp.FileStatus) value;
 
             // Whether to use darker colors (for text).

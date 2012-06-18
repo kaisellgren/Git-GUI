@@ -18,7 +18,7 @@
 
                 <controls:ChangesetHistory Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 
-                <GridSplitter Grid.Row="1" Style="{DynamicResource GridSplitterVerticalStyle}" />
+                <GridSplitter Grid.Row="1" Style="{StaticResource GridSplitterVerticalStyle}" />
                 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
@@ -28,7 +28,7 @@
                     </Grid.ColumnDefinitions>
 
                     <controls:StatusGrid Grid.Column="0" HorizontalAlignment="Stretch" />
-                    <GridSplitter Grid.Column="1" Style="{DynamicResource GridSplitterHorizontalStyle}" />
+                    <GridSplitter Grid.Column="1" Style="{StaticResource GridSplitterHorizontalStyle}" />
                     <controls:CommitPanel Grid.Column="2" HorizontalAlignment="Stretch" />
                 </Grid>
             </Grid>

@@ -51,6 +51,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -233,6 +234,10 @@
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <DesignData Include="DesignData\SampleApplication.xaml" />
+    <Page Include="Styles\ChangesetHistoryDataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -267,10 +272,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Button.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\ChangesetHistoryDataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

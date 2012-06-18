@@ -18,7 +18,7 @@
                       d:DataContext="{d:DesignData Source=../DesignData/RecentRepositories.xaml}"
                       DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}"
                       ItemsSource="{Binding RecentRepositories}"
-                      Style="{DynamicResource NewTabListViewStyle}"
+                      Style="{StaticResource NewTabListViewStyle}"
                       x:Name="RecentRepositoriesList"
                       MouseDoubleClick="OnMouseDoubleClick">
                 <ListView.Resources>
