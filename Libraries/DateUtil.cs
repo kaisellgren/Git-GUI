@@ -11,7 +11,7 @@ namespace GG.Libraries
         /// <returns></returns>
         public static string GetRelativeDate(DateTime dt)
         {
-            var ts = new TimeSpan(DateTime.UtcNow.Ticks - dt.Ticks);
+            var ts = new TimeSpan(DateTime.Now.Ticks - dt.Ticks);
             double delta = Math.Abs(ts.TotalSeconds);
 
             const int SECOND = 1;
