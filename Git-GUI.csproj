@@ -567,6 +567,12 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\TabPlus.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Plus.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Plus.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
