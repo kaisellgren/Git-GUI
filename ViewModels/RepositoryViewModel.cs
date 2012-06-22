@@ -85,7 +85,7 @@ namespace GG
             Stashes = new ObservableCollection<Stash> { };
             RecentCommitMessages = new ObservableCollection<RecentCommitMessage>();
 
-            CommitsPerPage = 50;
+            CommitsPerPage = 150;
             RecentCommitMessageCount = 10;
 
             // Initialize status item view and group.
@@ -337,28 +337,41 @@ namespace GG
         /// <param name="action"></param>
         private void DeleteFile(object action)
         {
-            var collection = (IList) action;
-            var items = collection.Cast<StatusItem>();
-            LibGit2Sharp.Repository repo = null;
-
-            // Loop through all selected status items and remove the files physically (and in some cases also from the repository).
-            foreach (StatusItem item in items)
+            var dialog = new ConfirmDialog
             {
-                // TODO: --cached ?
+                Title = "Delete file(s)",
+                Message = "Are you sure you want to delete the selected file(s)?\r\n\r\nYou may lose your changes!",
+                ButtonSet = ConfirmDialog.ButtonsSet.OK_CANCEL
+            };
 
-                File.Delete(RepositoryFullPath + "/" + item.Filename);
+            dialog.ShowDialog();
 
-                if (!item.Status.HasFlag(LibGit2Sharp.FileStatus.Untracked))
+            var pressedButton = (Button) dialog.PressedButton;
+            if (pressedButton != null && ((string) pressedButton.Content) == "OK")
+            {
+                var collection = (IList) action;
+                var items = collection.Cast<StatusItem>();
+                LibGit2Sharp.Repository repo = null;
+
+                // Loop through all selected status items and remove the files physically (and in some cases also from the repository).
+                foreach (StatusItem item in items)
                 {
-                    if (!(repo is LibGit2Sharp.Repository))
-                        repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+                    // TODO: --cached ?
 
-                    repo.Index.Stage(RepositoryFullPath + "/" + item.Filename);
+                    File.Delete(RepositoryFullPath + "/" + item.Filename);
+
+                    if (!item.Status.HasFlag(LibGit2Sharp.FileStatus.Untracked))
+                    {
+                        if (!(repo is LibGit2Sharp.Repository))
+                            repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+
+                        repo.Index.Unstage(RepositoryFullPath + "/" + item.Filename);
+                    }
                 }
-            }
 
-            if (repo is LibGit2Sharp.Repository)
-                repo.Dispose();
+                if (repo is LibGit2Sharp.Repository)
+                    repo.Dispose();
+            }
         }
 
         /// <summary>

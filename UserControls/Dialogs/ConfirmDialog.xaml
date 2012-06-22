@@ -1,4 +1,4 @@
-﻿<Window x:Class="GG.UserControls.Dialogs.PromptDialog"
+﻿<Window x:Class="GG.UserControls.Dialogs.ConfirmDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +9,7 @@
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource WindowGlassStyle}">
-    
+
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#fff" Offset="0" />
@@ -41,8 +41,13 @@
                             </Style>
                         </WrapPanel.Resources>
 
-                        <Button Click="Ok_Click" IsDefault="True">OK</Button>
-                        <Button Click="Close_Click" IsCancel="True">Cancel</Button>
+                        <ItemsControl ItemsSource="{Binding Buttons}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
                     </WrapPanel>
                 </StackPanel>
             </Border>
@@ -50,23 +55,14 @@
             <StackPanel Margin="16">
                 <StackPanel>
                     <DockPanel>
-                        <Image DockPanel.Dock="Left" Source="../../Resources/Icons/Information.png" Stretch="None" Margin="0,0,16,0" VerticalAlignment="Top" />
-                        
-                        <StackPanel DockPanel.Dock="Right">
-                            <TextBlock x:Name="MessageBlock" Text="You have not entered a message." />
-                            
-                            <TextBox x:Name="ResponseTextBox"
-                                     AcceptsReturn="False"
-                                     HorizontalAlignment="Left"
-                                     Width="256"
-                                     Margin="0,16,0,0"
-                                     PreviewKeyDown="ResponseTextBox_PreviewKeyDown" />
-                        </StackPanel>
+                        <Image DockPanel.Dock="Left" Source="../../Resources/Icons/Question.png" Stretch="None" Margin="0,0,16,0" VerticalAlignment="Top" />
+
+                        <TextBlock x:Name="MessageBlock" Text="You have not entered a message." DockPanel.Dock="Right" Padding="0,4,0,0" />
                     </DockPanel>
                 </StackPanel>
             </StackPanel>
         </DockPanel>
-        
+
         <!-- Application window buttons (close, maximize, restore, minimize). -->
         <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Top" shell:WindowChrome.IsHitTestVisibleInChrome="True" Margin="0,0,-1,0">
             <Border BorderBrush="#303030" BorderThickness="1,0,0,0">
@@ -77,12 +73,12 @@
                 </WrapPanel>
             </Border>
         </WrapPanel>
-        
+
         <TextBlock Text="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}"
                    HorizontalAlignment="Left"
                    Foreground="White"
                    Margin="4,6,0,0"
                    FontWeight="Bold" />
     </Grid>
-        
+
 </Window>

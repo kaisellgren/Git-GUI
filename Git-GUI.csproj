@@ -156,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\GetDataGridContentHeightConverter.cs" />
+    <Compile Include="UserControls\Dialogs\ConfirmDialog.xaml.cs">
+      <DependentUpon>ConfirmDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -212,9 +216,6 @@
     <Compile Include="UserControls\StatusGridContextMenu.xaml.cs">
       <DependentUpon>StatusGridContextMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\WindowStructure.xaml.cs">
-      <DependentUpon>WindowStructure.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\RepositoryViewModel.cs" />
     <Compile Include="UserControls\ChangesetHistory.xaml.cs">
@@ -237,6 +238,10 @@
     <Page Include="Styles\ChangesetHistoryDataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Dialogs\ConfirmDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\About.xaml">
       <SubType>Designer</SubType>
@@ -391,10 +396,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\TopToolbar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\WindowStructure.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
