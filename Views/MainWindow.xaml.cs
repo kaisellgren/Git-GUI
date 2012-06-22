@@ -74,5 +74,17 @@ namespace GG
             else
                 HideMaximizeRestoreApplicationButton(false, true);
         }
+
+        private void RepositoryTabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl)
+            {
+                // Make sure the repository tabs never goes to the last item (because it is the + tab).
+                var tabControl = (TabControl) e.Source;
+
+                if (tabControl.SelectedIndex == tabControl.Items.Count - 1)
+                    tabControl.SelectedIndex = 0;
+            }
+        }
     }
 }
