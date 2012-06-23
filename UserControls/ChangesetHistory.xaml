@@ -14,85 +14,112 @@
         <userControls:ChangesetHistoryContextMenu x:Key="changesetHistoryContextMenu" />
         <converters:IsHeadToFontWeightConverter x:Key="isHeadToFontWeightConverter" />
         <converters:IsHeadToTextDecorationsConverter x:Key="isHeadToTextDecorationsConverter" />
+        <converters:GetDataGridContentHeightConverter x:Key="getDataGridContentHeightConverter" />
     </UserControl.Resources>
     
-    <DataGrid CanUserSortColumns="False"
+    <Grid x:Name="ChangesetHistoryContainer">
+        
+        <DataGrid CanUserSortColumns="False"
               CanUserAddRows="False"
               CanUserDeleteRows="False"
               CanUserResizeColumns="True"
               CanUserReorderColumns="True"
               SelectionUnit="FullRow"
+              ScrollViewer.CanContentScroll="True"
+              ScrollViewer.ScrollChanged="ChangesetHistoryGrid_ScrollChanged"
               SelectionMode="Single"
               HeadersVisibility="Column"
               VirtualizingPanel.IsVirtualizing="True"
               VirtualizingPanel.VirtualizationMode="Recycling"
               ItemsSource="{Binding Commits}"
-              AutoGenerateColumns="False"
               Loaded="OnDataContextChanged"
               x:Name="ChangesetHistoryGrid"
+              AutoGenerateColumns="False"
               Tag="{Binding}"
+              Grid.Row="0"
               Style="{StaticResource ChangesetHistoryDataGridStyle}"
               ContextMenu="{StaticResource changesetHistoryContextMenu}">
-        
-        <DataGrid.InputBindings>
-            <KeyBinding Key="C" Modifiers="Control"
+
+            <DataGrid.InputBindings>
+                <KeyBinding Key="C" Modifiers="Control"
                         Command="{Binding CopyHashCommand}"
                         CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
-            
-            <KeyBinding Key="S" Modifiers="Control"
+
+                <KeyBinding Key="S" Modifiers="Control"
                         Command="{Binding ExportPatchCommand}"
                         CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
-        </DataGrid.InputBindings>
-        
-        <DataGrid.Columns>
-            <DataGridTemplateColumn Header="Graph" Width="128">
-                <DataGridTemplateColumn.CellTemplate><DataTemplate></DataTemplate></DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-                
-            <DataGridTemplateColumn Header="Description" Width="*">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <WrapPanel>
-                            <ListBox ItemsSource="{Binding DisplayTags}" Style="{StaticResource DisplayTagsBlueStyle}" IsHitTestVisible="False" />
-                            <ListBox ItemsSource="{Binding Tags}" Style="{StaticResource DisplayTagsOrangeStyle}" IsHitTestVisible="False" />
-                            <TextBlock Text="{Binding Path=ShortDescription}"
+            </DataGrid.InputBindings>
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Graph" Width="128">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate></DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Description" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <ListBox ItemsSource="{Binding DisplayTags}" Style="{StaticResource DisplayTagsBlueStyle}" IsHitTestVisible="False" />
+                                <ListBox ItemsSource="{Binding Tags}" Style="{StaticResource DisplayTagsOrangeStyle}" IsHitTestVisible="False" />
+                                <TextBlock Text="{Binding Path=ShortDescription}"
                                        VerticalAlignment="Center"
                                        FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
                                        TextDecorations="{Binding IsHead, Converter={StaticResource isHeadToTextDecorationsConverter}}" />
-                        </WrapPanel>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-            <DataGridTemplateColumn Header="Date" Width="128">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=FormattedDate}"
+                <DataGridTemplateColumn Header="Date" Width="128">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=FormattedDate}"
                                    FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
                                    TextDecorations="{Binding IsHead, Converter={StaticResource isHeadToTextDecorationsConverter}}" />
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-            <DataGridTemplateColumn Header="Author" Width="224">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=Author}"
+                <DataGridTemplateColumn Header="Author" Width="224">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Author}"
                                    FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
                                    TextDecorations="{Binding IsHead, Converter={StaticResource isHeadToTextDecorationsConverter}}" />
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-            <DataGridTemplateColumn Header="Hash" Width="64">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=HashShort}"
+                <DataGridTemplateColumn Header="Hash" Width="64">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=HashShort}"
                                    FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"
                                    TextDecorations="{Binding IsHead, Converter={StaticResource isHeadToTextDecorationsConverter}}" />
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
-        </DataGrid.Columns>
-    </DataGrid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <!--<ScrollViewer Margin="0,24,0,0"
+                      Grid.Row="0"
+                      Width="128"
+                      Height="{Binding ElementName=ChangesetHistoryGrid, Path=ActualHeight}"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      x:Name="GraphScrollViewer"
+                      IsHitTestVisible="True">
+            
+            <Canvas Width="128"
+                    Height="{Binding ElementName=ChangesetHistoryGrid, Converter={StaticResource getDataGridContentHeightConverter}}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    x:Name="Graph" />
+        </ScrollViewer>-->
+    </Grid>
+        
 </UserControl>

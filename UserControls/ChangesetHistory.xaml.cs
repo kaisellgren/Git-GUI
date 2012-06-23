@@ -27,8 +27,16 @@ namespace GG.UserControls
         /// <param name="e"></param>
         private void OnDataContextChanged(object sender, RoutedEventArgs e)
         {
-            ChangesetGraph graph = new ChangesetGraph((RepositoryViewModel) DataContext, UIHelper.FindChild<Canvas>(this, "Graph"));
+            var tabControl = (TabControl) UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
+
+            ChangesetGraph graph = new ChangesetGraph((RepositoryViewModel) DataContext, UIHelper.FindChild<Canvas>(tabControl, "Graph"));
             graph.Draw(ChangesetHistoryGrid.Items);
+        }
+
+        private void ChangesetHistoryGrid_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            //var scrollViewer = UIHelper.FindChild<ScrollViewer>(this, "GraphScrollViewer");
+            //scrollViewer.ScrollToVerticalOffset(Math.Floor(e.VerticalOffset) * 24);
         }
     }
 }
