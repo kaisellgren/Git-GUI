@@ -46,7 +46,7 @@ namespace GG.UserControls
                 {
                     // Load the repository.
                     item.NotOpened = false;
-                    item.Load();
+                    item.Init();
 
                     // Open the tab.
                     mainWindowViewModel.RepositoryViewModels.Add(item);
@@ -115,7 +115,7 @@ namespace GG.UserControls
             repository.RepositoryFullPath = path;
 
             // Try loading the repository information and see if it worked.
-            var result = repository.Load();
+            var result = repository.Init();
             if (result == true)
             {
                 var mainWindowViewModel = Application.Current.MainWindow.DataContext as MainWindowViewModel;

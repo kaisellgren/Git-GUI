@@ -65,7 +65,7 @@ namespace GG
                         // Only open the most recent one.
                         if (alreadyOpenedOneRepo == false)
                         {
-                            repo.Load();
+                            repo.Init();
                             RepositoryViewModels.Add(repo);
                         }
 

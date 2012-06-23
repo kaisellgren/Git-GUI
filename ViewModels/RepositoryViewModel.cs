@@ -29,15 +29,15 @@ namespace GG
         public bool NotOpened { get; set; }
         private bool alreadyLoaded = false;
 
-        public RangedObservableCollection<Commit>        Commits { get; set; }
-        public RangedObservableCollection<StatusItem>    StatusItems { get; set; }
-        public ObservableCollection<Branch>              Branches { get; set; }
-        public ObservableCollection<Tag>                 Tags { get; set; }
-        public ObservableCollection<Remote>              Remotes { get; set; }
-        public ObservableCollection<Submodule>           Submodules { get; set; }
-        public ObservableCollection<Stash>               Stashes { get; set; }
-        public ObservableCollection<RecentCommitMessage> RecentCommitMessages { get; private set; }
-        public ListCollectionView                        StatusItemsGrouped { get; set; }
+        public EnhancedObservableCollection<Commit> Commits { get; set; }
+        public EnhancedObservableCollection<StatusItem> StatusItems { get; set; }
+        public EnhancedObservableCollection<Branch> Branches { get; set; }
+        public EnhancedObservableCollection<Tag> Tags { get; set; }
+        public EnhancedObservableCollection<Remote> Remotes { get; set; }
+        public EnhancedObservableCollection<Submodule> Submodules { get; set; }
+        public EnhancedObservableCollection<Stash> Stashes { get; set; }
+        public EnhancedObservableCollection<RecentCommitMessage> RecentCommitMessages { get; private set; }
+        public ListCollectionView StatusItemsGrouped { get; set; }
 
         /// <summary>
         /// The HEAD. This can either be a reference to a DetachedHead or a Branch.
@@ -76,14 +76,14 @@ namespace GG
         public RepositoryViewModel()
         {
             // Initialize empty collections.
-            Commits = new RangedObservableCollection<Commit> { };
-            StatusItems = new RangedObservableCollection<StatusItem> { };
-            Branches = new ObservableCollection<Branch> { };
-            Tags = new ObservableCollection<Tag> { };
-            Remotes = new ObservableCollection<Remote> { };
-            Submodules = new ObservableCollection<Submodule> { };
-            Stashes = new ObservableCollection<Stash> { };
-            RecentCommitMessages = new ObservableCollection<RecentCommitMessage>();
+            Commits = new EnhancedObservableCollection<Commit> { };
+            StatusItems = new EnhancedObservableCollection<StatusItem> { };
+            Branches = new EnhancedObservableCollection<Branch> { };
+            Tags = new EnhancedObservableCollection<Tag> { };
+            Remotes = new EnhancedObservableCollection<Remote> { };
+            Submodules = new EnhancedObservableCollection<Submodule> { };
+            Stashes = new EnhancedObservableCollection<Stash> { };
+            RecentCommitMessages = new EnhancedObservableCollection<RecentCommitMessage>();
 
             CommitsPerPage = 150;
             RecentCommitMessageCount = 10;
@@ -185,7 +185,7 @@ namespace GG
                 using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
                     //repo.Notes.Create(commit.Hash, dialog.ResponseText);
-                    ConstructRepository();
+                    LoadEntireRepository();
                 }
             }
         }
@@ -220,7 +220,7 @@ namespace GG
                 using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
                     repo.Tags.Create(dialog.ResponseText, commit.Hash);
-                    ConstructRepository();
+                    LoadEntireRepository();
                 }
             }
         }
@@ -236,7 +236,7 @@ namespace GG
             using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
             {
                 repo.Reset(LibGit2Sharp.ResetOptions.Soft, commit.Hash);
-                ConstructRepository();
+                LoadEntireRepository();
             }
         }
 
@@ -251,7 +251,7 @@ namespace GG
             using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
             {
                 repo.Reset(LibGit2Sharp.ResetOptions.Mixed, commit.Hash);
-                ConstructRepository();
+                LoadEntireRepository();
             }
         }
 
@@ -277,7 +277,7 @@ namespace GG
                     repo.Branches.Create(dialog.ResponseText, repo.Head.Tip.Sha.ToString());
                 }
 
-                ConstructRepository();
+                LoadEntireRepository();
             }
         }
 
@@ -309,10 +309,19 @@ namespace GG
         /// <param name="action"></param>
         private void CommitChanges(object action)
         {
-            //need to pass author, commitor, and the commit message
-            LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath);
-            LibGit2Sharp.RepositoryExtensions.Commit(repo, action.ToString(), false);
-            ConstructRepository();
+            var commitMessage = (string) action;
+
+            using (LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            {
+                LibGit2Sharp.RepositoryExtensions.Commit(repo, commitMessage, false);
+
+                // Reconstruct the repository.
+                LoadEntireRepository();
+                LoadRepositoryStatus();
+
+                // Clear the commit message box.
+                UIHelper.FindChild<TextBox>(Application.Current.MainWindow, "CommitMessageTextBox").Clear();
+            }
         }
 
         /// <summary>
@@ -321,14 +330,12 @@ namespace GG
         /// <param name="action"></param>
         private bool CommitChanges_CanExecute(object action)
         {
-            if (action != null)
-            {
-                return action.ToString().Length > 0;
-            }
+            var commitMessage = (string) action;
+
+            if (commitMessage != null)
+                return commitMessage.Length > 0;
             else
-            {
                 return false;
-            }         
         }
 
         /// <summary>
@@ -397,9 +404,9 @@ namespace GG
         #region Loading and construction.
 
         /// <summary>
-        /// A method that loads the entire repository.
+        /// A method that loads the entire repository and initializes everything necessary.
         /// </summary>
-        public bool Load()
+        public bool Init()
         {
             if (alreadyLoaded == true)
                 throw new Exception("You may not load the repository more than once.");
@@ -407,118 +414,146 @@ namespace GG
             // The "New Tab" page should not load data, i.e., the repository is not yet opened.
             if (NotOpened == false)
             {
-                Console.WriteLine("Loading and constructing repository data for \"" + RepositoryFullPath + "\".");
+                alreadyLoaded = true;
 
-                var result = ConstructRepository();
-
-                if (result == true)
+                try
                 {
-                    LoadRepositoryStatus();
-                    LoadRecentCommitMessages();
-                    ListenToDirectoryChanges();
+                    LoadEntireRepository();
                 }
-
-                return result;
+                catch (Exception)
+                {
+                    return false;
+                }
             }
 
-            alreadyLoaded = true;
-
-            return false;
+            return true;
         }
 
         /// <summary>
         /// Loads and constructs the entire repository.
         /// 
-        /// This will limit the amount of changesets to 100 / n.
+        /// This will limit the amount of changesets to CommitsPerPage.
         /// </summary>
-        public bool ConstructRepository()
+        public void LoadEntireRepository()
         {
-            bool result;
-            LibGit2Sharp.Repository repo = null;
+            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            {
+                LoadTags(repo);
+                LoadBranchesAndCommits(repo);
+                LoadRepositoryStatus();
+                LoadRecentCommitMessages();
 
-            try
+                ListenToDirectoryChanges();
+            }
+        }
+
+        /// <summary>
+        /// Loads branches and commits.
+        /// </summary>
+        /// <param name="repo"></param>
+        private void LoadBranchesAndCommits(LibGit2Sharp.Repository repo)
+        {
+            var dispose = false;
+            if (repo == null)
             {
                 repo = new LibGit2Sharp.Repository(RepositoryFullPath);
-
-                // Create tags.
-                Console.WriteLine("Constructs repository tags for \"" + RepositoryFullPath + "\".");
-                Tags.Clear();
-                foreach (LibGit2Sharp.Tag tag in repo.Tags)
-                {
-                    Tag t = Tag.Create(repo, tag);
-
-                    if (t.HasCommitAsTarget)
-                        Tags.Add(t);
-                }
-
-                // Create commits.
-                Console.WriteLine("Constructs repository commits for \"" + RepositoryFullPath + "\".");
-                Commits.Clear();
-                List<Commit> commitList = new List<Commit>();
-                foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Branches }).Take(CommitsPerPage))
-                {
-                    commitList.Add(Commit.Create(repo, commit, Tags));
-                }
-                Commits.AddRange(commitList);
-
-                // Create branches.
-                Console.WriteLine("Constructs repository branches for \"" + RepositoryFullPath + "\".");
-                Branches.Clear();
-                foreach (LibGit2Sharp.Branch branch in repo.Branches)
-                {
-                    Branch b = Branch.Create(this, repo, branch);
-                    Branches.Add(b);
-                }
-
-                // Post-process branches (tips and tracking branches).
-                Console.WriteLine("Post-processing repository branches for \"" + RepositoryFullPath + "\".");
-                foreach (Branch branch in Branches)
-                {
-                    // Set the HEAD property if it matches.
-                    if (repo.Head.Name == branch.Name)
-                    {
-                        Head = branch;
-                        branch.Tip.IsHead = true;
-                    }
-
-                    branch.PostProcess(Branches, Commits);
-                }
-
-                // Post-process commits (commit parents).
-                Console.WriteLine("Post-processing repository commits for \"" + RepositoryFullPath + "\".");
-                foreach (Commit commit in Commits)
-                {
-                    // Set the HEAD property to a DetachedHead branch if the HEAD matched and it was null.
-                    if (Head == null && repo.Head.Tip.Sha == commit.Hash)
-                    {
-                        Head = new DetachedHead
-                        {
-                            Tip = commit
-                        };
-
-                        commit.IsHead = true;
-                    }
-
-                    commit.PostProcess(Commits, Branches);
-                }
-
-                // Calculate commit visual positions for each branch tree.
-                foreach (Branch branch in Branches)
-                {
-                    RepoUtil.IncrementCommitTreeVisualPositionsRecursively(branch.Tip);
-                }
-
-                result = true;
+                dispose = true;
             }
-            catch (Exception)
+
+            // Small performance boosts.
+            Commits.DisableNotifications();
+            Branches.DisableNotifications();
+
+            // Create commits.
+            Commits.Clear();
+            List<Commit> commitList = new List<Commit>();
+            foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Branches }).Take(CommitsPerPage))
             {
-                result = false;
+                commitList.Add(Commit.Create(repo, commit, Tags));
+            }
+            Commits.AddRange(commitList);
+
+            // Create branches.
+            Branches.Clear();
+            foreach (LibGit2Sharp.Branch branch in repo.Branches)
+            {
+                Branch b = Branch.Create(this, repo, branch);
+                Branches.Add(b);
             }
 
-            if (repo is LibGit2Sharp.Repository)
-                repo.Dispose();
+            // Post-process branches (tips and tracking branches).
+            foreach (Branch branch in Branches)
+            {
+                // Set the HEAD property if it matches.
+                if (repo.Head.Name == branch.Name)
+                {
+                    Head = branch;
+                    branch.Tip.IsHead = true;
+                }
 
-            return result;
+                branch.PostProcess(Branches, Commits);
+            }
+
+            // Post-process commits (commit parents).
+            foreach (Commit commit in Commits)
+            {
+                // Set the HEAD property to a DetachedHead branch if the HEAD matched and it was null.
+                if (Head == null && repo.Head.Tip.Sha == commit.Hash)
+                {
+                    Head = new DetachedHead
+                    {
+                        Tip = commit
+                    };
+
+                    commit.IsHead = true;
+                }
+
+                commit.PostProcess(Commits, Branches);
+            }
+
+            // Calculate commit visual positions for each branch tree.
+            foreach (Branch branch in Branches)
+            {
+                RepoUtil.IncrementCommitTreeVisualPositionsRecursively(branch.Tip);
+            }
+
+            Commits.EnableNotifications();
+            Branches.EnableNotifications();
+
+            if (dispose)
+                repo.Dispose();
+        }
+        
+        /// <summary>
+        /// Loads the tags.
+        /// </summary>
+        private void LoadTags(LibGit2Sharp.Repository repo)
+        {
+            var dispose = false;
+            if (repo == null)
+            {
+                repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+                dispose = true;
+            }
+
+            // Small performance boost.
+            Tags.DisableNotifications();
+
+            Tags.Clear();
+
+            // Add new tags.
+            foreach (LibGit2Sharp.Tag tag in repo.Tags)
+            {
+                Tag t = Tag.Create(repo, tag);
+
+                if (t.HasCommitAsTarget)
+                    Tags.Add(t);
+            }
+
+            Tags.EnableNotifications();
+
+            if (dispose)
+                repo.Dispose();
         }
 
         /// <summary>
@@ -526,8 +561,6 @@ namespace GG
         /// </summary>
         private void LoadRepositoryStatus()
         {
-            Console.WriteLine("Loading status data for \"" + RepositoryFullPath + "\".");
-
             var repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
             StatusItems.Clear();

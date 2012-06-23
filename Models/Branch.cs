@@ -100,7 +100,7 @@ namespace GG.Models
 
             repo.Dispose();
 
-            repositoryViewModel.ConstructRepository();
+            repositoryViewModel.LoadEntireRepository();
         }
     }
 }

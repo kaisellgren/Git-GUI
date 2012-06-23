@@ -157,6 +157,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\GetDataGridContentHeightConverter.cs" />
+    <Compile Include="Libraries\Observable.cs" />
     <Compile Include="UserControls\Dialogs\ConfirmDialog.xaml.cs">
       <DependentUpon>ConfirmDialog.xaml</DependentUpon>
     </Compile>
@@ -180,7 +181,7 @@
     <Compile Include="Libraries\FileUtil.cs" />
     <Compile Include="Libraries\GenericUtil.cs" />
     <Compile Include="Libraries\IconUtil.cs" />
-    <Compile Include="Libraries\RangedObservableCollection.cs" />
+    <Compile Include="Libraries\EnhancedObservableCollection.cs" />
     <Compile Include="Libraries\RepoUtil.cs" />
     <Compile Include="TemplateSelectors\TabTemplateSelector.cs" />
     <Compile Include="Libraries\UIHelper.cs" />
