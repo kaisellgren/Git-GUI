@@ -332,10 +332,11 @@ namespace GG
         {
             var commitMessage = (string) action;
 
-            if (commitMessage != null)
+            // Only allow commit if there's something to commit and there's a commit message.
+            if (commitMessage != null && StatusItems.Any(s => s.IsStaged))
                 return commitMessage.Length > 0;
-            else
-                return false;
+
+            return false;
         }
 
         /// <summary>

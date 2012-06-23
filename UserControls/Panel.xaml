@@ -50,7 +50,14 @@
                                      ToolTip="Enter your commit message."
                                      FontSize="12"
                                      FontFamily="Courier New"
-                                     Height="38pt" />
+                                     Height="38pt">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter"
+                                                Modifiers="Control"
+                                                Command="{Binding CommitCommand}"
+                                                CommandParameter="{Binding Text, ElementName=CommitMessageTextBox}" />
+                                </TextBox.InputBindings>
+                            </TextBox>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
