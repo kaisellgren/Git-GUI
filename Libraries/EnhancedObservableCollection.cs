@@ -30,9 +30,18 @@ namespace GG.Libraries
             disableNotifications = true;
         }
 
-        public void EnableNotifications()
+        /// <summary>
+        /// Enables notifications back.
+        /// 
+        /// A reset notification is sent if the sendNotification parameter is set to true.
+        /// </summary>
+        /// <param name="sendNotification"></param>
+        public void EnableNotifications(bool sendNotification = false)
         {
             disableNotifications = false;
+
+            if (sendNotification)
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         /// <summary> 
@@ -40,14 +49,16 @@ namespace GG.Libraries
         /// </summary> 
         public void AddRange(IEnumerable<T> collection)
         {
-            disableNotifications = true;
+            var temporarilyDisableNotifications = !disableNotifications;
+
+            if (temporarilyDisableNotifications)
+                disableNotifications = true;
 
             foreach (T item in collection)
-            {
                 Add(item);
-            }
 
-            disableNotifications = false;
+            if (temporarilyDisableNotifications)
+                disableNotifications = false;
 
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }

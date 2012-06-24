@@ -17,6 +17,7 @@ using GG.Models;
 using GG.UserControls.Dialogs;
 using System.Collections;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace GG
 {
@@ -111,9 +112,6 @@ namespace GG
             StatusItemDiff = "";
         }
 
-        /// <summary>
-        /// Commands.
-        /// </summary>
         #region Commands.
 
         public DelegateCommand ExportPatchCommand  { get; private set; }
@@ -317,7 +315,6 @@ namespace GG
 
                 // Reconstruct the repository.
                 LoadEntireRepository();
-                LoadRepositoryStatus();
 
                 // Clear the commit message box.
                 UIHelper.FindChild<TextBox>(Application.Current.MainWindow, "CommitMessageTextBox").Clear();
@@ -437,22 +434,27 @@ namespace GG
         /// </summary>
         public void LoadEntireRepository()
         {
-            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            ThreadStart start = delegate()
             {
-                LoadTags(repo);
-                LoadBranchesAndCommits(repo);
-                LoadRepositoryStatus();
-                LoadRecentCommitMessages();
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    LoadTags(repo);
+                    LoadBranchesAndCommits(repo);
+                    LoadRepositoryStatus(repo);
+                    LoadRecentCommitMessages();
 
-                ListenToDirectoryChanges();
-            }
+                    ListenToDirectoryChanges();
+                }
+            };
+
+            new Thread(start).Start();
         }
 
         /// <summary>
         /// Loads branches and commits.
         /// </summary>
         /// <param name="repo"></param>
-        private void LoadBranchesAndCommits(LibGit2Sharp.Repository repo)
+        private void LoadBranchesAndCommits(LibGit2Sharp.Repository repo = null)
         {
             var dispose = false;
             if (repo == null)
@@ -518,8 +520,15 @@ namespace GG
                 RepoUtil.IncrementCommitTreeVisualPositionsRecursively(branch.Tip);
             }
 
-            Commits.EnableNotifications();
-            Branches.EnableNotifications();
+            // Fire notifications for the collections on the UI thread.
+            Application.Current.Dispatcher.Invoke(
+                DispatcherPriority.Normal,
+                (Action) delegate()
+                {
+                    Commits.EnableNotifications(true);
+                    Branches.EnableNotifications(true);
+                }
+            );
 
             if (dispose)
                 repo.Dispose();
@@ -528,7 +537,7 @@ namespace GG
         /// <summary>
         /// Loads the tags.
         /// </summary>
-        private void LoadTags(LibGit2Sharp.Repository repo)
+        private void LoadTags(LibGit2Sharp.Repository repo = null)
         {
             var dispose = false;
             if (repo == null)
@@ -551,18 +560,35 @@ namespace GG
                     Tags.Add(t);
             }
 
-            Tags.EnableNotifications();
+            // Fire notifications for the Tags collection on the UI thread.
+            Application.Current.Dispatcher.Invoke(
+                DispatcherPriority.Normal,
+                (Action) delegate()
+                {
+                    Tags.EnableNotifications(true);
+                }
+            );
 
             if (dispose)
                 repo.Dispose();
         }
 
+        private Object thisLock = new Object();
+
         /// <summary>
         /// Loads the repository status (modified, added, removed).
         /// </summary>
-        private void LoadRepositoryStatus()
+        private void LoadRepositoryStatus(LibGit2Sharp.Repository repo = null)
         {
-            var repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+            var dispose = false;
+            if (repo == null)
+            {
+                repo = new LibGit2Sharp.Repository(RepositoryFullPath);
+                dispose = true;
+            }
+
+            // A small performance boost.
+            StatusItems.DisableNotifications();
 
             StatusItems.Clear();
 
@@ -596,7 +622,17 @@ namespace GG
 
             StatusItems.AddRange(itemList);
 
-            repo.Dispose();
+            if (dispose)
+                repo.Dispose();
+
+            // Fire notifications for the collection on the UI thread.
+            Application.Current.Dispatcher.Invoke(
+                DispatcherPriority.Normal,
+                (Action) delegate()
+                {
+                    StatusItems.EnableNotifications(true);
+                }
+            );
         }
 
         /// <summary>
@@ -604,12 +640,22 @@ namespace GG
         /// </summary>
         private void LoadRecentCommitMessages()
         {
+            // A small performance boost.
+            RecentCommitMessages.DisableNotifications();
+
             RecentCommitMessages.Clear();
 
             foreach (Commit commit in Commits.Take(RecentCommitMessageCount))
-            {
                 RecentCommitMessages.Add(new RecentCommitMessage(commit.ShortDescription));
-            }
+
+            // Fire notifications for the collection on the UI thread.
+            Application.Current.Dispatcher.Invoke(
+                DispatcherPriority.Normal,
+                (Action) delegate()
+                {
+                    RecentCommitMessages.EnableNotifications(true);
+                }
+            );
         }
 
 #endregion
@@ -656,7 +702,7 @@ namespace GG
 
             ReloadStatusDelegate reloadStatusDelegate = delegate(object sender, FileSystemEventArgs e)
             {
-                Application.Current.Dispatcher.Invoke(
+                Application.Current.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
                     (Action) delegate()
                     {
