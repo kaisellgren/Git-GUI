@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -18,6 +19,7 @@ using GG.UserControls.Dialogs;
 using System.Collections;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace GG
 {
@@ -133,21 +135,29 @@ namespace GG
         /// <param name="action"></param>
         public void ExportPatch(object action)
         {
-            Commit commit = action as Commit;
+            var commit = action as Commit;
 
-            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            if (commit == null)
+                return;
+
+            Task.Run(() =>
             {
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.FileName = commit.Description.Right(72);
-                dialog.DefaultExt = ".patch";
-                dialog.Filter = "Patch files|*.patch";
-
-                if (dialog.ShowDialog() == true)
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
-                    // Save the patch to a file.
-                    File.WriteAllText(dialog.FileName, RepoUtil.GetTreeChangesForCommit(repo, commit).Patch);
+                    var dialog = new SaveFileDialog
+                    {
+                        FileName = commit.Description.Right(72),
+                        DefaultExt = ".patch",
+                        Filter = "Patch files|*.patch"
+                    };
+
+                    if (dialog.ShowDialog() == true)
+                    {
+                        // Save the patch to a file.
+                        File.WriteAllText(dialog.FileName, RepoUtil.GetTreeChangesForCommit(repo, commit).Patch);
+                    }
                 }
-            }
+            });
         }
 
         /// <summary>
@@ -156,12 +166,15 @@ namespace GG
         /// <param name="action"></param>
         public void CopyPatch(object action)
         {
-            Commit commit = action as Commit;
+            var commit = action as Commit;
 
-            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            Task.Run(() =>
             {
-                Clipboard.SetText(RepoUtil.GetTreeChangesForCommit(repo, commit).Patch);
-            }
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    Clipboard.SetText(RepoUtil.GetTreeChangesForCommit(repo, commit).Patch);
+                }
+            });
         }
 
         /// <summary>
@@ -170,22 +183,27 @@ namespace GG
         /// <param name="action"></param>
         public void AddNote(object action)
         {
-            var dialog = new PromptDialog();
-            dialog.Title = "Add a note";
-            dialog.Message = "Enter the note to add for the commit:";
+            var dialog = new PromptDialog
+            {
+                Title = "Add a note",
+                Message = "Enter the note to add for the commit:"
+            };
 
             dialog.ShowDialog();
 
-            if (dialog.DialogResult == true)
-            {
-                Commit commit = action as Commit;
+            if (dialog.DialogResult != true)
+                return;
 
+            var commit = action as Commit;
+
+            Task.Run(() =>
+            {
                 using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
-                    //repo.Notes.Create(commit.Hash, dialog.ResponseText);
+                    //repo.Notes.Create(commit.Hash, dialog.ResponseText); // TODO: Complete?
                     LoadEntireRepository();
                 }
-            }
+            });
         }
 
         /// <summary>
@@ -194,7 +212,10 @@ namespace GG
         /// <param name="action"></param>
         public void CopyHash(object action)
         {
-            Commit commit = action as Commit;
+            var commit = action as Commit;
+
+            if (commit == null)
+                return;
 
             Clipboard.SetText(commit.Hash);
         }
@@ -205,22 +226,27 @@ namespace GG
         /// <param name="action"></param>
         public void CreateTag(object action)
         {
-            var dialog = new PromptDialog();
-            dialog.Title = "Create a new tag";
-            dialog.Message = "Enter the name for the tag:";
+            var commit = action as Commit;
+
+            var dialog = new PromptDialog
+            {
+                Title = "Create a new tag",
+                Message = "Enter the name for the tag:"
+            };
 
             dialog.ShowDialog();
 
-            if (dialog.DialogResult == true)
-            {
-                Commit commit = action as Commit;
+            if (dialog.DialogResult != true || commit == null)
+                return;
 
+            Task.Run(() =>
+            {
                 using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
                     repo.Tags.Create(dialog.ResponseText, commit.Hash);
                     LoadEntireRepository();
                 }
-            }
+            });
         }
 
         /// <summary>
@@ -229,13 +255,19 @@ namespace GG
         /// <param name="action"></param>
         public void ResetMixed(object action)
         {
-            Commit commit = action as Commit;
+            var commit = action as Commit;
 
-            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            if (commit == null)
+                return;
+
+            Task.Run(() =>
             {
-                repo.Reset(LibGit2Sharp.ResetOptions.Soft, commit.Hash);
-                LoadEntireRepository();
-            }
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    repo.Reset(LibGit2Sharp.ResetOptions.Soft, commit.Hash);
+                    LoadEntireRepository();
+                }
+            });
         }
 
         /// <summary>
@@ -244,13 +276,19 @@ namespace GG
         /// <param name="action"></param>
         public void ResetSoft(object action)
         {
-            Commit commit = action as Commit;
+            var commit = action as Commit;
 
-            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            if (commit == null)
+                return;
+
+            Task.Run(() =>
             {
-                repo.Reset(LibGit2Sharp.ResetOptions.Mixed, commit.Hash);
-                LoadEntireRepository();
-            }
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    repo.Reset(LibGit2Sharp.ResetOptions.Mixed, commit.Hash);
+                    LoadEntireRepository();
+                }
+            });
         }
 
         /// <summary>
@@ -267,16 +305,18 @@ namespace GG
 
             dialog.ShowDialog();
 
-            if (dialog.DialogResult == true)
+            if (dialog.DialogResult != true)
+                return;
+
+            Task.Run(() =>
             {
                 using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
-                    var sha = repo.Head.Tip.Sha.ToString();
-                    repo.Branches.Create(dialog.ResponseText, repo.Head.Tip.Sha.ToString());
+                    repo.Branches.Create(dialog.ResponseText, repo.Head.Tip.Sha.ToString(CultureInfo.InvariantCulture));
                 }
 
                 LoadEntireRepository();
-            }
+            });
         }
 
         /// <summary>
@@ -288,17 +328,19 @@ namespace GG
             var collection = (IList) action;
             var items = collection.Cast<StatusItem>();
 
-            var repo = new LibGit2Sharp.Repository(RepositoryFullPath);
-
-            foreach (StatusItem item in items)
+            Task.Run(() =>
             {
-                if (item.GenericStatus == "Staged")
-                    repo.Index.Unstage(RepositoryFullPath + "/" + item.Filename);
-                else
-                    repo.Index.Stage(RepositoryFullPath + "/" + item.Filename);
-            }
-
-            repo.Dispose();
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    foreach (var item in items)
+                    {
+                        if (item.GenericStatus == "Staged")
+                            repo.Index.Unstage(RepositoryFullPath + "/" + item.Filename);
+                        else
+                            repo.Index.Stage(RepositoryFullPath + "/" + item.Filename);
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -309,16 +351,19 @@ namespace GG
         {
             var commitMessage = (string) action;
 
-            using (LibGit2Sharp.Repository repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            Task.Run(() =>
             {
-                LibGit2Sharp.RepositoryExtensions.Commit(repo, commitMessage, false);
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    LibGit2Sharp.RepositoryExtensions.Commit(repo, commitMessage, false);
 
-                // Reconstruct the repository.
-                LoadEntireRepository();
+                    // Reconstruct the repository.
+                    LoadEntireRepository();
 
-                // Clear the commit message box.
-                UIHelper.FindChild<TextBox>(Application.Current.MainWindow, "CommitMessageTextBox").Clear();
-            }
+                    // Clear the commit message box.
+                    UIHelper.FindChild<TextBox>(Application.Current.MainWindow, "CommitMessageTextBox").Clear();
+                }
+            });
         }
 
         /// <summary>
@@ -434,7 +479,7 @@ namespace GG
         /// </summary>
         public void LoadEntireRepository()
         {
-            ThreadStart start = delegate()
+            Task.Run(() =>
             {
                 using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
@@ -445,9 +490,7 @@ namespace GG
 
                     ListenToDirectoryChanges();
                 }
-            };
-
-            new Thread(start).Start();
+            });
         }
 
         /// <summary>
@@ -469,8 +512,8 @@ namespace GG
 
             // Create commits.
             Commits.Clear();
-            List<Commit> commitList = new List<Commit>();
-            foreach (LibGit2Sharp.Commit commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Branches }).Take(CommitsPerPage))
+            var commitList = new List<Commit>();
+            foreach (var commit in repo.Commits.QueryBy(new LibGit2Sharp.Filter { Since = repo.Branches }).Take(CommitsPerPage))
             {
                 commitList.Add(Commit.Create(repo, commit, Tags));
             }
@@ -478,14 +521,14 @@ namespace GG
 
             // Create branches.
             Branches.Clear();
-            foreach (LibGit2Sharp.Branch branch in repo.Branches)
+            foreach (var branch in repo.Branches)
             {
-                Branch b = Branch.Create(this, repo, branch);
+                var b = Branch.Create(this, repo, branch);
                 Branches.Add(b);
             }
 
             // Post-process branches (tips and tracking branches).
-            foreach (Branch branch in Branches)
+            foreach (var branch in Branches)
             {
                 // Set the HEAD property if it matches.
                 if (repo.Head.Name == branch.Name)
@@ -498,7 +541,7 @@ namespace GG
             }
 
             // Post-process commits (commit parents).
-            foreach (Commit commit in Commits)
+            foreach (var commit in Commits)
             {
                 // Set the HEAD property to a DetachedHead branch if the HEAD matched and it was null.
                 if (Head == null && repo.Head.Tip.Sha == commit.Hash)
@@ -515,7 +558,7 @@ namespace GG
             }
 
             // Calculate commit visual positions for each branch tree.
-            foreach (Branch branch in Branches)
+            foreach (var branch in Branches)
             {
                 RepoUtil.IncrementCommitTreeVisualPositionsRecursively(branch.Tip);
             }
@@ -523,11 +566,11 @@ namespace GG
             // Fire notifications for the collections on the UI thread.
             Application.Current.Dispatcher.Invoke(
                 DispatcherPriority.Normal,
-                (Action) delegate()
+                (Action) (() =>
                 {
                     Commits.EnableNotifications(true);
                     Branches.EnableNotifications(true);
-                }
+                })
             );
 
             if (dispose)
@@ -552,9 +595,9 @@ namespace GG
             Tags.Clear();
 
             // Add new tags.
-            foreach (LibGit2Sharp.Tag tag in repo.Tags)
+            foreach (var tag in repo.Tags)
             {
-                Tag t = Tag.Create(repo, tag);
+                var t = Tag.Create(repo, tag);
 
                 if (t.HasCommitAsTarget)
                     Tags.Add(t);
@@ -563,17 +606,12 @@ namespace GG
             // Fire notifications for the Tags collection on the UI thread.
             Application.Current.Dispatcher.Invoke(
                 DispatcherPriority.Normal,
-                (Action) delegate()
-                {
-                    Tags.EnableNotifications(true);
-                }
+                (Action) (() => Tags.EnableNotifications(true))
             );
 
             if (dispose)
                 repo.Dispose();
         }
-
-        private Object thisLock = new Object();
 
         /// <summary>
         /// Loads the repository status (modified, added, removed).
@@ -593,22 +631,22 @@ namespace GG
             StatusItems.Clear();
 
             // Load status items.
-            List<StatusItem> itemList = new List<StatusItem>();
+            var itemList = new List<StatusItem>();
 
-            LibGit2Sharp.RepositoryStatus status = repo.Index.RetrieveStatus();
-            foreach (LibGit2Sharp.StatusEntry fileStatus in status)
+            var status = repo.Index.RetrieveStatus();
+            foreach (var fileStatus in status)
             {
                 foreach (LibGit2Sharp.FileStatus value in Enum.GetValues(typeof(LibGit2Sharp.FileStatus)))
                 {
-                    bool isSet = fileStatus.State.HasFlag(value);
+                    var isSet = fileStatus.State.HasFlag(value);
 
                     if (isSet == false || value.ToString() == "Unaltered" || value.ToString() == "Ignored")
                         continue;
 
-                    string fileFullPath = RepositoryFullPath + "/" + fileStatus.FilePath;
+                    var fileFullPath = RepositoryFullPath + "/" + fileStatus.FilePath;
 
                     // Only those enum statuses that were set will generate a row in the status grid (and those that are not ignored/unaltered).
-                    StatusItem item = new StatusItem
+                    var item = new StatusItem
                     {
                         Filename = fileStatus.FilePath,
                         Status = value,
@@ -628,10 +666,7 @@ namespace GG
             // Fire notifications for the collection on the UI thread.
             Application.Current.Dispatcher.Invoke(
                 DispatcherPriority.Normal,
-                (Action) delegate()
-                {
-                    StatusItems.EnableNotifications(true);
-                }
+                (Action) (() => StatusItems.EnableNotifications(true))
             );
         }
 
@@ -645,16 +680,13 @@ namespace GG
 
             RecentCommitMessages.Clear();
 
-            foreach (Commit commit in Commits.Take(RecentCommitMessageCount))
+            foreach (var commit in Commits.Take(RecentCommitMessageCount))
                 RecentCommitMessages.Add(new RecentCommitMessage(commit.ShortDescription));
 
             // Fire notifications for the collection on the UI thread.
             Application.Current.Dispatcher.Invoke(
                 DispatcherPriority.Normal,
-                (Action) delegate()
-                {
-                    RecentCommitMessages.EnableNotifications(true);
-                }
+                (Action) (() => RecentCommitMessages.EnableNotifications(true))
             );
         }
 
@@ -663,7 +695,7 @@ namespace GG
         /// <summary>
         /// Updates the diff panel text.
         /// </summary>
-        /// <param name="items"></param>
+        /// <param name="collection"> </param>
         public void UpdateStatusItemDiff(IList collection)
         {
             if (NotOpened == true)
@@ -672,17 +704,20 @@ namespace GG
             var diff = "";
             var items = collection.Cast<StatusItem>();
 
-            using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+            Task.Run(() =>
             {
-                foreach (StatusItem item in items)
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
-                    
+                    foreach (var item in items)
+                    {
+
+                    }
+
+                    diff += repo.Diff.Compare(repo.Head.Tip.Tree, LibGit2Sharp.DiffTarget.Index).Patch;
                 }
 
-                diff += repo.Diff.Compare(repo.Head.Tip.Tree, LibGit2Sharp.DiffTarget.Index).Patch;
-            }
-
-            StatusItemDiff = diff;
+                StatusItemDiff = diff;
+            });
         }
 
         /// <summary>
