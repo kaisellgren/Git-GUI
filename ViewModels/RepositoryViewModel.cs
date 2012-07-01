@@ -140,22 +140,23 @@ namespace GG
             if (commit == null)
                 return;
 
+            var dialog = new SaveFileDialog
+            {
+                FileName = commit.Description.Right(72),
+                DefaultExt = ".patch",
+                Filter = "Patch files|*.patch"
+            };
+
+            if (dialog.ShowDialog() == false)
+                return;
+
+            var filename = dialog.FileName;
+
             Task.Run(() =>
             {
                 using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
-                    var dialog = new SaveFileDialog
-                    {
-                        FileName = commit.Description.Right(72),
-                        DefaultExt = ".patch",
-                        Filter = "Patch files|*.patch"
-                    };
-
-                    if (dialog.ShowDialog() == true)
-                    {
-                        // Save the patch to a file.
-                        File.WriteAllText(dialog.FileName, RepoUtil.GetTreeChangesForCommit(repo, commit).Patch);
-                    }
+                    File.WriteAllText(filename, RepoUtil.GetTreeChangesForCommit(repo, commit).Patch);
                 }
             });
         }
@@ -195,6 +196,7 @@ namespace GG
                 return;
 
             var commit = action as Commit;
+            var response = dialog.ResponseText;
 
             Task.Run(() =>
             {
@@ -239,11 +241,13 @@ namespace GG
             if (dialog.DialogResult != true || commit == null)
                 return;
 
+            var response = dialog.ResponseText;
+
             Task.Run(() =>
             {
                 using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
-                    repo.Tags.Create(dialog.ResponseText, commit.Hash);
+                    repo.Tags.Create(response, commit.Hash);
                     LoadEntireRepository();
                 }
             });
@@ -308,11 +312,13 @@ namespace GG
             if (dialog.DialogResult != true)
                 return;
 
+            var response = dialog.ResponseText;
+
             Task.Run(() =>
             {
                 using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
-                    repo.Branches.Create(dialog.ResponseText, repo.Head.Tip.Sha.ToString(CultureInfo.InvariantCulture));
+                    repo.Branches.Create(response, repo.Head.Tip.Sha.ToString(CultureInfo.InvariantCulture));
                 }
 
                 LoadEntireRepository();
@@ -433,8 +439,11 @@ namespace GG
             Window about = new About();
 
             // Apply a blur effect to main window.
-            BlurEffect blur = new BlurEffect();
-            blur.Radius = 4;
+            var blur = new BlurEffect
+            {
+                Radius = 4
+            };
+
             Application.Current.MainWindow.Effect = blur;
 
             about.ShowDialog();
@@ -733,16 +742,13 @@ namespace GG
         /// </summary>
         private void ListenToDirectoryChanges()
         {
-            FileSystemWatcher watcher = new FileSystemWatcher();
+            var watcher = new FileSystemWatcher();
 
             ReloadStatusDelegate reloadStatusDelegate = delegate(object sender, FileSystemEventArgs e)
             {
                 Application.Current.Dispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
-                    (Action) delegate()
-                    {
-                        LoadRepositoryStatus();
-                    }
+                    (Action) (() => LoadRepositoryStatus())
                 );
             };
 

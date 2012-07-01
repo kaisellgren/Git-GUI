@@ -38,7 +38,7 @@ namespace GG.UserControls.Dialogs
 
             Application.Current.Dispatcher.BeginInvoke(
                 DispatcherPriority.Loaded,
-                new Action(() => InvalidateVisual())
+                (Action) (InvalidateVisual)
             );
         }
 
