@@ -17,6 +17,8 @@ namespace GG.Libraries
         private Int16 cellHeight = 24;
         private RepositoryViewModel repositoryViewModel;
 
+        public int TotalHeight { get; private set; }
+
         // A highlight color to reuse in tooltips.
         private SolidColorBrush highlightColor = new SolidColorBrush()
         {
@@ -81,6 +83,11 @@ namespace GG.Libraries
 
             // Loop through all commits and draw the graph, in reverse order.
             commitList.MoveCurrentToLast();
+
+            // Clear the existing graph.
+            graph.Children.Clear();
+
+            TotalHeight = 0;
             
             while (true)
             {
@@ -105,9 +112,7 @@ namespace GG.Libraries
 
                 int horizontalIndex = indexOfCurrentBranch + commit.VisualPosition;
                 for (var i = indexOfCurrentBranch - 1; i >= 0; i--)
-                {
                     horizontalIndex += ((Branch) branchesAroundCommit.ElementAt(i)).RightMostVisualPosition;
-                }
 
                 // Draw the dot/ellipse based on the index of the current branch.
                 byte dotSize = 10;
@@ -115,6 +120,9 @@ namespace GG.Libraries
 
                 int dotX = horizontalDotSpacing + dotSize * horizontalIndex + horizontalDotSpacing * horizontalIndex;
                 int dotY = cellHeight * rowNumber + cellHeight / 2 - dotSize / 2;
+
+                if (TotalHeight == 0)
+                    TotalHeight = cellHeight * (rowNumber + 1);
 
                 // Store the dot position on the dictionary.
                 commitDotPositions.Add(commit.Hash, new int[2] { dotX, dotY });

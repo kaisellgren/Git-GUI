@@ -142,7 +142,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
+                                <RowDefinition Height="24"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                         
@@ -190,7 +190,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type DataGridCell}">
         <Setter Property="BorderBrush" Value="#dddddd" />
         <Setter Property="Foreground" Value="#000" />

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
@@ -16,12 +17,9 @@ using GG.ViewModels;
 using GG.Models;
 using GG.UserControls.Dialogs;
 using System.Collections;
-<<<<<<< HEAD
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-=======
->>>>>>> ChangesetHistoryEnhances
 
 namespace GG
 {
@@ -32,7 +30,7 @@ namespace GG
         public string Name { get; set; }
         public string RepositoryFullPath { get; set; }
         public bool NotOpened { get; set; }
-        private bool alreadyLoaded;
+        private bool alreadyLoaded = false;
 
         public EnhancedObservableCollection<Commit> Commits { get; set; }
         public EnhancedObservableCollection<StatusItem> StatusItems { get; set; }
@@ -55,14 +53,14 @@ namespace GG
         /// <summary>
         /// Stores the diff text for the diff panel.
         /// </summary>
-        private string statusItemDiff;
+        private string _StatusItemDiff;
 
         public string StatusItemDiff
         {
-            get { return statusItemDiff; }
+            get { return _StatusItemDiff; }
             set
             {
-                statusItemDiff = value;
+                _StatusItemDiff = value;
                 //var regex = new Regex("+.*");
                 //regex.Replace(value, 
                 RaisePropertyChanged("StatusItemDiff");
@@ -462,7 +460,7 @@ namespace GG
         /// </summary>
         public bool Init()
         {
-            if (alreadyLoaded)
+            if (alreadyLoaded == true)
                 throw new Exception("You may not load the repository more than once.");
 
             // The "New Tab" page should not load data, i.e., the repository is not yet opened.
