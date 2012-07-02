@@ -4,9 +4,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using GG.Libraries;
 using GG.Models;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace GG.UserControls
 {
@@ -18,19 +21,34 @@ namespace GG.UserControls
         public ChangesetHistory()
         {
             InitializeComponent();
+
+            ChangesetHistoryGrid.Loaded += (sender, args) =>
+            {
+                var commits = (EnhancedObservableCollection<Commit>) ChangesetHistoryGrid.ItemsSource;
+                //commits.CollectionChanged += (sender2, args2) => Task.Run(() => Application.Current.Dispatcher.BeginInvoke((Action)(RedrawGraph)));
+
+                //RedrawGraph();
+            };
         }
 
         /// <summary>
-        /// When the changeset history data changes, redraw the graph.
+        /// Recalculates the height for the graph and draws it.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnDataContextChanged(object sender, RoutedEventArgs e)
+        private void RedrawGraph()
         {
-            var tabControl = (TabControl) UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
+            Console.WriteLine("Redraw!");
 
-            ChangesetGraph graph = new ChangesetGraph((RepositoryViewModel) DataContext, UIHelper.FindChild<Canvas>(tabControl, "Graph"));
-            graph.Draw(ChangesetHistoryGrid.Items);
+            // Calculate the height.
+            var scrollViewer = UIHelper.FindChild<ScrollViewer>(ChangesetHistoryGrid);
+            var totalHeight = scrollViewer.ExtentHeight * 24;
+
+            Graph.Height = totalHeight;
+
+            Console.WriteLine(totalHeight);
+
+            // Redraw.
+            var changesetGraph = new ChangesetGraph((RepositoryViewModel)DataContext, Graph);
+            changesetGraph.Draw(ChangesetHistoryGrid.Items);
         }
 
         private void ChangesetHistoryGrid_ScrollChanged(object sender, ScrollChangedEventArgs e)

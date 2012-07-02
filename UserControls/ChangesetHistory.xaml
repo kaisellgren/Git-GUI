@@ -32,12 +32,10 @@
               VirtualizingPanel.IsVirtualizing="True"
               VirtualizingPanel.VirtualizationMode="Recycling"
               ItemsSource="{Binding Commits}"
-              Loaded="OnDataContextChanged"
               x:Name="ChangesetHistoryGrid"
               AutoGenerateColumns="False"
               Tag="{Binding}"
               Grid.Row="0"
-              Style="{StaticResource ChangesetHistoryDataGridStyle}"
               ContextMenu="{StaticResource changesetHistoryContextMenu}">
 
             <DataGrid.InputBindings>
@@ -104,10 +102,10 @@
             </DataGrid.Columns>
         </DataGrid>
         
-        <!--<ScrollViewer Margin="0,24,0,0"
+        <ScrollViewer Margin="0,24,0,0"
                       Grid.Row="0"
                       Width="128"
-                      Height="{Binding ElementName=ChangesetHistoryGrid, Path=ActualHeight}"
+                      Height="{Binding ElementName=ChangesetHistoryGrid, Converter={StaticResource getDataGridContentHeightConverter}}"
                       ScrollViewer.VerticalScrollBarVisibility="Visible"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
@@ -115,11 +113,11 @@
                       IsHitTestVisible="True">
             
             <Canvas Width="128"
-                    Height="{Binding ElementName=ChangesetHistoryGrid, Converter={StaticResource getDataGridContentHeightConverter}}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
+                    Background="Green"
                     x:Name="Graph" />
-        </ScrollViewer>-->
+        </ScrollViewer>
     </Grid>
         
 </UserControl>

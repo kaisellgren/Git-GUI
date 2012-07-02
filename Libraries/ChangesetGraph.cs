@@ -81,6 +81,9 @@ namespace GG.Libraries
 
             // Loop through all commits and draw the graph, in reverse order.
             commitList.MoveCurrentToLast();
+
+            // Clear the existing graph.
+            graph.Children.Clear();
             
             while (true)
             {
