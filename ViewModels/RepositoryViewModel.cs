@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
@@ -10,18 +9,14 @@ using System.Windows.Data;
 using System.Windows.Threading;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
+using GG.UserControls;
 using Microsoft.Win32;
 using GG.Libraries;
 using GG.ViewModels;
 using GG.Models;
 using GG.UserControls.Dialogs;
 using System.Collections;
-<<<<<<< HEAD
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
-=======
->>>>>>> ChangesetHistoryEnhances
 
 namespace GG
 {
@@ -369,7 +364,9 @@ namespace GG
                     LoadEntireRepository();
 
                     // Clear the commit message box.
-                    UIHelper.FindChild<TextBox>(Application.Current.MainWindow, "CommitMessageTextBox").Clear();
+                    Application.Current.Dispatcher.BeginInvoke(
+                        (Action)(() => UIHelper.FindChild<TextBox>(Application.Current.MainWindow, "CommitMessageTextBox").Clear())
+                    );
                 }
             });
         }
@@ -581,6 +578,10 @@ namespace GG
                 {
                     Commits.EnableNotifications(true);
                     Branches.EnableNotifications(true);
+
+                    var tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
+                    var changesetHistory = UIHelper.FindChild<ChangesetHistory>(tabControl);
+                    changesetHistory.RedrawGraph();
                 })
             );
 
