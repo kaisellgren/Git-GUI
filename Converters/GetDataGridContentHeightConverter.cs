@@ -14,8 +14,9 @@ namespace GG.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var dataGrid = (DataGrid) value;
+            var height = dataGrid.ActualHeight - 24;
 
-            return dataGrid.ActualHeight - 24;
+            return height >= 0 ? height : 0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
