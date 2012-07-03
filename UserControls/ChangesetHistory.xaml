@@ -106,7 +106,7 @@
                       Grid.Row="0"
                       Width="128"
                       Height="{Binding ElementName=ChangesetHistoryGrid, Converter={StaticResource getDataGridContentHeightConverter}}"
-                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
                       ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"

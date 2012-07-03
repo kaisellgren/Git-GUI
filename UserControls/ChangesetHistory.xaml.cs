@@ -30,8 +30,6 @@ namespace GG.UserControls
         /// </summary>
         public void RedrawGraph()
         {
-            Console.WriteLine("Redraw!");
-
             // Redraw.
             var changesetGraph = new ChangesetGraph((RepositoryViewModel)DataContext, Graph);
             changesetGraph.Draw(ChangesetHistoryGrid.Items);
@@ -46,7 +44,6 @@ namespace GG.UserControls
         {
             var scrollViewer = UIHelper.FindChild<ScrollViewer>(this, "GraphScrollViewer");
             scrollViewer.ScrollToVerticalOffset(Math.Floor(e.VerticalOffset) * 24);
-            Console.WriteLine(e.ExtentHeight);
         }
     }
 }

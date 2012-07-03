@@ -32,8 +32,8 @@ namespace GG.UserControls
             var repositoryViewModel = repositoryTabs.SelectedItem as RepositoryViewModel;
 
             // Tell repository view model to update status item diff.
-            if (repositoryViewModel is RepositoryViewModel)
-                repositoryViewModel.UpdateStatusItemDiff(StatusGridElement.SelectedItems);
+            //if (repositoryViewModel is RepositoryViewModel)
+                //repositoryViewModel.UpdateStatusItemDiff(StatusGridElement.SelectedItems);
         }
     }
 }

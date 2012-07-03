@@ -30,14 +30,14 @@ namespace GG
         private bool alreadyLoaded;
 
         public EnhancedObservableCollection<Commit> Commits { get; set; }
-        public EnhancedObservableCollection<StatusItem> StatusItems { get; set; }
+        public EnhancedObservableCollection<StatusItem> StatusItemsStaged { get; set; }
+        public EnhancedObservableCollection<StatusItem> StatusItemsUnstaged { get; set; }
         public EnhancedObservableCollection<Branch> Branches { get; set; }
         public EnhancedObservableCollection<Tag> Tags { get; set; }
         public EnhancedObservableCollection<Remote> Remotes { get; set; }
         public EnhancedObservableCollection<Submodule> Submodules { get; set; }
         public EnhancedObservableCollection<Stash> Stashes { get; set; }
         public EnhancedObservableCollection<RecentCommitMessage> RecentCommitMessages { get; private set; }
-        public ListCollectionView StatusItemsGrouped { get; set; }
 
         /// <summary>
         /// The HEAD. This can either be a reference to a DetachedHead or a Branch.
@@ -77,7 +77,8 @@ namespace GG
         {
             // Initialize empty collections.
             Commits = new EnhancedObservableCollection<Commit> { };
-            StatusItems = new EnhancedObservableCollection<StatusItem> { };
+            StatusItemsStaged = new EnhancedObservableCollection<StatusItem> { };
+            StatusItemsUnstaged = new EnhancedObservableCollection<StatusItem> { };
             Branches = new EnhancedObservableCollection<Branch> { };
             Tags = new EnhancedObservableCollection<Tag> { };
             Remotes = new EnhancedObservableCollection<Remote> { };
@@ -87,11 +88,6 @@ namespace GG
 
             CommitsPerPage = 150;
             RecentCommitMessageCount = 10;
-
-            // Initialize status item view and group.
-            StatusItemsGrouped = new ListCollectionView(StatusItems);
-            StatusItemsGrouped.GroupDescriptions.Add(new PropertyGroupDescription("GenericStatus"));
-            StatusItemsGrouped.SortDescriptions.Add(new SortDescription("GenericStatus", ListSortDirection.Descending));
 
             // Initialize commands.
             ExportPatchCommand = new DelegateCommand(ExportPatch);
@@ -380,7 +376,7 @@ namespace GG
             var commitMessage = (string) action;
 
             // Only allow commit if there's something to commit and there's a commit message.
-            if (commitMessage != null && StatusItems.Any(s => s.IsStaged))
+            if (commitMessage != null && StatusItemsStaged.Count > 0)
                 return commitMessage.Length > 0;
 
             return false;
@@ -638,9 +634,11 @@ namespace GG
             }
 
             // A small performance boost.
-            StatusItems.DisableNotifications();
+            StatusItemsStaged.DisableNotifications();
+            StatusItemsUnstaged.DisableNotifications();
 
-            StatusItems.Clear();
+            StatusItemsStaged.Clear();
+            StatusItemsUnstaged.Clear();
 
             // Load status items.
             var itemList = new List<StatusItem>();
@@ -655,6 +653,7 @@ namespace GG
                     if (isSet == false || value.ToString() == "Unaltered" || value.ToString() == "Ignored")
                         continue;
 
+                    // TODO: would it be better without full repo path?
                     var fileFullPath = RepositoryFullPath + "/" + fileStatus.FilePath;
 
                     // Only those enum statuses that were set will generate a row in the status grid (and those that are not ignored/unaltered).
@@ -662,7 +661,7 @@ namespace GG
                     {
                         Filename = fileStatus.FilePath,
                         Status = value,
-                        Size = FileUtil.GetFormattedFileSize(fileFullPath),
+                        Size = FileUtil.GetFormattedFileSize(fileFullPath), // TODO: Should these two file IO be done lazily?
                         IsBinary = FileUtil.IsBinaryFile(fileFullPath) ? "Yes" : "-"
                     };
 
@@ -670,7 +669,8 @@ namespace GG
                 }
             }
 
-            StatusItems.AddRange(itemList);
+            StatusItemsStaged.AddRange(itemList.Where(s => s.IsStaged));
+            StatusItemsUnstaged.AddRange(itemList.Where(s => !s.IsStaged));
 
             if (dispose)
                 repo.Dispose();
@@ -678,7 +678,13 @@ namespace GG
             // Fire notifications for the collection on the UI thread.
             Application.Current.Dispatcher.Invoke(
                 DispatcherPriority.Normal,
-                (Action) (() => StatusItems.EnableNotifications(true))
+                (Action)(
+                    () =>
+                    {
+                        StatusItemsStaged.EnableNotifications(true);
+                        StatusItemsUnstaged.EnableNotifications(true);
+                    }
+                )
             );
         }
 
