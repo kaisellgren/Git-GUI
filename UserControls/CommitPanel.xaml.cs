@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using GG.Libraries;
+using GG.Models;
 
 namespace GG.UserControls
 {
@@ -22,6 +13,34 @@ namespace GG.UserControls
         public CommitPanel()
         {
             InitializeComponent();
+        }
+
+        private void TextBoxLoaded(object sender, RoutedEventArgs e)
+        {
+            ((TextBox) sender).Name = "CommitMessageTextBox";
+        }
+
+        private void OnRecentCommitMessagesSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Retrieve elements.
+            var recentCommitMessages = UIHelper.FindChild<ComboBox>(this, "RecentCommitMessages");
+            var commitMessageBox = UIHelper.FindChild<TextBox>(this, "CommitMessageTextBox");
+
+            var selectedRecentCommitMessage = recentCommitMessages.SelectedItem as RecentCommitMessage;
+
+            if (selectedRecentCommitMessage == null)
+                return;
+
+            // Set the commit text box value.
+            commitMessageBox.Text = selectedRecentCommitMessage.FullMessage;
+
+            // Reset the drop down menu.
+            recentCommitMessages.SelectedIndex = -1;
+        }
+
+        private void ComboBoxLoaded(object sender, RoutedEventArgs e)
+        {
+            ((ComboBox) sender).Name = "RecentCommitMessages";
         }
     }
 }

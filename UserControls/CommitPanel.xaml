@@ -3,20 +3,74 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:GG.UserControls"
+             xmlns:userControls="clr-namespace:GG.UserControls"
+             xmlns:converters="clr-namespace:GG.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="640">
+    
+    <UserControl.Resources>
+        <converters:NullToVisibilityConverter x:Key="nullToVisibilityConverter" />
+        
+        <DataTemplate x:Key="Test">
+            <TextBlock x:Name="FooBarBaz">Foo bar baz</TextBlock>
+        </DataTemplate>
+    </UserControl.Resources>
+    
     <DockPanel>
-        <!-- TODO: Panel should be a reusable component... I've only made the title to be reusable, the rest is hard-coded as Commit Panel stuff in Panel XAML... move it in here...  -->
-        <controls:Panel>
-            <controls:Panel.Header>
+        <userControls:Panel Header="{StaticResource Test}">
+            <!--<userControls:Panel.Header>
                 <WrapPanel>
                     <TextBlock Text="Parent: (" />
                     <TextBlock Text="{Binding Head.Tip.HashShort}" />
                     <TextBlock Text=") " />
                     <TextBlock Text="{Binding Head.Tip.ShortDescription}" />
                 </WrapPanel>
-            </controls:Panel.Header>
-        </controls:Panel>
+            </userControls:Panel.Header>-->
+            
+            <userControls:Panel.HeaderButtons>
+                <WrapPanel HorizontalAlignment="Right">
+                    <Grid>
+                        <ComboBox ToolTip="Copy a previous commit message. The entire message will be copied."
+                                  ItemsSource="{Binding RecentCommitMessages}"
+                                  DisplayMemberPath="CroppedMessage"
+                                  Loaded="ComboBoxLoaded"
+                                  SelectionChanged="OnRecentCommitMessagesSelectionChanged"
+                                  Width="135" Margin="0,4,4,4">
+                        </ComboBox>
+                        <WrapPanel Margin="8,9,0,0" Visibility="{Binding SelectedItem, ElementName=RecentCommitMessages, Converter={StaticResource nullToVisibilityConverter}}">
+                            <Image Source="../Resources/Icons/MessageWrite.png" Stretch="None" Margin="0,0,4,0" />
+                            <TextBlock IsHitTestVisible="False" Text="Copy a message" Foreground="#333" />
+                        </WrapPanel>
+                    </Grid>
+                    <Button Margin="0,3,3,3" Command="{Binding CommitCommand}" CommandParameter="{Binding Text, ElementName=CommitMessageTextBox}">
+                        <WrapPanel>
+                            <Image Source="../Resources/Icons/RepositoryWrite.png" Width="16" Margin="0,0,4,0" />
+                            <TextBlock>Commit</TextBlock>
+                        </WrapPanel>
+                    </Button>
+                </WrapPanel>
+            </userControls:Panel.HeaderButtons>
+            
+            <userControls:Panel.Body>
+                <StackPanel Margin="4">
+                    <TextBox Loaded="TextBoxLoaded"
+                             ToolTip="Enter your commit message."
+                             FontSize="12"
+                             FontFamily="Courier New"
+                             Height="38pt">
+                        
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter"
+                                        Modifiers="Control"
+                                        Command="{Binding CommitCommand}"
+                                        CommandParameter="{Binding Text, ElementName=CommitMessageTextBox}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    
+                    <userControls:DiffPanel DockPanel.Dock="Bottom" Margin="0,4,0,0" />
+                </StackPanel>
+            </userControls:Panel.Body>
+            
+        </userControls:Panel>
     </DockPanel>
 </UserControl>

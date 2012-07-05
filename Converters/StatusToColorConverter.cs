@@ -27,10 +27,10 @@ namespace GG.Converters
             if (value == null)
                 return COLOR_RED;
 
-            LibGit2Sharp.FileStatus status = (LibGit2Sharp.FileStatus) value;
+            var status = (LibGit2Sharp.FileStatus) value;
 
             // Whether to use darker colors (for text).
-            bool darkerColors = (string) parameter == "dark";
+            var darkerColors = (string) parameter == "dark";
 
             // Removed & Missing = red.
             if (status.HasFlag(LibGit2Sharp.FileStatus.Removed) || status.HasFlag(LibGit2Sharp.FileStatus.Missing))
@@ -48,7 +48,7 @@ namespace GG.Converters
             if (status.HasFlag(LibGit2Sharp.FileStatus.Untracked))
                 return darkerColors ? COLOR_DARK_GRAY : COLOR_GRAY;
 
-            throw new Exception("Could not convert status " + status.ToString() + " to a SolidColorBrush!");
+            throw new Exception("Could not convert status " + status + " to a SolidColorBrush!");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

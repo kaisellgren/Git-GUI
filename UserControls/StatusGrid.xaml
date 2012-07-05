@@ -11,7 +11,7 @@
         <converters:StatusToColorConverter x:Key="statusToColorConverter" />
         <converters:StatusToCharacterConverter x:Key="statusToCharacterConverter" />
         <converters:ExtensionToImageConverter x:Key="extensionToImageConverter" />
-        <converters:StatusGridGroupToColorConverter x:Key="statusGridGroupToColorConverter" />
+        <converters:GenericVisibilityConverter x:Key="genericVisibilityConverter" />
         <userControls:StatusGridContextMenu x:Key="statusGridContextMenu" />
         
         <!-- Status template. -->
@@ -19,17 +19,17 @@
             <WrapPanel HorizontalAlignment="Center">
                 <Border BorderThickness="0" CornerRadius="4" Background="{Binding Path=Status, Converter={StaticResource statusToColorConverter}}">
                     <TextBlock
-                                        Width="16"
-                                        VerticalAlignment="Stretch"
-                                        HorizontalAlignment="Center"
-                                        TextAlignment="Center"
-                                        Foreground="White"
-                                        FontFamily="Arial"
-                                        FontSize="12"
-                                        FontWeight="Bold"
-                                        TextOptions.TextFormattingMode="Display"
-                                        TextOptions.TextRenderingMode="ClearType"
-                                        Text="{Binding Status, Converter={StaticResource statusToCharacterConverter}}" />
+                        Width="16"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Center"
+                        TextAlignment="Center"
+                        Foreground="White"
+                        FontFamily="Arial"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        TextOptions.TextFormattingMode="Display"
+                        TextOptions.TextRenderingMode="ClearType"
+                        Text="{Binding Status, Converter={StaticResource statusToCharacterConverter}}" />
                 </Border>
             </WrapPanel>
         </ItemContainerTemplate>
@@ -39,7 +39,7 @@
             <WrapPanel>
                 <Image Source="{Binding Extension, Converter={StaticResource extensionToImageConverter}}" Stretch="None" Margin="0,0,3,0" />
                 <TextBlock Text="{Binding Path=Filename}"
-                                           Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
+                           Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
             </WrapPanel>
         </ItemContainerTemplate>
         
@@ -60,92 +60,100 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="*" MinHeight="72" />
+            <RowDefinition Height="6" />
+            <RowDefinition Height="*" MinHeight="72" />
         </Grid.RowDefinitions>
         
-        <DataGrid Grid.Row="0"
-                  ItemsSource="{Binding StatusItemsStaged}"
-                  SelectionChanged="StatusGridElement_SelectionChanged"
-                  Tag="{Binding}">
-            <DataGrid.InputBindings>
-                <KeyBinding Command="{Binding StageUnstageCommand}"
-                            CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                            Gesture="Enter" />
-                <KeyBinding Command="{Binding StageUnstageCommand}"
-                            CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                            Gesture="Delete" />
-            </DataGrid.InputBindings>
+        <userControls:Panel Grid.Row="0">
+            <userControls:Panel.Header>
+                <WrapPanel Margin="0,4,0,4">
+                    <TextBlock>Staged</TextBlock>
+                    <TextBlock xml:space="preserve">: </TextBlock>
+                    <TextBlock Text="{Binding StatusItemsStaged.Count}" />
+                </WrapPanel>
+            </userControls:Panel.Header>
+            <userControls:Panel.Body>
+                <Grid>
+                    <TextBlock Margin="8"
+                               Foreground="#222"
+                               Visibility="{Binding StatusItemsStaged.Count, Converter={StaticResource genericVisibilityConverter}, ConverterParameter=not}">Nothing to commit.</TextBlock>
+                    
+                    <DataGrid 
+                              ItemsSource="{Binding StatusItemsStaged}"
+                              SelectionChanged="StatusGridSelectionChanged"
+                              BorderThickness="0"
+                              Visibility="{Binding StatusItemsStaged.Count, Converter={StaticResource genericVisibilityConverter}}"
+                              Tag="{Binding}">
+                        <DataGrid.InputBindings>
+                            <KeyBinding Command="{Binding StageUnstageCommand}"
+                                        CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        Gesture="Enter" />
+                            <KeyBinding Command="{Binding StageUnstageCommand}"
+                                        CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        Gesture="Delete" />
+                        </DataGrid.InputBindings>
             
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="St" CellTemplate="{StaticResource StatusGridStatusTemplate}" />
-                <DataGridTemplateColumn Header="Filename" Width="*" CellTemplate="{StaticResource StatusGridFilenameTemplate}" />
-                <DataGridTextColumn Binding="{Binding Path=Size}"
-                                    Header="Size"
-                                    Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
-                <DataGridTextColumn Binding="{Binding Path=IsBinary}"
-                                    Header="Binary"
-                                    Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
-            </DataGrid.Columns>
-        </DataGrid>
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="St" CellTemplate="{StaticResource StatusGridStatusTemplate}" />
+                            <DataGridTemplateColumn Header="Filename" Width="*" CellTemplate="{StaticResource StatusGridFilenameTemplate}" />
+                            <DataGridTextColumn Binding="{Binding Path=Size}"
+                                                Header="Size"
+                                                Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
+                            <DataGridTextColumn Binding="{Binding Path=IsBinary}"
+                                                Header="Binary"
+                                                Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </userControls:Panel.Body>
+        </userControls:Panel>
         
-        <DataGrid Grid.Row="1"
-                  ItemsSource="{Binding StatusItemsUnstaged}"
-                  SelectionChanged="StatusGridElement_SelectionChanged"
-                  Tag="{Binding}">
-            <DataGrid.InputBindings>
-                <KeyBinding Command="{Binding StageUnstageCommand}"
-                            CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                            Gesture="Enter" />
-                <KeyBinding Command="{Binding StageUnstageCommand}"
-                            CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                            Gesture="Delete" />
-            </DataGrid.InputBindings>
+        <GridSplitter Grid.Row="1" Style="{StaticResource GridSplitterVerticalStyle}" />
+        
+        <userControls:Panel Grid.Row="2">
+            <userControls:Panel.Header>
+                <WrapPanel Margin="0,4,0,4">
+                    <TextBlock>Unstaged</TextBlock>
+                    <TextBlock xml:space="preserve">: </TextBlock>
+                    <TextBlock Text="{Binding StatusItemsUnstaged.Count}" />
+                </WrapPanel>
+            </userControls:Panel.Header>
+            <userControls:Panel.Body>
 
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="St" CellTemplate="{StaticResource StatusGridStatusTemplate}" />
-                <DataGridTemplateColumn Header="Filename" Width="*" CellTemplate="{StaticResource StatusGridFilenameTemplate}" />
-                <DataGridTextColumn Binding="{Binding Path=Size}"
-                                    Header="Size"
-                                    Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
-                <DataGridTextColumn Binding="{Binding Path=IsBinary}"
-                                    Header="Binary"
-                                    Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <Grid>
+                    <TextBlock Margin="8"
+                               Foreground="#222"
+                               Visibility="{Binding StatusItemsUnstaged.Count, Converter={StaticResource genericVisibilityConverter}, ConverterParameter=not}">Nothing to stage.</TextBlock>
+
+                    <DataGrid 
+                              ItemsSource="{Binding StatusItemsUnstaged}"
+                              SelectionChanged="StatusGridSelectionChanged"
+                              BorderThickness="0"
+                              Visibility="{Binding StatusItemsUnstaged.Count, Converter={StaticResource genericVisibilityConverter}}"
+                              Tag="{Binding}">
+                        <DataGrid.InputBindings>
+                            <KeyBinding Command="{Binding StageUnstageCommand}"
+                                        CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        Gesture="Enter" />
+                            <KeyBinding Command="{Binding StageUnstageCommand}"
+                                        CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        Gesture="Delete" />
+                        </DataGrid.InputBindings>
+
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="St" CellTemplate="{StaticResource StatusGridStatusTemplate}" />
+                            <DataGridTemplateColumn Header="Filename" Width="*" CellTemplate="{StaticResource StatusGridFilenameTemplate}" />
+                            <DataGridTextColumn Binding="{Binding Path=Size}"
+                                                Header="Size"
+                                                Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
+                            <DataGridTextColumn Binding="{Binding Path=IsBinary}"
+                                                Header="Binary"
+                                                Foreground="{Binding Path=Status, Converter={StaticResource statusToColorConverter}, ConverterParameter=dark}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </userControls:Panel.Body>
+        </userControls:Panel>
     </Grid>
 </UserControl>
-<!--<DataGrid.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Name}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <StackPanel>
-                                            <Border BorderBrush="#aaa" BorderThickness="0,1,0,1">
-                                                <Grid Style="{StaticResource DataGridGroupItemStyle}">
-                                                    <StackPanel Orientation="Horizontal" Margin="4,3,0,3">
-                                                        <TextBlock Text="{Binding Name}" Foreground="{Binding Path=Name, Converter={StaticResource statusGridGroupToColorConverter}}" />
-                                                        <TextBlock xml:space="preserve" Foreground="{Binding Path=Name, Converter={StaticResource statusGridGroupToColorConverter}}">: </TextBlock>
-                                                        <TextBlock Text="{Binding ItemCount}" Foreground="{Binding Path=Name, Converter={StaticResource statusGridGroupToColorConverter}}" />
-                                                    </StackPanel>
-                                                </Grid>
-                                            </Border>
-                                            
-                                            <ItemsPresenter />
-                                        </StackPanel>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </GroupStyle.ContainerStyle>
-                </GroupStyle>
-            </DataGrid.GroupStyle>-->

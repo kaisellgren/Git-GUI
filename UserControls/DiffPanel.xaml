@@ -8,7 +8,6 @@
 
     <TextBox HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
-             Margin="4"
              Padding="4,6"
              Background="White"
              BorderThickness="0"

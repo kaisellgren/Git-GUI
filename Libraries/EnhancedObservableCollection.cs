@@ -63,6 +63,14 @@ namespace GG.Libraries
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
+        /// <summary>
+        /// Returns true if the collection is empty.
+        /// </summary>
+        public bool IsEmpty
+        {
+            get { return Count == 0; }
+        }
+
         /// <summary> 
         /// Initializes a new instance of the System.Collections.ObjectModel.ObservableCollection(Of T) class. 
         /// </summary> 

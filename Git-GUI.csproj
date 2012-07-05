@@ -156,8 +156,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\GenericVisibilityConverter.cs" />
     <Compile Include="Converters\GetDataGridContentHeightConverter.cs" />
     <Compile Include="Libraries\Observable.cs" />
+    <Compile Include="UserControls\CenterArea.xaml.cs">
+      <DependentUpon>CenterArea.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Dialogs\ConfirmDialog.xaml.cs">
       <DependentUpon>ConfirmDialog.xaml</DependentUpon>
     </Compile>
@@ -239,6 +243,10 @@
     <Page Include="Styles\ChangesetHistoryDataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\CenterArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Dialogs\ConfirmDialog.xaml">
       <SubType>Designer</SubType>

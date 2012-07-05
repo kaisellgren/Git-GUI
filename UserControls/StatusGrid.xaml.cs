@@ -25,15 +25,16 @@ namespace GG.UserControls
             InitializeComponent();
         }
 
-        private void StatusGridElement_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void StatusGridSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Retrieve repository view model.
             var repositoryTabs = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
             var repositoryViewModel = repositoryTabs.SelectedItem as RepositoryViewModel;
+            var dataGrid = (DataGrid) sender;
 
             // Tell repository view model to update status item diff.
-            //if (repositoryViewModel is RepositoryViewModel)
-                //repositoryViewModel.UpdateStatusItemDiff(StatusGridElement.SelectedItems);
+            if (repositoryViewModel != null)
+                repositoryViewModel.UpdateStatusItemDiff(dataGrid.SelectedItems);
         }
     }
 }
