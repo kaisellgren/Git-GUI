@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="GG.UserControls.CenterArea"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:GG.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="412" d:DesignWidth="859">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Name="ChangesetHistoryRowDefinition" />
+            <RowDefinition Height="6" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <controls:ChangesetHistory Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="ChangesetHistoryElement" />
+
+        <GridSplitter Grid.Row="1" Style="{StaticResource GridSplitterVerticalStyle}" DragCompleted="GridSplitterDragCompleted" />
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <controls:StatusGrid Grid.Column="0" HorizontalAlignment="Stretch" />
+            <GridSplitter Grid.Column="1" Style="{StaticResource GridSplitterHorizontalStyle}" />
+            <controls:CommitPanel Grid.Column="2" HorizontalAlignment="Stretch" />
+        </Grid>
+    </Grid>
+</UserControl>

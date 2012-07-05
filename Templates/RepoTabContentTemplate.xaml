@@ -9,29 +9,7 @@
             <controls:TopToolbar DockPanel.Dock="Top" />
 
             <controls:LeftToolbar DockPanel.Dock="Left" VerticalAlignment="Stretch" />
-            <Grid DockPanel.Dock="Right">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="6" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-
-                <controls:ChangesetHistory Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                
-                <GridSplitter Grid.Row="1" Style="{StaticResource GridSplitterVerticalStyle}" />
-                
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="6" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <controls:StatusGrid Grid.Column="0" HorizontalAlignment="Stretch" />
-                    <GridSplitter Grid.Column="1" Style="{StaticResource GridSplitterHorizontalStyle}" />
-                    <controls:CommitPanel Grid.Column="2" HorizontalAlignment="Stretch" />
-                </Grid>
-            </Grid>
+            <controls:CenterArea DockPanel.Dock="Right" />
         </DockPanel>
     </DataTemplate>
     
