@@ -33,6 +33,7 @@ namespace GG.UserControls
 
             // Set the commit text box value.
             commitMessageBox.Text = selectedRecentCommitMessage.FullMessage;
+            commitMessageBox.Focus();
 
             // Reset the drop down menu.
             recentCommitMessages.SelectedIndex = -1;
