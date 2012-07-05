@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Windows;
 using GG.UserControls.Dialogs;
 
@@ -34,7 +30,9 @@ namespace GG
             {
                 Title = "Error occured",
                 Message = unhandledExceptionEventArgs.ExceptionObject.ToString(),
-                ButtonSet = ConfirmDialog.ButtonsSet.OK
+                ButtonSet = ConfirmDialog.ButtonsSet.OK,
+                MaxHeight = 640,
+                MaxWidth = 800
             };
 
             dialog.ShowDialog();
