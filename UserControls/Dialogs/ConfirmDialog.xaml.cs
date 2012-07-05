@@ -21,6 +21,8 @@ namespace GG.UserControls.Dialogs
             /// The OK-Cancel button set.
             /// </summary>
             public const int OK_CANCEL = 1;
+
+            public const int OK = 2;
         };
 
         public ConfirmDialog() : base()
@@ -36,10 +38,7 @@ namespace GG.UserControls.Dialogs
 
             Application.Current.Dispatcher.BeginInvoke(
                 DispatcherPriority.Loaded,
-                new Action(() =>
-                {
-                    InvalidateVisual();
-                })
+                (Action) (InvalidateVisual)
             );
 
             DataContext = this;
@@ -82,6 +81,19 @@ namespace GG.UserControls.Dialogs
         {
             set
             {
+                if (value == ButtonsSet.OK)
+                {
+                    Buttons = new ObservableCollection<Button>
+                    {
+                        new Button
+                        {
+                            Content = "OK",
+                            IsDefault = true,
+                            IsCancel = true
+                        }
+                    };
+                }
+
                 if (value == ButtonsSet.OK_CANCEL)
                 {
                     Buttons = new ObservableCollection<Button>

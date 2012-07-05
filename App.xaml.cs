@@ -23,17 +23,18 @@ namespace GG
             base.MainWindow = mainWindow;
 
             // Set up a global exception handler.
-            //AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
             mainWindow.Show();
         }
 
         private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
         {
-            var dialog = new PromptDialog
+            var dialog = new ConfirmDialog
             {
                 Title = "Error occured",
-                Message = unhandledExceptionEventArgs.ExceptionObject.ToString()
+                Message = unhandledExceptionEventArgs.ExceptionObject.ToString(),
+                ButtonSet = ConfirmDialog.ButtonsSet.OK
             };
 
             dialog.ShowDialog();
