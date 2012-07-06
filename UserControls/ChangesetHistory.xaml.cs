@@ -2,14 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using GG.Libraries;
-using GG.Models;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace GG.UserControls
 {
@@ -30,11 +23,11 @@ namespace GG.UserControls
         /// </summary>
         public void RedrawGraph()
         {
-            // Redraw.
-            var changesetGraph = new ChangesetGraph((RepositoryViewModel)DataContext, Graph);
+            // Redraw the graph.
+            var changesetGraph = new ChangesetGraph((RepositoryViewModel) DataContext, Graph);
             changesetGraph.Draw(ChangesetHistoryGrid.Items);
 
-            // Set the height for the Graph element.
+            // Update the height for the Graph element.
             Graph.Height = changesetGraph.TotalHeight;
 
             // TODO: Set width also, and for the datagrid as well!
@@ -44,6 +37,9 @@ namespace GG.UserControls
         {
             var scrollViewer = UIHelper.FindChild<ScrollViewer>(this, "GraphScrollViewer");
             scrollViewer.ScrollToVerticalOffset(Math.Floor(e.VerticalOffset) * 24);
+
+            var dataGrid = UIHelper.FindChild<DataGrid>(this, "ChangesetHistoryGrid");
+            scrollViewer.Height = Math.Abs(dataGrid.ActualHeight - 24);
         }
     }
 }
