@@ -39,10 +39,21 @@ namespace GG
         public EnhancedObservableCollection<Stash> Stashes { get; set; }
         public EnhancedObservableCollection<RecentCommitMessage> RecentCommitMessages { get; private set; }
 
+        private Branch head;
+
         /// <summary>
         /// The HEAD. This can either be a reference to a DetachedHead or a Branch.
         /// </summary>
-        public Branch Head { get; set; }
+        public Branch Head
+        {
+            get { return head; }
+
+            set
+            {
+                head = value;
+                RaisePropertyChanged("Head");
+            }
+        }
 
         public int CommitsPerPage { get; set; }
         public int RecentCommitMessageCount { get; set; }
@@ -413,14 +424,14 @@ namespace GG
 
                     if (!item.Status.HasFlag(LibGit2Sharp.FileStatus.Untracked))
                     {
-                        if (!(repo is LibGit2Sharp.Repository))
+                        if (repo == null)
                             repo = new LibGit2Sharp.Repository(RepositoryFullPath);
 
                         repo.Index.Unstage(RepositoryFullPath + "/" + item.Filename);
                     }
                 }
 
-                if (repo is LibGit2Sharp.Repository)
+                if (repo != null)
                     repo.Dispose();
             }
         }
