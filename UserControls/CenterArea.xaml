@@ -8,7 +8,7 @@
              d:DesignHeight="412" d:DesignWidth="859">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Name="ChangesetHistoryRowDefinition" />
+            <RowDefinition Name="ChangesetHistoryRowDefinition" Height="264" />
             <RowDefinition Height="6" />
             <RowDefinition />
         </Grid.RowDefinitions>

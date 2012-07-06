@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using GG.Libraries;
 
 namespace GG.UserControls
 {
@@ -15,6 +17,11 @@ namespace GG.UserControls
         }
 
         private void GridSplitterDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            MakeGridSplitterToSnapToGrid();
+        }
+
+        private void MakeGridSplitterToSnapToGrid()
         {
             // We want the grid splitter to snap in grid of 24 units.
             var excess = (int) ChangesetHistoryRowDefinition.Height.Value % 24;

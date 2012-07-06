@@ -14,7 +14,6 @@
         <userControls:ChangesetHistoryContextMenu x:Key="changesetHistoryContextMenu" />
         <converters:IsHeadToFontWeightConverter x:Key="isHeadToFontWeightConverter" />
         <converters:IsHeadToTextDecorationsConverter x:Key="isHeadToTextDecorationsConverter" />
-        <converters:GetDataGridContentHeightConverter x:Key="getDataGridContentHeightConverter" />
     </UserControl.Resources>
     
     <Grid x:Name="ChangesetHistoryContainer">
