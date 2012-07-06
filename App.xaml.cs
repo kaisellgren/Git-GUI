@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using GG.UserControls.Dialogs;
 
 namespace GG
 {
@@ -9,6 +8,14 @@ namespace GG
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            #if !DEBUG
+            AppDomain.CurrentDomain.UnhandledException += NBug.Handler.UnhandledException;
+            Application.Current.DispatcherUnhandledException += NBug.Handler.DispatcherUnhandledException;
+            #endif
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             var mainWindow = new MainWindow
@@ -18,26 +25,7 @@ namespace GG
 
             base.MainWindow = mainWindow;
 
-            // Set up a global exception handler.
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
-
             mainWindow.Show();
-        }
-
-        private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
-        {
-            var dialog = new ConfirmDialog
-            {
-                Title = "Error occured",
-                Message = unhandledExceptionEventArgs.ExceptionObject.ToString(),
-                ButtonSet = ConfirmDialog.ButtonsSet.OK,
-                MaxHeight = 640,
-                MaxWidth = 800
-            };
-
-            dialog.ShowDialog();
-
-            Environment.Exit(1);
         }
     }
 }

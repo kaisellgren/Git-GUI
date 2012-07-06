@@ -90,7 +90,7 @@ namespace GG.UserControls
             dialog.ShowDialog();
 
             // Open the selected folder if possible.
-            if (dialog.SelectedPath != null && dialog.SelectedPath.Length > 0)
+            if (!string.IsNullOrEmpty(dialog.SelectedPath))
             {
                 LibGit2Sharp.Repository.Init(dialog.SelectedPath).Dispose();
 
