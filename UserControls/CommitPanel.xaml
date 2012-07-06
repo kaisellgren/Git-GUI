@@ -48,12 +48,15 @@
             </userControls:Panel.HeaderButtons>
             
             <userControls:Panel.Body>
-                <StackPanel Margin="4">
+                <DockPanel Margin="4" VerticalAlignment="Stretch">
                     <TextBox Loaded="TextBoxLoaded"
                              ToolTip="Enter your commit message."
                              FontSize="12"
                              FontFamily="Courier New"
-                             Height="38pt">
+                             DockPanel.Dock="Top"
+                             LostFocus="CommitMessageLostFocus"
+                             GotFocus="CommitMessageGotFocus"
+                             Height="51">
                         
                         <TextBox.InputBindings>
                             <KeyBinding Key="Enter"
@@ -64,7 +67,7 @@
                     </TextBox>
                     
                     <userControls:DiffPanel DockPanel.Dock="Bottom" Margin="0,4,0,0" />
-                </StackPanel>
+                </DockPanel>
             </userControls:Panel.Body>
             
         </userControls:Panel>

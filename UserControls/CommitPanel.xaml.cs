@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using GG.Libraries;
 using GG.Models;
@@ -42,6 +43,16 @@ namespace GG.UserControls
         private void ComboBoxLoaded(object sender, RoutedEventArgs e)
         {
             ((ComboBox) sender).Name = "RecentCommitMessages";
+        }
+
+        private void CommitMessageLostFocus(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void CommitMessageGotFocus(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
