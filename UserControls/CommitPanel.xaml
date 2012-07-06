@@ -10,22 +10,18 @@
     
     <UserControl.Resources>
         <converters:NullToVisibilityConverter x:Key="nullToVisibilityConverter" />
-        
-        <DataTemplate x:Key="Test">
-            <TextBlock x:Name="FooBarBaz">Foo bar baz</TextBlock>
-        </DataTemplate>
     </UserControl.Resources>
     
     <DockPanel>
-        <userControls:Panel Header="{StaticResource Test}">
-            <!--<userControls:Panel.Header>
+        <userControls:Panel>
+            <userControls:Panel.Header>
                 <WrapPanel>
                     <TextBlock Text="Parent: (" />
                     <TextBlock Text="{Binding Head.Tip.HashShort}" />
                     <TextBlock Text=") " />
                     <TextBlock Text="{Binding Head.Tip.ShortDescription}" />
                 </WrapPanel>
-            </userControls:Panel.Header>-->
+            </userControls:Panel.Header>
             
             <userControls:Panel.HeaderButtons>
                 <WrapPanel HorizontalAlignment="Right">
