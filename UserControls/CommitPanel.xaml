@@ -4,13 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:userControls="clr-namespace:GG.UserControls"
-             xmlns:converters="clr-namespace:GG.Converters"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             Loaded="CommitPanelLoaded"
              d:DesignHeight="480" d:DesignWidth="640">
-    
-    <UserControl.Resources>
-        <converters:NullToVisibilityConverter x:Key="nullToVisibilityConverter" />
-    </UserControl.Resources>
     
     <DockPanel>
         <userControls:Panel>
@@ -29,16 +25,16 @@
                         <ComboBox ToolTip="Copy a previous commit message. The entire message will be copied."
                                   ItemsSource="{Binding RecentCommitMessages}"
                                   DisplayMemberPath="CroppedMessage"
-                                  Loaded="ComboBoxLoaded"
+                                  Initialized="ComboBoxInitialized"
                                   SelectionChanged="OnRecentCommitMessagesSelectionChanged"
                                   Width="135" Margin="0,4,4,4">
                         </ComboBox>
-                        <WrapPanel Margin="8,9,0,0" Visibility="{Binding SelectedItem, ElementName=RecentCommitMessages, Converter={StaticResource nullToVisibilityConverter}}">
+                        <WrapPanel Margin="8,9,0,0" Visibility="Visible">
                             <Image Source="../Resources/Icons/MessageWrite.png" Stretch="None" Margin="0,0,4,0" />
                             <TextBlock IsHitTestVisible="False" Text="Copy a message" Foreground="#333" />
                         </WrapPanel>
                     </Grid>
-                    <Button Margin="0,3,3,3" Command="{Binding CommitCommand}" CommandParameter="{Binding Text, ElementName=CommitMessageTextBox}">
+                    <Button Initialized="ButtonInitialized" Margin="0,3,3,3">
                         <WrapPanel>
                             <Image Source="../Resources/Icons/RepositoryWrite.png" Width="16" Margin="0,0,4,0" />
                             <TextBlock>Commit</TextBlock>
@@ -49,22 +45,15 @@
             
             <userControls:Panel.Body>
                 <DockPanel Margin="4" VerticalAlignment="Stretch">
-                    <TextBox Loaded="TextBoxLoaded"
+                    <TextBox
                              ToolTip="Enter your commit message."
                              FontSize="12"
                              FontFamily="Courier New"
                              DockPanel.Dock="Top"
+                             Initialized="TextBoxInitialized"
                              LostFocus="CommitMessageLostFocus"
                              GotFocus="CommitMessageGotFocus"
-                             Height="51">
-                        
-                        <TextBox.InputBindings>
-                            <KeyBinding Key="Enter"
-                                        Modifiers="Control"
-                                        Command="{Binding CommitCommand}"
-                                        CommandParameter="{Binding Text, ElementName=CommitMessageTextBox}" />
-                        </TextBox.InputBindings>
-                    </TextBox>
+                             Height="51" />
                     
                     <userControls:DiffPanel DockPanel.Dock="Bottom" Margin="0,4,0,0" />
                 </DockPanel>

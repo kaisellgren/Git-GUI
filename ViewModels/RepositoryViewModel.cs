@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Threading;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
@@ -359,7 +357,7 @@ namespace GG
         /// <param name="action"></param>
         private void CommitChanges(object action)
         {
-            var commitMessage = (string) action;
+            var commitMessage = ((TextBox) action).Text;
 
             Task.Run(() =>
             {
@@ -384,7 +382,12 @@ namespace GG
         /// <param name="action"></param>
         private bool CommitChanges_CanExecute(object action)
         {
-            var commitMessage = (string) action;
+            var textBox = ((TextBox) action);
+
+            if (textBox == null)
+                return false;
+
+            var commitMessage = textBox.Text;
 
             // Only allow commit if there's something to commit and there's a commit message.
             if (commitMessage != null && StatusItemsStaged.Count > 0)
@@ -727,7 +730,7 @@ namespace GG
         /// <param name="collection"> </param>
         public void UpdateStatusItemDiff(IList collection)
         {
-            if (NotOpened == true)
+            if (NotOpened)
                 return;
 
             var diff = "";

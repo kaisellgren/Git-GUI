@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 using GG.Libraries;
 using GG.Models;
 
@@ -14,11 +16,6 @@ namespace GG.UserControls
         public CommitPanel()
         {
             InitializeComponent();
-        }
-
-        private void TextBoxLoaded(object sender, RoutedEventArgs e)
-        {
-            ((TextBox) sender).Name = "CommitMessageTextBox";
         }
 
         private void OnRecentCommitMessagesSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -40,11 +37,6 @@ namespace GG.UserControls
             recentCommitMessages.SelectedIndex = -1;
         }
 
-        private void ComboBoxLoaded(object sender, RoutedEventArgs e)
-        {
-            ((ComboBox) sender).Name = "RecentCommitMessages";
-        }
-
         private void CommitMessageLostFocus(object sender, RoutedEventArgs e)
         {
             
@@ -54,5 +46,44 @@ namespace GG.UserControls
         {
 
         }
+
+        private void CommitPanelLoaded(object sender, RoutedEventArgs e)
+        {
+            // Find elements.
+            var commitButton = UIHelper.FindChild<Button>(this, "CommitButton");
+            var commitMessageBox = UIHelper.FindChild<TextBox>(this, "CommitMessageTextBox");
+
+            // Set up bindings for commit button.
+            commitButton.Command = ((RepositoryViewModel) DataContext).CommitCommand;
+            commitButton.CommandParameter = commitMessageBox;
+
+            // Set up bindings for commit text box.
+            commitMessageBox.InputBindings.Add(new KeyBinding
+            {
+                Key = Key.Enter,
+                Modifiers = ModifierKeys.Control,
+                Command = ((RepositoryViewModel) DataContext).CommitCommand,
+                CommandParameter = commitMessageBox
+            });
+        }
+
+        #region Names.
+
+        private void ComboBoxInitialized(object sender, EventArgs e)
+        {
+            ((ComboBox) sender).Name = "RecentCommitMessages";
+        }
+
+        private void TextBoxInitialized(object sender, EventArgs e)
+        {
+            ((TextBox) sender).Name = "CommitMessageTextBox";
+        }
+
+        private void ButtonInitialized(object sender, EventArgs e)
+        {
+            ((Button) sender).Name = "CommitButton";
+        }
+
+        #endregion
     }
 }
