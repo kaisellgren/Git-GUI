@@ -16,14 +16,14 @@ namespace GG
         public Configuration Config { get; private set; }
 
         public ObservableCollection<RepositoryViewModel> RecentRepositories { get; set; }
-        private ObservableCollection<RepositoryViewModel> repositoryViewModels;
-        public ObservableCollection<RepositoryViewModel> RepositoryViewModels
+        private EnhancedObservableCollection<RepositoryViewModel> repositoryViewModels;
+        public EnhancedObservableCollection<RepositoryViewModel> RepositoryViewModels
         {
             get
             {
                 if (repositoryViewModels == null)
                 {
-                    repositoryViewModels = new ObservableCollection<RepositoryViewModel>();
+                    repositoryViewModels = new EnhancedObservableCollection<RepositoryViewModel>();
                     var itemsView = (IEditableCollectionView) CollectionViewSource.GetDefaultView(repositoryViewModels);
                     itemsView.NewItemPlaceholderPosition = NewItemPlaceholderPosition.AtEnd;
                 }
@@ -44,27 +44,44 @@ namespace GG
 
         private void RepositoryViewModelsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            if (notifyCollectionChangedEventArgs.NewItems == null)
-                return;
-
-            // Update the configuration "recent repositories".
-            // Basically, remove existing and prepend again, to make sure they appear on "top".
-            foreach (RepositoryViewModel item in notifyCollectionChangedEventArgs.NewItems)
+            // Handle "closed" repositories.
+            if (notifyCollectionChangedEventArgs.OldItems != null)
             {
-                if (item.RepositoryFullPath == null)
-                    continue;
-
-                Config.RecentRepositories.RemoveAll(r => r.RepositoryFullPath == item.RepositoryFullPath);
-
-                Config.RecentRepositories.Add(new RecentRepositoryConfiguration
+                foreach (RepositoryViewModel item in notifyCollectionChangedEventArgs.OldItems)
                 {
-                    Name = item.Name,
-                    RepositoryFullPath = item.RepositoryFullPath
-                });
+                    if (String.IsNullOrEmpty(item.RepositoryFullPath))
+                        continue;
+
+                    Config.OpenedRepositories.RemoveAll(r => r.RepositoryFullPath == item.RepositoryFullPath);
+                }
             }
 
-            if (Config.RecentRepositories.Count > 20)
-                Config.RecentRepositories.RemoveRange(20, Config.RecentRepositories.Count - 20);
+            if (notifyCollectionChangedEventArgs.NewItems != null)
+            {
+                // Update the configuration "recent repositories".
+                // Basically, remove existing and prepend again, to make sure they appear on "top".
+                foreach (RepositoryViewModel item in notifyCollectionChangedEventArgs.NewItems)
+                {
+                    if (String.IsNullOrEmpty(item.RepositoryFullPath))
+                        continue;
+
+                    var repo = new RepositoryConfiguration
+                    {
+                        Name = item.Name,
+                        RepositoryFullPath = item.RepositoryFullPath
+                    };
+
+                    // Add this repo to the opened list.
+                    Config.OpenedRepositories.Add(repo);
+
+                    // Add this repo to the recent list.
+                    Config.RecentRepositories.RemoveAll(r => r.RepositoryFullPath == item.RepositoryFullPath);
+                    Config.RecentRepositories.Insert(0, repo);
+                }
+
+                if (Config.RecentRepositories.Count > 20)
+                    Config.RecentRepositories.RemoveRange(20, Config.RecentRepositories.Count - 20);
+            }
 
             Config.Save();
         }
@@ -78,6 +95,9 @@ namespace GG
 
             Config = Configuration.LoadConfiguration();
 
+            // We need to temporarily disable notifications to avoid collection modification within a loop.
+            RepositoryViewModels.DisableNotifications();
+
             // Fill the "RecentRepositories" collection and load them.
             foreach (var recent in Config.RecentRepositories)
             {
@@ -85,13 +105,15 @@ namespace GG
 
                 RecentRepositories.Add(repo);
 
-                // Only open the most recent one.
-                /*if (recent.IsOpened)
+                // If this repository was opened previously, re-open it again.
+                if (Config.OpenedRepositories.Any(r => r.RepositoryFullPath == recent.RepositoryFullPath))
                 {
                     repo.Init();
                     RepositoryViewModels.Add(repo);
-                }*/
+                }
             }
+
+            RepositoryViewModels.EnableNotifications(true);
 
             // Create the dashboard tab if there are no tabs opened.
             if (tabControl.Items.Count == 1) // The "+" tab is counted as one.

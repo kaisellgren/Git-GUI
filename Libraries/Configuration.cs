@@ -9,7 +9,10 @@ namespace GG.Libraries
     {
         [XmlArrayItem("Repository")]
         [XmlArray("RecentRepositories")]
-        public List<RecentRepositoryConfiguration> RecentRepositories { get; set; }
+        public List<RepositoryConfiguration> RecentRepositories { get; set; }
+
+        [XmlArray("OpenedRepositories")]
+        public List<RepositoryConfiguration> OpenedRepositories { get; set; }
 
         /// <summary>
         /// Loads the configuration from the Configuration.xml file.
@@ -45,11 +48,12 @@ namespace GG.Libraries
 
         public Configuration()
         {
-            RecentRepositories = new List<RecentRepositoryConfiguration>();
+            RecentRepositories = new List<RepositoryConfiguration>();
+            OpenedRepositories = new List<RepositoryConfiguration>();
         }
     }
 
-    public class RecentRepositoryConfiguration
+    public class RepositoryConfiguration
     {
         [XmlAttribute("Name")]
         public string Name { get; set; }

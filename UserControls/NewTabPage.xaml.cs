@@ -68,7 +68,7 @@ namespace GG.UserControls
             dialog.ShowDialog();
 
             // Open the selected repository, if possible.
-            if (!string.IsNullOrEmpty(dialog.SelectedPath))
+            if (!String.IsNullOrEmpty(dialog.SelectedPath))
             {
                 if (OpenNewRepository(dialog.SelectedPath) == false)
                     MessageBox.Show(String.Format("Could not open \"{0}\". Are you sure it is an existing Git repository?", dialog.SelectedPath));
@@ -92,7 +92,7 @@ namespace GG.UserControls
             dialog.ShowDialog();
 
             // Open the selected folder if possible.
-            if (!string.IsNullOrEmpty(dialog.SelectedPath))
+            if (!String.IsNullOrEmpty(dialog.SelectedPath))
             {
                 LibGit2Sharp.Repository.Init(dialog.SelectedPath).Dispose();
 
