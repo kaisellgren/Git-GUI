@@ -1,35 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
-using System.Xml.Serialization;
 using GG.Libraries;
-using GG.UserControls;
 using GG.ViewModels;
 
 namespace GG
 {
     class MainWindowViewModel : BaseViewModel
     {
+        public Configuration Config { get; private set; }
+
         public ObservableCollection<RepositoryViewModel> RecentRepositories { get; set; }
-        ObservableCollection<RepositoryViewModel> _repositoryViewModels;
+        private ObservableCollection<RepositoryViewModel> repositoryViewModels;
         public ObservableCollection<RepositoryViewModel> RepositoryViewModels
         {
             get
             {
-                if (_repositoryViewModels == null)
+                if (repositoryViewModels == null)
                 {
-                    _repositoryViewModels = new ObservableCollection<RepositoryViewModel>();
-                    var itemsView = (IEditableCollectionView)CollectionViewSource.GetDefaultView(_repositoryViewModels);
+                    repositoryViewModels = new ObservableCollection<RepositoryViewModel>();
+                    var itemsView = (IEditableCollectionView) CollectionViewSource.GetDefaultView(repositoryViewModels);
                     itemsView.NewItemPlaceholderPosition = NewItemPlaceholderPosition.AtEnd;
                 }
 
-                return _repositoryViewModels;
+                return repositoryViewModels;
             }
         }
 
@@ -37,8 +36,37 @@ namespace GG
         {
             RecentRepositories = new ObservableCollection<RepositoryViewModel>() { };
 
+            RepositoryViewModels.CollectionChanged += RepositoryViewModelsOnCollectionChanged;
+
             CreateTabCommand = new DelegateCommand(CreateTab);
             CloseTabCommand = new DelegateCommand(CloseTab);
+        }
+
+        private void RepositoryViewModelsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            if (notifyCollectionChangedEventArgs.NewItems == null)
+                return;
+
+            // Update the configuration "recent repositories".
+            // Basically, remove existing and prepend again, to make sure they appear on "top".
+            foreach (RepositoryViewModel item in notifyCollectionChangedEventArgs.NewItems)
+            {
+                if (item.RepositoryFullPath == null)
+                    continue;
+
+                Config.RecentRepositories.RemoveAll(r => r.RepositoryFullPath == item.RepositoryFullPath);
+
+                Config.RecentRepositories.Add(new RecentRepositoryConfiguration
+                {
+                    Name = item.Name,
+                    RepositoryFullPath = item.RepositoryFullPath
+                });
+            }
+
+            if (Config.RecentRepositories.Count > 20)
+                Config.RecentRepositories.RemoveRange(20, Config.RecentRepositories.Count - 20);
+
+            Config.Save();
         }
 
         /// <summary>
@@ -46,38 +74,30 @@ namespace GG
         /// </summary>
         public void Load()
         {
-            if (File.Exists("./Configuration.xml"))
+            var tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
+
+            Config = Configuration.LoadConfiguration();
+
+            // Fill the "RecentRepositories" collection and load them.
+            foreach (var recent in Config.RecentRepositories)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(Configuration));
-                using (FileStream fileStream = new FileStream("./Configuration.xml", FileMode.Open))
+                var repo = new RepositoryViewModel { Name = recent.Name, RepositoryFullPath = recent.RepositoryFullPath };
+
+                RecentRepositories.Add(repo);
+
+                // Only open the most recent one.
+                /*if (recent.IsOpened)
                 {
-                    Configuration configuration = (Configuration) serializer.Deserialize(fileStream);
-
-                    var alreadyOpenedOneRepo = false;
-
-                    // Fill the "RecentRepositories" collection and load them.
-                    foreach (RecentRepositoryConfiguration recent in configuration.RecentRepositories)
-                    {
-                        RepositoryViewModel repo = new RepositoryViewModel { Name = recent.Name, RepositoryFullPath = recent.RepositoryFullPath };
-
-                        RecentRepositories.Add(repo);
-
-                        // Only open the most recent one.
-                        if (alreadyOpenedOneRepo == false)
-                        {
-                            repo.Init();
-                            RepositoryViewModels.Add(repo);
-                        }
-
-                        alreadyOpenedOneRepo = true;
-                    }
-                }
+                    repo.Init();
+                    RepositoryViewModels.Add(repo);
+                }*/
             }
 
-            CreateTab(new object()); // Create "New Tab".
+            // Create the dashboard tab if there are no tabs opened.
+            if (tabControl.Items.Count == 1) // The "+" tab is counted as one.
+                CreateTab(new object()); // Create "Dashboard".
 
             // Select the first tab.
-            TabControl tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
             tabControl.SelectedIndex = 0;
         }
 
@@ -92,8 +112,8 @@ namespace GG
         /// <param name="action"></param>
         private void CloseTab(object action)
         {
-            TabControl tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
-            ObservableCollection<RepositoryViewModel> repositories = tabControl.ItemsSource as ObservableCollection<RepositoryViewModel>;
+            var tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
+            var repositories = (ObservableCollection<RepositoryViewModel>) tabControl.ItemsSource;
 
             if (action == null)
                 repositories.Remove((RepositoryViewModel) tabControl.SelectedContent);
@@ -115,10 +135,10 @@ namespace GG
         /// <param name="action"></param>
         private void CreateTab(object action)
         {
-            TabControl tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
-            MainWindowViewModel mainWindowViewModel = Application.Current.MainWindow.DataContext as MainWindowViewModel;
+            var tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
+            var mainWindowViewModel = (MainWindowViewModel) Application.Current.MainWindow.DataContext;
 
-            RepositoryViewModel repository = new RepositoryViewModel
+            var repository = new RepositoryViewModel
             {
                 Name = "Dashboard",
                 NotOpened = true,
@@ -128,9 +148,6 @@ namespace GG
             mainWindowViewModel.RepositoryViewModels.Add(repository);
 
             tabControl.SelectedItem = repository;
-
-            // TODO: Automatically give focus to the ListView's first item.
-            //ListView recentRepositoriesList = UIHelper.FindChild<ListView>(tabControl.ItemContainerGenerator.ContainerFromIndex(0), "RecentRepositoriesList");
         }
 
         #endregion

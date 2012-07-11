@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using GG.Libraries;
@@ -18,7 +19,8 @@ namespace GG
 
         void OnLoad(object sender, RoutedEventArgs e)
         {
-            MainWindowViewModel vm = this.DataContext as MainWindowViewModel;
+            var vm = DataContext as MainWindowViewModel;
+            Debug.Assert(vm != null, "vm != null");
             vm.Load();
 
             if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
@@ -36,8 +38,8 @@ namespace GG
         /// <param name="hideRestore"></param>
         private void HideMaximizeRestoreApplicationButton(bool hideMaximize, bool hideRestore)
         {
-            Button maximize = UIHelper.FindChild<Button>(Application.Current.MainWindow, "MaximizeApplicationButton");
-            Button restore = UIHelper.FindChild<Button>(Application.Current.MainWindow, "RestoreApplicationButton");
+            var maximize = UIHelper.FindChild<Button>(Application.Current.MainWindow, "MaximizeApplicationButton");
+            var restore = UIHelper.FindChild<Button>(Application.Current.MainWindow, "RestoreApplicationButton");
 
             maximize.Visibility = hideMaximize ? Visibility.Collapsed : Visibility.Visible;
             restore.Visibility = hideRestore ? Visibility.Collapsed : Visibility.Visible;
@@ -75,16 +77,25 @@ namespace GG
                 HideMaximizeRestoreApplicationButton(false, true);
         }
 
+        private int lastRepositoryIndex;
+
         private void RepositoryTabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.Source is TabControl)
-            {
-                // Make sure the repository tabs never goes to the last item (because it is the + tab).
-                var tabControl = (TabControl) e.Source;
+            var tabControl = (TabControl) e.Source;
 
-                if (tabControl.SelectedIndex == tabControl.Items.Count - 1)
+            if (tabControl == null)
+                return;
+
+            // When the user switches the tab via ctrl+tab, make sure we never end up in the "+" tab page.
+            if (tabControl.SelectedIndex == tabControl.Items.Count - 1)
+            {
+                if (lastRepositoryIndex == tabControl.SelectedIndex - 1)
                     tabControl.SelectedIndex = 0;
+                else
+                    tabControl.SelectedIndex = tabControl.Items.Count - 2;
             }
+
+            lastRepositoryIndex = tabControl.SelectedIndex;
         }
     }
 }

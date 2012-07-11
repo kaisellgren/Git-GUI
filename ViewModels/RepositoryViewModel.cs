@@ -25,7 +25,6 @@ namespace GG
         public string Name { get; set; }
         public string RepositoryFullPath { get; set; }
         public bool NotOpened { get; set; }
-        private bool alreadyLoaded;
 
         public EnhancedObservableCollection<Commit> Commits { get; set; }
         public EnhancedObservableCollection<StatusItem> StatusItemsStaged { get; set; }
@@ -469,14 +468,9 @@ namespace GG
         /// </summary>
         public bool Init()
         {
-            if (alreadyLoaded)
-                throw new Exception("You may not load the repository more than once.");
-
             // The "New Tab" page should not load data, i.e., the repository is not yet opened.
             if (NotOpened == false)
             {
-                alreadyLoaded = true;
-
                 try
                 {
                     LoadEntireRepository();
@@ -591,7 +585,9 @@ namespace GG
 
                     var tabControl = UIHelper.FindChild<TabControl>(Application.Current.MainWindow, "RepositoryTabs");
                     var changesetHistory = UIHelper.FindChild<ChangesetHistory>(tabControl);
-                    changesetHistory.RedrawGraph();
+
+                    if (changesetHistory != null)
+                        changesetHistory.RedrawGraph();
                 })
             );
 
