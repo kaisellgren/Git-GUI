@@ -4,19 +4,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:userControls="clr-namespace:GG.UserControls"
+             xmlns:contextMenus="clr-namespace:GG.UserControls.LeftToolbarContextMenus"
              mc:Ignorable="d">
+    
+    <UserControl.Resources>
+        <contextMenus:TagContextMenu x:Key="tagContextMenu" />
+    </UserControl.Resources>
 
     <Border BorderBrush="#bbb" BorderThickness="1,1,1,0">
         <Grid>
             <Grid VerticalAlignment="Stretch" Style="{StaticResource LeftToolbarStyle}" HorizontalAlignment="Left" Width="160">
                 <Grid Margin="8" d:DataContext="{d:DesignData Source=../DesignData/Branches.xaml}">
                     <TreeView Background="{x:Null}" BorderThickness="0" Padding="0">
-                        <TreeView.InputBindings>
-                            <!--<KeyBinding Command="{Binding DeleteBranchCommand}" Gesture="Delete" />-->
-                        </TreeView.InputBindings>
-
-                        <TreeViewItem ItemsSource="{Binding Branches}" PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown">
+                        <TreeViewItem ItemsSource="{Binding Branches}"
+                                      PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown"
+                                      Tag="{Binding}">
                             <TreeViewItem.Header>
                                 <WrapPanel>
                                     <Image Source="../Resources/Icons/Branch.png" Stretch="None" Style="{StaticResource LeftToolbarTitleImageStyle}" />
@@ -26,38 +28,27 @@
 
                             <TreeViewItem.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource LeftToolbarTitleStyle}" Tag="{Binding ElementName=LeftToolbarUserControl}">
-                                        <TextBlock.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="Checkout">
-                                                    <MenuItem.Icon>
-                                                        <Image Source="../Resources/Icons/Checkout.png" Stretch="None" />
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                                <MenuItem Header="Delete" CommandParameter="{Binding}" Command="{Binding PlacementTarget.Tag.DeleteBranchCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}}" InputGestureText="Delete">
-                                                    <MenuItem.Icon>
-                                                        <Image Source="../Resources/Icons/Delete.png" Stretch="None" />
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                                <MenuItem Header="Merge with X">
-                                                    <MenuItem.Icon>
-                                                        <Image Source="../Resources/Icons/Merge.png" Stretch="None" />
-                                                    </MenuItem.Icon>
-                                                </MenuItem>
-                                            </ContextMenu>
-                                        </TextBlock.ContextMenu>
-                                    </TextBlock>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource LeftToolbarTitleStyle}" Tag="{Binding ElementName=LeftToolbarUserControl}" />
                                 </DataTemplate>
                             </TreeViewItem.ItemTemplate>
                         </TreeViewItem>
 
-                        <TreeViewItem ItemsSource="{Binding Tags}">
+                        <TreeViewItem ItemsSource="{Binding Tags}"
+                                      PreviewMouseRightButtonDown="OnPreviewMouseRightButtonDown"
+                                      ContextMenu="{StaticResource tagContextMenu}"
+                                      Tag="{Binding}">
                             <TreeViewItem.Header>
                                 <WrapPanel>
                                     <Image Source="../Resources/Icons/Tag.png" Stretch="None" Style="{StaticResource LeftToolbarTitleImageStyle}" />
                                     <TextBlock Style="{StaticResource LeftToolbarTitleStyle}">TAGS</TextBlock>
                                 </WrapPanel>
                             </TreeViewItem.Header>
+                            
+                            <TreeViewItem.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource LeftToolbarTitleStyle}" Tag="{Binding ElementName=LeftToolbarUserControl}" />
+                                </DataTemplate>
+                            </TreeViewItem.ItemTemplate>
                         </TreeViewItem>
 
                         <TreeViewItem ItemsSource="{Binding Remotes}">

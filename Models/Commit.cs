@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using GG.Libraries;
 using System.Linq;
 using System.Collections.ObjectModel;
@@ -16,7 +14,7 @@ namespace GG.Models
         public string       Description      { get; set; }
         public string       ShortDescription { get; set; }
         public List<string> DisplayTags      { get; set; }
-        public List<string> Tags             { get; set; }
+        public ObservableCollection<Tag> Tags { get; set; }
         public string       Hash             { get; set; }
         public List<Branch> Branches         { get; set; }
         public List<Branch> BranchesAround   { get; set; }
@@ -79,34 +77,35 @@ namespace GG.Models
         /// </summary>
         /// <param name="repo"></param>
         /// <param name="commit"></param>
+        /// <param name="tags"> </param>
         /// <returns></returns>
         public static Commit Create(LibGit2Sharp.Repository repo,
                                     LibGit2Sharp.Commit commit,
                                     ObservableCollection<Tag> tags)
         {
-            Commit c = new Commit();
+            var c = new Commit();
 
             // Process Tags (Git tags to display next to the commit description).
-            List<string> commitTags = new List<string>();
-            foreach (Tag tag in tags)
+            var commitTags = new ObservableCollection<Tag>();
+            foreach (var tag in tags)
             {
-                if (tag.TargetSha == commit.Sha.ToString())
+                if (tag.TargetSha == commit.Sha)
                 {
-                    commitTags.Add(tag.Name);
+                    commitTags.Add(tag);
                     tag.Target = c;
                 }
             }
 
             // Process display tags.
-            List<string> displayTags = new List<string>();
+            var displayTags = new List<string>();
             if (repo.Head.Tip == commit)
                 displayTags.Add("HEAD");
 
             // Process ParentHashes.
-            List<string> parentHashes = new List<string>();
-            foreach (LibGit2Sharp.Commit parentCommit in commit.Parents)
+            var parentHashes = new List<string>();
+            foreach (var parentCommit in commit.Parents)
             {
-                parentHashes.Add(parentCommit.Sha.ToString());
+                parentHashes.Add(parentCommit.Sha);
             }
 
             // Set properties.
@@ -118,7 +117,7 @@ namespace GG.Models
             c.DisplayTags  = displayTags;
             c.Branches     = new List<Branch>();
             c.Tags         = commitTags;
-            c.Hash         = commit.Sha.ToString();
+            c.Hash         = commit.Sha;
             c.ParentHashes = parentHashes;
             c.ParentCount  = commit.ParentsCount;
             c.Parents      = new List<Commit>();

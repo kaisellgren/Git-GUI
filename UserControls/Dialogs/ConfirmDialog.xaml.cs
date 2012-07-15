@@ -42,6 +42,9 @@ namespace GG.UserControls.Dialogs
             );
 
             DataContext = this;
+
+            if (Buttons == null)
+                ButtonSet = ButtonsSet.OK_CANCEL;
         }
 
         /// <summary>

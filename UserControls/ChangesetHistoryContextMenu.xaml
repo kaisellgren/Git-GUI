@@ -69,7 +69,7 @@
     </MenuItem>
     
     <MenuItem Header="Tag this commit..."
-              Command="{Binding PlacementTarget.Tag.TagCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+              Command="{Binding PlacementTarget.Tag.CreateTagCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
               CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
         <MenuItem.Icon>
             <Image Source="../Resources/Icons/Tag.png" Stretch="None" />

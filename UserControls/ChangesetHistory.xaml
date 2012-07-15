@@ -59,7 +59,7 @@
                         <DataTemplate>
                             <WrapPanel>
                                 <ListBox ItemsSource="{Binding DisplayTags}" Style="{StaticResource DisplayTagsBlueStyle}" IsHitTestVisible="False" />
-                                <ListBox ItemsSource="{Binding Tags}" Style="{StaticResource DisplayTagsOrangeStyle}" IsHitTestVisible="False" />
+                                <ListBox ItemsSource="{Binding Tags}" DisplayMemberPath="Name" Style="{StaticResource DisplayTagsOrangeStyle}" IsHitTestVisible="False" />
                                 <TextBlock Text="{Binding Path=ShortDescription}"
                                        VerticalAlignment="Center"
                                        FontWeight="{Binding IsHead, Converter={StaticResource isHeadToFontWeightConverter}}"

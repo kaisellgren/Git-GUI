@@ -98,18 +98,20 @@ namespace GG
             RecentCommitMessageCount = 10;
 
             // Initialize commands.
-            ExportPatchCommand = new DelegateCommand(ExportPatch);
-            CopyPatchCommand = new DelegateCommand(CopyPatch);
             AddNoteCommand = new DelegateCommand(AddNote);
-            CopyHashCommand = new DelegateCommand(CopyHash);
-            TagCommand = new DelegateCommand(CreateTag);
+            CheckoutCommand = new DelegateCommand(Checkout);
             CreateBranchCommand = new DelegateCommand(CreateBranch);
+            CreateTagCommand = new DelegateCommand(CreateTag);
+            CommitCommand = new DelegateCommand(CommitChanges, CommitChanges_CanExecute);
+            CopyHashCommand = new DelegateCommand(CopyHash);
+            CopyPatchCommand = new DelegateCommand(CopyPatch);
+            DeleteFileCommand = new DelegateCommand(DeleteFile);
+            DeleteTagCommand = new DelegateCommand(DeleteTag);
+            ExportPatchCommand = new DelegateCommand(ExportPatch);
+            OpenAboutCommand = new DelegateCommand(OpenAbout);
             ResetSoftCommand = new DelegateCommand(ResetSoft);
             ResetMixedCommand = new DelegateCommand(ResetMixed);
-            OpenAboutCommand = new DelegateCommand(OpenAbout);
             StageUnstageCommand = new DelegateCommand(StageUnstage);
-            DeleteFileCommand = new DelegateCommand(DeleteFile);
-            CommitCommand = new DelegateCommand(CommitChanges, CommitChanges_CanExecute);
 
             // Diff panel.
             StatusItemDiff = "";
@@ -117,18 +119,20 @@ namespace GG
 
         #region Commands.
 
-        public DelegateCommand ExportPatchCommand  { get; private set; }
-        public DelegateCommand CopyPatchCommand    { get; private set; }
-        public DelegateCommand AddNoteCommand      { get; private set; }
-        public DelegateCommand CopyHashCommand     { get; private set; }
-        public DelegateCommand TagCommand          { get; private set; }
+        public DelegateCommand AddNoteCommand { get; private set; }
+        public DelegateCommand CheckoutCommand { get; private set; }
         public DelegateCommand CreateBranchCommand { get; private set; }
-        public DelegateCommand ResetSoftCommand    { get; private set; }
-        public DelegateCommand ResetMixedCommand   { get; private set; }
+        public DelegateCommand CreateTagCommand { get; private set; }
+        public DelegateCommand CommitCommand { get; private set; }
+        public DelegateCommand CopyHashCommand { get; private set; }
+        public DelegateCommand CopyPatchCommand    { get; private set; }
+        public DelegateCommand DeleteFileCommand { get; private set; }
+        public DelegateCommand DeleteTagCommand { get; private set; }
+        public DelegateCommand ExportPatchCommand { get; private set; }
         public DelegateCommand OpenAboutCommand    { get; private set; }
+        public DelegateCommand ResetSoftCommand { get; private set; }
+        public DelegateCommand ResetMixedCommand { get; private set; }
         public DelegateCommand StageUnstageCommand { get; private set; }
-        public DelegateCommand DeleteFileCommand   { get; private set; }
-        public DelegateCommand CommitCommand       { get; private set; }
 
         /// <summary>
         /// Exports the given changeset as a patch to a file.
@@ -175,6 +179,22 @@ namespace GG
                 using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
                 {
                     Clipboard.SetText(RepoUtil.GetTreeChangesForCommit(repo, commit).Patch);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Checkouts a commit/branch/tag.
+        /// </summary>
+        /// <param name="action"></param>
+        public void Checkout(object action)
+        {
+            Task.Run(() =>
+            {
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    if (action is Tag)
+                        repo.Checkout(((Tag) action).CanonicalName);
                 }
             });
         }
@@ -250,6 +270,44 @@ namespace GG
                 {
                     repo.Tags.Create(response, commit.Hash);
                     LoadEntireRepository();
+                }
+            });
+        }
+
+        /// <summary>
+        /// Deletes a tag.
+        /// </summary>
+        /// <param name="action"></param>
+        public void DeleteTag(object action)
+        {
+            var tag = (Tag) action;
+
+            var dialog = new ConfirmDialog
+            {
+                Title = "Deleting a tag",
+                Message = String.Format("Are you sure you want to delete this tag ({0})?", tag.Name)
+            };
+
+            dialog.ShowDialog();
+
+            var pressedButton = dialog.PressedButton;
+            if (pressedButton == null || ((string) pressedButton.Content) != "OK")
+                return;
+
+            Task.Run(() =>
+            {
+                using (var repo = new LibGit2Sharp.Repository(RepositoryFullPath))
+                {
+                    // Remove the tag from the Git repository.
+                    repo.Tags.Delete(tag.CanonicalName);
+
+                    // Reload all tags.
+                    LoadTags();
+
+                    Application.Current.Dispatcher.BeginInvoke(
+                        DispatcherPriority.Normal,
+                        (Action) (() => tag.Target.Tags.Remove(tag))
+                    );
                 }
             });
         }

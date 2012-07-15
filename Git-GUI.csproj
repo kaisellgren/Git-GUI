@@ -161,12 +161,16 @@
     </ApplicationDefinition>
     <Compile Include="Converters\GenericVisibilityConverter.cs" />
     <Compile Include="Converters\GetDataGridContentHeightConverter.cs" />
+    <Compile Include="Converters\GetSelectedTreeViewItemConverter.cs" />
     <Compile Include="Libraries\Observable.cs" />
     <Compile Include="UserControls\CenterArea.xaml.cs">
       <DependentUpon>CenterArea.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Dialogs\ConfirmDialog.xaml.cs">
       <DependentUpon>ConfirmDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\LeftToolbarContextMenus\TagContextMenu.xaml.cs">
+      <DependentUpon>TagContextMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
@@ -252,6 +256,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Dialogs\ConfirmDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\LeftToolbarContextMenus\TagContextMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

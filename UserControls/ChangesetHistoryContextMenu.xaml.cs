@@ -5,7 +5,6 @@ using System.Windows.Media.Imaging;
 using System.Collections.Generic;
 using System.Linq;
 using GG.Models;
-using System.Windows;
 using GG.Libraries;
 using System.Windows.Documents;
 
@@ -64,10 +63,10 @@ namespace GG.UserControls
 
             // Add Checkout menu items. TODO: Add also non-branch-checkouts.
             var numberOfCheckoutItems = 0;
-            foreach (Branch branch in commit.Branches)
+            foreach (var branch in commit.Branches)
             {
                 // Only if the right clicked commit is the tip of the branch, AND the branch is not already checkout out, continue.
-                if (branch.Tip == commit && ((Branch) repositoryViewModel.Head) != branch && branch.IsRemote == false)
+                if (branch.Tip == commit && (repositoryViewModel.Head) != branch && branch.IsRemote == false)
                 {
                     var text = new TextBlock();
                     text.Inlines.AddRange(new Inline[]

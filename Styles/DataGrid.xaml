@@ -27,6 +27,14 @@
         <GradientStop Color="#9fd3eb" Offset="1"/>
     </LinearGradientBrush>
     
+    <LinearGradientBrush x:Key="DataGridHighlightBlurBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#fcfcfc" Offset="0"/>
+        <GradientStop Color="#e3e3e3" Offset="0.1"/>
+        <GradientStop Color="#d2d2d2" Offset="0.45"/>
+        <GradientStop Color="#c8c8c8" Offset="0.9"/>
+        <GradientStop Color="#ebebeb" Offset="1"/>
+    </LinearGradientBrush>
+    
     <Style TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="{StaticResource DefaultBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="#bbb" />
@@ -225,17 +233,7 @@
                             <Setter Property="BorderBrush" Value="#bebebe" />
                             <Setter Property="BorderBrush" Value="#bebebe" TargetName="OuterBorder" />
                             <Setter Property="Foreground" Value="#000" />
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientStop Color="#fcfcfc" Offset="0"/>
-                                        <GradientStop Color="#e3e3e3" Offset="0.1"/>
-                                        <GradientStop Color="#d2d2d2" Offset="0.45"/>
-                                        <GradientStop Color="#c8c8c8" Offset="0.9"/>
-                                        <GradientStop Color="#ebebeb" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" Value="{StaticResource DataGridHighlightBlurBrush}" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
