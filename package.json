@@ -1,0 +1,18 @@
+{
+    "author": "Kai Sellgren <kaisellgren@gmail.com>",
+    "name": "gitgui.com",
+    "homepage": "http://gitgui.com/",
+    "description": "Website for gitgui.com",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "ejs": "*",
+        "flatiron": "*"
+    },
+    "engines": {
+        "node": ">=0.7.7"
+    },
+    "scripts": {
+        "start": "node main.js"
+    }
+}
