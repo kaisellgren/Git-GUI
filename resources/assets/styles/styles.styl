@@ -1,0 +1,108 @@
+@import "mixins"
+
+/* Header */
+
+#header {
+    mixin-linear-gradient: top, #fcfcfc, #ebebeb 10%, #ebebeb 90%, #fcfcfc;
+    border-bottom: 1px solid #b8b8b8;
+    width: 100%;
+    position: relative;
+}
+
+#header > .container {
+    margin: 0 auto;
+    width: 1200px;
+    display: table;
+}
+
+#header .title {
+    padding-top: 96px;
+    padding-right: 36px;
+    display: table-cell;
+    vertical-align: top;
+}
+
+#header img {
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+#header-shadow {
+    mixin-linear-gradient: top, #cdcdcd, #e3e3e3;
+    height: 64px;
+    width: 100%;
+    color: red;
+}
+
+#warning-text {
+    color: red;
+    padding: 12px 0 0 0;
+    margin: 0 auto;
+    display: table;
+}
+
+/* Menu */
+
+#menu {
+    mixin-linear-gradient: top, #8cd8ff, #58a8db 5%, #448ec7 50%, #3490b7 95%, #95d9fc;
+    height: 42px;
+    border-bottom: 1px solid #000
+    border-top: 1px solid #000
+}
+
+#menu ul {
+    display: table;
+    margin: 10px auto 0 auto;
+    overflow: hidden;
+}
+
+#menu li {
+    float: left;
+    margin: 0 8px;
+    font-family: sans-serif;
+    color: #fff;
+    font-size: 12pt;
+    cursor: default;
+}
+
+#menu a {
+    font-family: sans-serif;
+    color: #fff;
+    font-size: 12pt;
+    cursor: pointer;
+}
+
+#menu a:hover {
+    text-decoration: none;
+}
+
+/* Feature box. */
+
+.feature-box {
+    background: #fdfdfd;
+    border-radius: 8px;
+    padding: 32px;
+    width: 1000px;
+    margin: 0px auto 32px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.feature-box h2 {
+    margin-top: 0;
+}
+
+.feature-box > div {
+    overflow: hidden;
+    padding: 8px;
+    margin-bottom: 64px;
+}
+
+.feature-box > .feature-image-left > img {
+    float: left;
+    margin-right: 40px;
+}
+
+.feature-box > .feature-image-right > img {
+    float: right;
+    margin-left: 40px;
+}

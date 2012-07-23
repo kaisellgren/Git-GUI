@@ -6,13 +6,18 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "ejs": "*",
-        "flatiron": "*"
+        "union": "0.3.0",
+        "connect": "*",
+        "flatiron": "0.2.5",
+        "director": "*",
+        "stylus": "*"
     },
-    "engines": {
-        "node": ">=0.7.7"
+    "devDependencies": {
+        "api-easy": "0.3.2",
+        "vows": "0.6.1"
     },
     "scripts": {
-        "start": "node main.js"
+        "test": "vows --spec",
+        "start": "node app.js"
     }
 }
