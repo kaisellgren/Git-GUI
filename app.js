@@ -7,7 +7,7 @@ var flatiron = require('flatiron'),
     stylus = require('stylus'),
     assetus = require('./lib/assetus.js');
 
-templater.setTemplatePath('resources/views/');
+templater.setTemplatePath(__dirname + '/resources/views/');
 
 var routes = require('./routes.js');
 var router = new director.http.Router(routes);
@@ -24,7 +24,7 @@ var app = connect()
         dest: __dirname + "/public",
         compress: true
     }))
-    .use(connect.static('public/'))
+    .use(connect.static(__dirname + '/public/'))
     .use(function(req, res) {
         router.dispatch(req, res, function(err) {
             if (err) {
