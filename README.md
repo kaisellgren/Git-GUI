@@ -1,5 +1,7 @@
 # Git-GUI
 
+[http://gitgui.com/](http://gitgui.com/)
+
 Git-GUI is Windows only graphical user interface for Git source code management.
 
 #####*Please note: Git-GUI is not ready yet -- i.e. it's an alpha version that does not support everything you need. I'm working on it to make it a stable product.*
